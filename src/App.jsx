@@ -1,15 +1,19 @@
 import { useState } from 'react'
-import Learners_Dashboard from './pages/leaners/dashboard'
+import Admin_Dashboard from './pages/Tutor/dashboard'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Courses from './pages/leaners/course'
+import Staff_Courses from './pages/Tutor/course'
+import Learners_Dashboard from './pages/leaners/dashboard'
+import Courses from './pages/leaners/courses'
 
 function App() {
 
   return (
       <Router>
         <Routes>
-          <Route path='/learner_dashboard' element={<Learners_Dashboard />}></Route>
-          <Route path='/courses' element={<Courses />}></Route>
+          <Route path='/admin_dashboard' element={<Admin_Dashboard />}></Route>
+          <Route path='/learners_dashboard' element={<Learners_Dashboard />}></Route>
+          <Route path='/staff-courses' element={<Staff_Courses />}></Route>
+          <Route path='/student-course' element={<Courses />}></Route>
         </Routes>
       </Router>
 

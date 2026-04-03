@@ -1,6 +1,6 @@
 import SideBar from "./components/sidebar";
 
-export default function Courses(){
+export default function Staff_Courses(){
     return(
         <>
             <SideBar />
