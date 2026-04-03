@@ -148,7 +148,7 @@ export default function Learners_Dashboard(){
                                     <p className="text-sm mt-2 text-[#8A9E95]">by {data.author}</p>
                                     <div className="w-full mt-3">
                                         <div className="relative w-full h-1.5 rounded-xl bg-[#E8F5EC]">
-                                            <div className={`absolute w-${data.percent} h-full bg-[#1A7A4A] rounded-xl`}></div>
+                                            <div className={`absolute  h-full bg-[#1A7A4A] rounded-xl`} style={{ width: `${data.percent}%` }}></div>
                                         </div>
                                     </div>
                                     <p className="mt-1.5 text-[#8A9E95] text-sm">

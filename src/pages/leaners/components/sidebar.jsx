@@ -88,7 +88,7 @@ export default function SideBar({ children }){
                                 </ul>
                             </div>
                         )}
-                        <h3 className="font-semibold text-[#1A1A1A] text-lg hidden lg:flex ">Dashboard</h3>
+                        <h3 className="font-semibold text-[#1A1A1A] text-lg hidden lg:flex ml-4">Dashboard</h3>
                         <div className="w-150 h-10 border-1 border-[#D8D6EF]  hover:border-1.5 hover:border-[#1A7A4A] bg-[#F4F6F5] rounded-lg flex items-center px-3 space-x-2">
                             <FaSearch  className="text-[#8F9E95]"/>
                             <input type="text" placeholder="Search Courses, assignments..." className="text-[#8A9E95] text-[13px] border-none outline-none w-full h-full"/>
