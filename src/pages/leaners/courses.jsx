@@ -1,88 +1,21 @@
 import { useState } from "react";
 import SideBar from "./components/sidebar";
 import { FaSearch } from "react-icons/fa";
-import cosImg1 from '../../images/cos1.jpg'
-import cosImg2 from '../../images/cos2.jpg'
-import cosImg3 from '../../images/cos3.jpg'
-import cosImg4 from '../../images/cos4.jpg'
-import cosImg5 from '../../images/cos5.jpg'
-import cosImg6 from '../../images/cos6.jpg'
+
+// import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { courseType } from "./data/course";
+
 
 
 export default function Courses(){
-    const courseType = [
-        {
-            image : cosImg1,
-            status : 'In Progress',
-            category : 'Development',
-            title : 'Introduction to Web Development',
-            text : 'Learn the fundamentals of HTML, CSS, and Javascript to build modern web...',
-            author : 'Chukwuemeka Nwosu',
-            modules : 4,
-            percent : 65,
-            style : 'bg-[#E8F0FB] text-[#2563EB]'
-        },
-        {
-            image : cosImg2,
-            status : 'In Progress',
-            category : 'Design',
-            title : 'UI/UX Design Principles',
-            text : 'Master the art of creating beautiful and functional user interfaces with modern...',
-            author : 'Amina Bello',
-            modules : 3,
-            percent : 30,
-            style : 'bg-[#E8F0FB] text-[#2563EB]'
-        },
-        {
-            image : cosImg3,
-            status : '',
-            category : 'Data Science',
-            title : 'Data Analysics with Python',
-            text : 'Dive into data analysis using Python, pandas, and visualization libraries',
-            author : 'Oluwaseun Adeyemi',
-            modules : 5,
-            percent : 0
-        },
-        {
-            image : cosImg4,
-            status : '',
-            category : 'Development',
-            title : 'Mobile App Development',
-            text : 'Build native mobile applications for IOS and Android using React Native.',
-            author : 'Chukwuemeka Nwosu',
-            modules : 6,
-            percent : 0
-        },
-        {
-            image : cosImg5,
-            status : 'Completed',
-            category : 'Marketing',
-            title : 'Digital Marketing Fundamentals',
-            text : 'Learn strategies for SEO, social media marketing, and content creation',
-            author : 'blessing Okafor',
-            modules : 2,
-            percent : 100,
-            style : 'bg-[#E8F5EC] text-[#1A7A4A]'
-
-        },
-        {
-            image : cosImg6,
-            status : '',
-            category : 'Business',
-            title : 'Project Management Essentials',
-            text : 'Master project planning, execution and team leadership skills',
-            author : 'Ibrahim Mohammed',
-            modules : 3,
-            percent : 0
-        }
-    ]
     const courses = ['All', 'Development', 'Design', 'Data Science', 'Marketing', 'Business']
     const [selectedCategory, setSelectedCategory] = useState("All");
     const filteredCategory = selectedCategory === "All" ? courseType : courseType.filter(type => type.category === selectedCategory);
 
     return(
         <>
-           <SideBar >
+           <SideBar  title="Courses">
                 <div className="w-full h-auto p-5">
                     <h3 className="font-semibold text-2xl mt-3">Course Catalog</h3>
                     <p className="text-sm mt-2 text-[#8A9E95]">Explore ad enroll in courses to expand your skills</p>
@@ -91,16 +24,18 @@ export default function Courses(){
                             <FaSearch  className="text-[#8F9E95]"/>
                             <input type="text" placeholder="Search Courses..." className="text-[#8A9E95] text-[13px] border-none outline-none w-full h-full "/>
                         </div>
-                        <select className="border w-[23%] border border-[#D8D6EF] bg-white rounded-lg px-3 text-[13px] outline-none cursor-pointer">
-                            <option value="all">All Categories</option>
-                            <option value="Development">Development</option>
-                            <option value="Development">Design</option>
-                            <option value="Development">Data Science</option>
-                            <option value="Development">Marketing</option>
-                            <option value="Development">Business</option>
+                        <select 
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="border w-[23%] border border-[#D8D6EF] bg-white rounded-lg px-3 text-[13px] outline-none cursor-pointer">
+                            {courses.map((data, index) => (
+                                // <option value={`${data}`}>{data}</option>
+                                <option key={index} value={data}>{data}</option>
+                            ))}
+                            
                         </select>
                     </div>
-                    <div className="w-full p-5 mt-5">
+                    <div className="w-full lg:p-5 mt-5">
                         <div className="lg:w-[75%] grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                             {courses.map((data, index) => (
                                 <button key={index}
@@ -134,8 +69,11 @@ export default function Courses(){
                                             </div>
 
                                         </div>
-                                        <button className={` font-semibold mt-2 py-2.5 text-sm rounded-lg cursor-pointer transition-all duration-300 ${data.percent === 0 ? "text-[#1A7A4A] border-1 border-[#1A7A4A] hover:bg-[#156239] hover:text-[#FFFFFF]" : "bg-[#1A7A4A] text-white hover:bg-[#156239]"}`}>
-                                            {data.percent === 0 ? "Enroll Now" : "Continue Learning"}
+                                        <button
+                                            className={`font-semibold mt-2 py-2.5 text-sm rounded-lg cursor-pointer transition-all duration-300 ${data.percent === 0 ? "text-[#1A7A4A] border-1 border-[#1A7A4A] hover:bg-[#156239] hover:text-[#FFFFFF]" : "bg-[#1A7A4A] text-white hover:bg-[#156239]"}`}>
+                                            <Link to={`/student-course/${data.id}`}>
+                                                {data.percent === 0 ? "Enroll Now" : "Continue Learning"}
+                                            </Link>
                                         </button>
                                     </div>
                                 </div>

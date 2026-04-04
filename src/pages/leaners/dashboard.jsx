@@ -2,10 +2,11 @@ import { useEffect } from "react"
 import SideBar from "./components/sidebar";
 import image1 from '../../images/cos1.jpg'
 import image2 from '../../images/cos2.jpg'
-
+import { motion } from "framer-motion";
 import { LuBookOpen, LuClock, LuCircleCheck } from "react-icons/lu";
 
 import { Link } from "react-router-dom";
+import { buttonHoverEffects } from "./components/effect";
 export default function Learners_Dashboard(){
     useEffect(() => {
         document.title = 'Learners_Dashboard'
@@ -21,7 +22,9 @@ export default function Learners_Dashboard(){
             tits: 'Submitted Assignments',
             title : 'Calculator Project',
             time : 'Yesterday',
-            style : '[#2563EB]'
+            // style : '[#2563EB]'
+            style : '[#1A7A4A]'
+
         },
         {
             tits: 'Recieved grade',
@@ -98,9 +101,9 @@ export default function Learners_Dashboard(){
         }
     ]
     return(
-        <SideBar>
+        <SideBar title="Dashboard">
             <div className="w-full h-auto p-5">
-                <div className="w-full h-auto rounded-xl p-5 flex flex-col lg:mt-5 bg-gradient-to-r from-[#1A7748] to-[#15663C]">
+                <div className="w-full h-auto rounded-xl p-5 flex flex-col lg:mt-5 bg-gradient-to-br from-[#1A7A4A] to-[#156239]">
                     <h3 className="text-2xl lg:text-3xl font-semibold text-white text-normal mt-2">Welcome Back, Adeola!</h3>
                     <p className="mt-2 text-sm text-white/80">You're doing great! Keep up the momentum and continue your learning journey</p>
                     <div className="flex w-75 my-4 items-center justify-between">
@@ -154,9 +157,9 @@ export default function Learners_Dashboard(){
                                     <p className="mt-1.5 text-[#8A9E95] text-sm">
                                         {data.percent}%
                                     </p>
-                                    <button className="cursor-pointer w-full border mt-4 mb-2 py-2 rounded-lg text-sm font-semibold bg-[#1A7A4A] hover:bg-[#156239] transition-all duration-300 text-white ">
-                                        <Link>Continue Learning</Link>
-                                    </button>
+                                    <motion.button {...buttonHoverEffects} className="cursor-pointer w-full border mt-4 mb-2 py-2.5 rounded-lg text-sm font-semibold bg-[#1A7A4A] hover:bg-[#156239] transition-all duration-200 text-white ">
+                                        <Link to="/student-course" className="w-full h-full">Continue Learning</Link>
+                                    </motion.button>
                                 </div>
                             </div>
                         ))}
@@ -189,7 +192,7 @@ export default function Learners_Dashboard(){
                             {activity.map((data, index) =>(
                                 <div className="p-3 flex flex-col">
                                     <div className="flex space-x-3 items-center">
-                                        <div className={`w-2 h-2 rounded-full  bg-${data.style}`}></div>
+                                        <div className={`w-2 h-2 rounded-full bg-${data.style}`}></div>
                                         <h3 className="text-[13px]">{data.tits} : <span className="font-semibold">{data.title}</span></h3>
                                     </div>
                                     <p className="text-[12px] text-[#8A9E95] ml-5">
