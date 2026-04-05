@@ -13,7 +13,6 @@ export default function CourseOverview(){
     const totalLessons = courses.modulesView.reduce((sum, module) => sum + (module.lessons?.length || 0), 0);
     const completedLessons = courses.modulesView.reduce((sum, module) => sum + (module.lesssons_completed || 0),0);
     const remaining_course = totalLessons - completedLessons
-    const course_percent = totalLessons === 0 ? 0 : Math.round((completedLessons / totalLessons) * 100);
 
     if(!courses) return <p>Courses not available</p>
 
@@ -29,14 +28,14 @@ export default function CourseOverview(){
                                     <LuArrowLeft  size={15} className="mt-0.5"/>
                                     <p>Back to Courses</p>
                                 </Link>
-                                <div className="w-auto py-2 mt-20 flex flex-col space-y-2.5">
+                                <div className="w-auto py-2 mt-10 lg:mt-20 flex flex-col space-y-2.5">
                                     <p className="w-25 font-medium text-white bg-[#1A7A4A] text-xs rounded-full py-1 px-3 flex items-center justify-center">{courses.category}</p>
                                     <h1 className="text-3xl md:text-4xl font-semibold text-white mb-2">{courses.title}</h1>
                                     <p className="text-white/90 mb-3">by {courses.author}</p>
                                     <div className="flex space-x-4">
                                         <div className="flex items-center space-x-1 text-white/80 text-sm">
                                             <LuClock  className="w-4 h-4 mt-0.5"/>
-                                            <p>{courses.duration} weeks</p>
+                                            <p>{courses.weeks} weeks</p>
                                         </div>
                                         <div className="flex items-center space-x-1 text-white/80 text-sm">
                                             <LuBookOpen  className="w-4 h-4 mt-0.5"/>
@@ -56,25 +55,25 @@ export default function CourseOverview(){
                     <div className="w-full h-auto mt-5 flex items-center p-5">
                         <div className="w-full bg-white rounded-xl border-1 border-[#D8D6EF] py-5 flex-col flex shadow-sm">
                             <div className="w-full flex space-x-4 items-center border-b-1 border-[#D8D6EF]">
-                                <button onClick={() => setActiveTab("overview")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "overview" ? 'text-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuInfo /> <p>Overview</p></button>
-                                <button onClick={() => setActiveTab("content")}  className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "content" ? 'text-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuBookOpen /> <p>Course Content</p></button>
-                                <button onClick={() => setActiveTab("progress")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "progress" ? 'text-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuChartLine /> <p>My Progress</p></button>
+                                <button onClick={() => setActiveTab("overview")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "overview" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuInfo /> <p>Overview</p></button>
+                                <button onClick={() => setActiveTab("content")}  className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "content" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuBookOpen /> <p>Course Content</p></button>
+                                <button onClick={() => setActiveTab("progress")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "progress" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuChartLine /> <p>My Progress</p></button>
                                 
                             </div>
                             {activeTab === "overview" && (
                                     <div className="px-5 py-2">
                                         <h3 className="text-xl font-semibold text-[#1A1A1A] mb-4">About this Course</h3>
                                         <p className="text-[#4A5C52] leading-relaxed mb-6">{courses.text}</p>
-                                        <div className="flex space-x-5">
-                                            <div className="w-1/3 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
+                                        <div className="flex flex-col lg:flex lg:flex-row space-x-5 space-y-5 lg:space-y-0">
+                                            <div className="w-full lg:w-1/3 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
                                                 <p className="text-sm text-[#8A9E95] mb-1">Duration</p>
-                                                <h3 className="text-lg font-semibold text-[#1A1A1A]">{courses.duration} weeks</h3>
+                                                <h3 className="text-lg font-semibold text-[#1A1A1A]">{courses.weeks} weeks</h3>
                                             </div>
-                                            <div className="w-1/3 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
+                                            <div className="w-full lg:w-1/3 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
                                                 <p className="text-sm text-[#8A9E95] mb-1">Modules</p>
                                                 <h3 className="text-lg font-semibold text-[#1A1A1A]">{courses.modules}</h3>
                                             </div>
-                                            <div className="w-1/3 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
+                                            <div className="w-full lg:w-1/3 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
                                                 <p className="text-sm text-[#8A9E95] mb-1">Category</p>
                                                 <h3 className="text-lg font-semibold text-[#1A1A1A]">{courses.category}</h3>
                                             </div>
@@ -155,8 +154,8 @@ export default function CourseOverview(){
                                         </div>
                                         <div className="w-full flex flex-col space-y-5">
                                             {courses.modulesView.map((module) => (
-                                                <div key={module.id} className="border-1 border-[#D8D6EF] p-5 w-full flex space-x-3 bg-white rounded-lg hover:bg-[#EAF3EE] transition-all">
-                                                    <p className="w-8 h-8 bg-[#E8F5EC] rounded-lg flex items-center justify-center flex-shrink-0">{module.id}</p>
+                                                <div key={module.id} className="border-1 border-[#D8D6EF] p-3 lg:p-5 w-full flex space-x-3 bg-white rounded-lg hover:bg-[#EAF3EE] transition-all">
+                                                    <p className="w-8 h-8 bg-[#E8F5EC] rounded-lg flex items-center justify-center hidden lg:flex shrink-0">{module.id}</p>
                                                     <div className="flex flex-col w-full">
                                                         <button onClick={() => setOpenModule(module.id)} className="cursor-pointer flex justify-between items-center">
                                                             <h3 className="font-medium text-[#1A1A1A] mb-1 text-lg">{module.title}</h3>
@@ -178,7 +177,7 @@ export default function CourseOverview(){
                                                             {openModule === module.id && module.no_of_lessons > 0 && module.lessons.map((data) => (
                                                                 <Link 
                                                                 // /student-course/:id/student-assessment/:id
-                                                                    to={`/student-course/${module.id}/student-assessment/${module.id}`}
+                                                                    to={`/student-course/${courses.id}/module/${module.id}/student-assessment/${data.id}`}
                                                                     className="cursor-pointer w-full p-3 flex space-x-2.5 rounded-lg bg-white hover:border-1 hover:border-[#1A7A4A] transition-all duration-300 group">
                                                                     <div className="w-8 h-8 flex items-center justify-center bg-[#E8F5EC] text-[#1A7A4A] rounded">
                                                                         <data.icon />
@@ -202,6 +201,13 @@ export default function CourseOverview(){
                                                                                                
                                             ))}
                                         </div>
+                                        {courses.percent === 0 && (
+                                            <div className="w-full flex flex-col mt-7 space-y-3.5 bg-[#E8F5EC] rounded-xl p-6 text-center items-center border border-[#1A7A4A]/20">
+                                                <h3 className="font-semibold text-[#1A1A1A] mb-2">Enroll to access course content!</h3>
+                                                <p className="text-sm text-[#4A5C52] mb-4">Start learning today and unlock all modules and lessons.</p>
+                                                <button className="w-35 cursor-pointer py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium">Enroll Now</button>
+                                            </div>
+                                        )}
                                         
                                         
                                     </div>
@@ -220,18 +226,18 @@ export default function CourseOverview(){
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="w-full py-3 mt-5 flex space-x-5">
-                                                    <div className="w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
+                                                <div className="w-full py-3 mt-5 lg:flex lg:flex-row lg:space-x-5 flex flex-col space-y-5 lg:space-y-0">
+                                                    <div className="w-full lg:w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
                                                         <p className="text-sm text-[#8A9E95] mb-2">Total Lessons</p>
                                                         <h3 className="text-3xl font-semibold text-[#1A1A1A]">{totalLessons}</h3>
                                                         
                                                     </div>
-                                                    <div className="w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
+                                                    <div className="w-full lg:w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
                                                         <p className="text-sm text-[#8A9E95] mb-2">Completed</p>
                                                         <h3 className="text-3xl font-semibold text-[#1A7A4A]">{completedLessons}</h3>
                                                         
                                                     </div>
-                                                    <div className="w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
+                                                    <div className="w-full lg:w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
                                                         <p className="text-sm text-[#8A9E95] mb-2">Remaining</p>
                                                         <h3 className="text-3xl font-semibold text-[#d97706]">{remaining_course}</h3>
                                                     </div>

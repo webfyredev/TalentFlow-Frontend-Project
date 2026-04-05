@@ -53,7 +53,7 @@ export default function AssignmentOverview(){
     return(
         <>
             <SideBar title="Assignments">
-                <div className="w-full h-auto p-10">
+                <div className="w-full h-auto p-5 lg:p-10">
                     <Link to="/assignment" className="w-full py-3 flex space-x-1 text-[#4A5C52] hover:text-[#1A7A4A] items-center">
                         <LuArrowLeft  className="mt-0.5"/>
                         <p className="font-semibold">Back to Assignments</p>
@@ -71,11 +71,12 @@ export default function AssignmentOverview(){
                     <form action="" className="w-full py-5 flex flex-col mt-5 space-y-4">
                         <div className="w-full p-4 border-1 bg-white rounded-lg border-[#D8D6EF]">
                             <p className="text-[13px] text-[#1A1A1A] font-semibold">Your Submission</p>
-                            <textarea name="" id="" placeholder="Describe your work, share links, or provide context for your submission" className="w-full h-50 border-1 border-[#D8D6EF] mt-3 rounded-lg outline-[#1A7A4A] p-2.5"></textarea>
+                            <textarea name="" id="" placeholder="Describe your work, share links, or provide context for your submission" className="text-sm w-full h-50 border-1 border-[#D8D6EF] mt-3 rounded-lg outline-[#1A7A4A] p-2.5"></textarea>
                         </div>
                         <div className="w-full p-4 border-1 bg-white rounded-lg border-[#D8D6EF]">
                             <p className="text-[13px] text-[#1A1A1A] font-semibold">Attach Files (Optional)</p>
-                            <input type="file" className="w-full h-35 border-1 border-[#D8D6EF] mt-3 rounded-lg outline-[#1A7A4A] p-2.5" />
+                            <input type="file" className="w-full h-35 border-1 border-[#D8D6EF] mt-3 rounded-lg outline-[#1A7A4A] p-2.5 text-center">
+                            </input>
                         </div>
                         <div className="w-full p-4 border-1 bg-white rounded-lg border-[#D8D6EF] space-y-2">
                             <p className="text-[13px] text-[#1A1A1A] font-semibold">Add Links (Optional)</p>

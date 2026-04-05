@@ -18,11 +18,13 @@ import ProfileSettings from './pages/leaners/settings'
 import AssignmentOverview from './pages/leaners/assignmentDetails'
 import LearnerProfile from './pages/leaners/profile'
 import Assessment from './pages/leaners/assessment'
+import PageUp from './pages/leaners/pageUp'
 
 function App() {
 
   return (
       <Router>
+        <PageUp />
         <Routes>
           {/* Authentication Routes */}
           <Route path="/login" element={<LoginPage />} />
@@ -46,7 +48,7 @@ function App() {
           <Route path='/profile-setting' element={<ProfileSettings />}></Route>
           <Route path='/assignment/:id' element={<AssignmentOverview />}></Route>
           <Route path='/user-profile' element={<LearnerProfile />}></Route>
-          <Route path='/student-course/:id/student-assessment/:id' element={<Assessment />}></Route>
+          <Route path='/student-course/:id/module/:moduleId/student-assessment/:lessonId' element={<Assessment />}></Route>
         </Routes>
       </Router>
 

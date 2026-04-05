@@ -86,15 +86,15 @@ export default function Assignments(){
                             </div>
                         ))}
                     </div>
-                    <div className="mt-2 w-full mt-3 flex justify-between">
-                        <div className="w-[75%] h-11 border border-[#D8D6EF] bg-white rounded-lg flex items-center px-3 space-x-2 focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all">
+                    <div className="mt-2 w-full mt-3 lg:flex lg:flex-row flex flex-col space-y-3 justify-between">
+                        <div className="w-full lg:w-[75%] h-11 border border-[#D8D6EF] bg-white rounded-lg flex items-center px-3 space-x-2 focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all">
                             <FaSearch  className="text-[#8F9E95]"/>
                             <input type="text" placeholder="Search assignments..." className="text-[#8A9E95] text-[13px] border-none outline-none w-full h-full "/>
                         </div>
                         <select 
                             value={selectedStatus}
                             onChange={(e) => setSelectedStatus(e.target.value)}
-                            className="border w-[23%] border border-[#D8D6EF] bg-white rounded-lg px-3 text-[13px] outline-none cursor-pointer">
+                            className="border w-full lg:w-[23%] h-11 lg:h-auto border border-[#D8D6EF] bg-white rounded-lg px-3 text-[13px] outline-none cursor-pointer">
                             {assignment_status.map((data, index) => (
                                 <option key={index} value={data}>{data}</option>
                             ))}
