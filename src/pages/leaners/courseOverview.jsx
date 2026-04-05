@@ -1,15 +1,22 @@
 import { useParams, Link } from "react-router-dom";
 import SideBar from "./components/sidebar";
-import { LuArrowLeft, LuBook, LuBookOpen, LuChartLine, LuCheck, LuChevronDown, LuChevronUp, LuCircleHelp, LuClock, LuFile, LuInfo, LuVideo } from "react-icons/lu";
+import { LuArrowLeft, LuBook, LuBookOpen, LuChartLine, LuChartNoAxesColumn, LuCheck, LuChevronDown, LuChevronUp, LuCircleHelp, LuClock, LuFile, LuInfo, LuVideo } from "react-icons/lu";
 import { useState } from "react";
 import { progressCards, courseType } from "./data/course";
+import { percent } from "framer-motion";
 export default function CourseOverview(){
     
     const [activeTab, setActiveTab] = useState("overview");
     const [openModule, setOpenModule] = useState(null);
     const { id } = useParams();
     const courses = courseType.find((item) => item.id ===   Number(id));
+    const totalLessons = courses.modulesView.reduce((sum, module) => sum + (module.lessons?.length || 0), 0);
+    const completedLessons = courses.modulesView.reduce((sum, module) => sum + (module.lesssons_completed || 0),0);
+    const remaining_course = totalLessons - completedLessons
+    const course_percent = totalLessons === 0 ? 0 : Math.round((completedLessons / totalLessons) * 100);
+
     if(!courses) return <p>Courses not available</p>
+
     return(
         <>
             <SideBar title="Courses">
@@ -49,9 +56,9 @@ export default function CourseOverview(){
                     <div className="w-full h-auto mt-5 flex items-center p-5">
                         <div className="w-full bg-white rounded-xl border-1 border-[#D8D6EF] py-5 flex-col flex shadow-sm">
                             <div className="w-full flex space-x-4 items-center border-b-1 border-[#D8D6EF]">
-                                <button onClick={() => setActiveTab("overview")} className="flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm text-[#8A9E95] cursor-pointer hover:text-[#1A7A4A] transition-all"> <LuInfo /> <p>Overview</p></button>
-                                <button onClick={() => setActiveTab("content")} className="flex space-x-2 items-center px-6 py-2 h-full font-semibold text-sm text-[#8A9E95] cursor-pointer hover:text-[#1A7A4A] transition-all"> <LuBookOpen /> <p>Course Content</p></button>
-                                <button onClick={() => setActiveTab("progress")} className="flex space-x-2 items-center px-6 py-2 h-full font-semibold text-sm text-[#8A9E95] cursor-pointer hover:text-[#1A7A4A] transition-all"> <LuChartLine /> <p>My Progress</p></button>
+                                <button onClick={() => setActiveTab("overview")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "overview" ? 'text-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuInfo /> <p>Overview</p></button>
+                                <button onClick={() => setActiveTab("content")}  className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "content" ? 'text-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuBookOpen /> <p>Course Content</p></button>
+                                <button onClick={() => setActiveTab("progress")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "progress" ? 'text-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuChartLine /> <p>My Progress</p></button>
                                 
                             </div>
                             {activeTab === "overview" && (
@@ -201,30 +208,73 @@ export default function CourseOverview(){
                                 )}
                                 {activeTab === "progress" && (
                                     <div className="px-5 py-2">
-                                        <h3 className="text-xl font-semibold text-[#1A1A1A] mb-4">Your Progress</h3>
-                                        {courses.percent >0 &&  (
+                                        {courses.percent > 0 &&  (
                                             <>
+                                                <h3 className="text-xl font-semibold text-[#1A1A1A] mb-4 mt-2">Your Progress</h3>
                                                 <div className="w-full border bg-gradient-to-br from-[#1A7A4A] to-[#156239] text-white rounded-xl p-6">
                                                     <p className="text-sm opacity-90 mb-2">Overall Completion</p>
                                                     <h3 className="text-lg font-semibold mb-4">{courses.percent}%</h3>
                                                     <div className="w-full">
-                                                        <div className="w-full h-3 border relative rounded-full bg-white/20">
+                                                        <div className="w-full h-3 relative rounded-full bg-white/20">
                                                             <div className="absolute bg-white rounded-full h-full" style={{ width: `${courses.percent}%` }}></div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="w-full border p-5 mt-5 flex space-x-5">
+                                                <div className="w-full py-3 mt-5 flex space-x-5">
                                                     <div className="w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
-                                                        <p className="text-sm text-[#8A9E95] mb-1">Total Lessons</p>
-                                                        {/* {courses.modulesView.map((data) => (
-                                                            <h3 className="text-3xl font-semibold text-[#1A1A1A]"> {data.no_of_lessons}</h3>
-                                                        ))} */}
+                                                        <p className="text-sm text-[#8A9E95] mb-2">Total Lessons</p>
+                                                        <h3 className="text-3xl font-semibold text-[#1A1A1A]">{totalLessons}</h3>
+                                                        
+                                                    </div>
+                                                    <div className="w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
+                                                        <p className="text-sm text-[#8A9E95] mb-2">Completed</p>
+                                                        <h3 className="text-3xl font-semibold text-[#1A7A4A]">{completedLessons}</h3>
+                                                        
+                                                    </div>
+                                                    <div className="w-1/3 border p-5 bg-white rounded-lg border-[#D8D6EF] flex flex-col">
+                                                        <p className="text-sm text-[#8A9E95] mb-2">Remaining</p>
+                                                        <h3 className="text-3xl font-semibold text-[#d97706]">{remaining_course}</h3>
                                                     </div>
                                                 </div>
+                                                <div className="w-full p-5 border-1 mt-5 rounded-lg bg-white border-[#D8D6EF]">
+                                                    <h3 className="text-md font-medium text-[#1A1A1A]">Progress by Module</h3>
+                                                    <div className="flex flex-col space-y-3 mt-4">
+                                                        {courses.modulesView.map((data) => {
+                                                            const course_range = data.no_of_lessons === 0 ? 0 :  Math.round((data.lesssons_completed / data.no_of_lessons) * 100);
+                                                            return(
+                                                                <div className="py-2">
+                                                                    <div className="w-full flex items-center justify-between">
+                                                                        <p className="text-sm font-medium text-[#1A1A1A]">Module {data.id}: {data.title}</p>
+                                                                        <p className="text-sm text-[#1A7A4A] font-medium">{course_range}%</p>
+                                                                    </div>
+                                                                    <div className="w-full mt-1.5">
+                                                                        <div className="w-full h-2 bg-[#EAF3EE] rounded-full relative">
+                                                                            <div className="absolute h-full bg-[#1A7A4A] rounded-full" style={{ width: `${course_range}%`}}></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p className="text-xs text-[#8A9E95] mt-1">{data.lesssons_completed} of {data.no_of_lessons} lessons completed</p>
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div className="w-full flex flex-col mt-7 space-y-3.5 bg-[#E8F5EC] rounded-xl p-6 text-center items-center border border-[#1A7A4A]/20">
+                                                    <h3 className="font-semibold text-[#1A1A1A] mb-2">Keep up the great work!</h3>
+                                                    <p className="text-sm text-[#4A5C52] mb-4">You're making excellent progress. Continue learning to complete the course.</p>
+                                                    <button className="w-50 cursor-pointer py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium">Continue Learning</button>
+                                                </div>
                                                 <div>
-
                                                 </div>
                                             </>
+                                        )}
+                                        {courses.percent === 0 && (
+                                            <div className="w-full h-70 flex flex-col items-center justify-center text-center">
+                                                <LuChartNoAxesColumn  className="w-15 h-15 text-[#8A9E95]"/>
+                                                <h3 className="font-semibold text-[#1A1A1A] mb-2">Enroll to track your progress</h3>
+                                                <p className="text-sm text-[#4A5C52] mb-4">Start this course to monitor your learning journey and track completion</p>
+                                                <button className=" cursor-pointer px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium">Enroll Now</button>
+                                            </div>
                                         )}
                                     </div>
                                 )}
