@@ -22,18 +22,18 @@ export default function Assessment(){
                 <div className="w-full h-auto">
                     <div className="w-full p-5 bg-white">
                         <div className="flex space-x-2 items-center mb-3">
-                            <Link to={`/student-course/${id}`} className="flex  items-center space-x-1.5 text-[#8A9E95] font-semibold hover:text-[#1A7A4A] text-md">
+                            <Link to={`/student-course/${id}`} className="flex items-center space-x-1.5 text-[#8A9E95] font-semibold hover:text-[#1A7A4A] md:text-md">
                                 <LuArrowLeft  size={15} className="mt-0.5"/>
                                 <p>{module.title} </p>
                                 <p className="8A9E95">/</p>
                             </Link>
-                            <p className="text-[#1A1A1A]">{lesson.title}</p>
+                            <p className="text-sm md:text-md text-[#1A1A1A]">{lesson.title}</p>
                         </div>
                         <p className="w-20 text-xs font-medium text-[#1A7A4A] bg-[#E8F5EC] px-2 py-1 rounded mb-3 flex items-center justify-center">
                             {lesson.resource_type}
                         </p>
                         <div className="flex justify-between">
-                            <h3 className="text-2xl md:text-3xl font-semibold text-[#1A1A1A]">{lesson.title}</h3>
+                            <h3 className="text-xl md:text-3xl font-semibold text-[#1A1A1A]">{lesson.title}</h3>
                             {lesson.status === "Completed" && (
                                 <div className="flex items-center text-sm font-semibold text-[#1A7A4A] bg-[#E8F5EC] px-3 py-2 rounded-lg space-x-1"> <LuCheck  className="w-5 h-5 mt-1"/> <p>Completed</p></div>
                             )}
@@ -42,7 +42,7 @@ export default function Assessment(){
                     </div>
                     <div className="w-full h-auto mt-5 flex items-center p-5">
                         <div className="w-full bg-white rounded-xl border-1 border-[#D8D6EF] py-5 flex-col flex shadow-sm">
-                            <div className="w-full flex space-x-4 items-center border-b-1 border-[#D8D6EF]">
+                            <div className="w-full flex space-x-2 md:space-x-4 items-center border-b-1 border-[#D8D6EF] overflow-hidden">
                                 <button onClick={() => setActiveTab("content")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "content" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuBook /> <p>Content</p></button>
                                 <button onClick={() => setActiveTab("assignment")}  className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "assignment" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuClipboard /> <p>Assignment</p></button>
                                 <button onClick={() => setActiveTab("about")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "about" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuInfo /> <p>About</p></button>
@@ -52,7 +52,7 @@ export default function Assessment(){
                                     {lesson.resource_type === 'Video' && (
                                         <div className="w-full relative">
                                             <video src="" controls className="w-full h-70 lg:h-120 rounded-xl bg-[#1A1A1A]"></video>
-                                            <p className="absolute top-30 lg:top-55 left-[35%] lg:left-[45%] text-white/60 text-sm ">{lesson.title}</p>
+                                            <p className="absolute top-30 lg:top-55 left-[30%] md:left-[40%] lg:left-[45%] text-white/60 text-xs md:text-sm ">{lesson.title}</p>
                                             <div className="w-full mt-5 bg-[#F4F6F5] rounded-lg p-4 flex items-center justify-between">
                                                 <div className="flex space-x-3">
                                                     <LuPlay  className="w-10 h-10 p-2.5 text-[#1A7A4A] bg-[#E8F5EC] rounded-lg flex items-center justify-center"/>
@@ -76,11 +76,13 @@ export default function Assessment(){
                                         </div>
                                     )}
                                     {lesson.resource_type === "Quiz" && (
-                                        <div className="w-full  mt-5 h-100 flex flex-col text-center items-center">
+                                        <div className="w-full  mt-5 lg:h-80 flex flex-col text-center items-center">
                                             <LuCircleHelp  className="w-16 h-16 text-[#1A7A4A] mb-4 mt-10"/>
                                             <h3 className="text-lg font-medium text-[#1A1A1A] mb-2">Quiz: {lesson.title}</h3>
                                             <p className="text-sm text-[#8A9E95] mb-6">Test your knowledge on this topic</p>
-                                            <Link className="flex items-center space-x-2 px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-all font-semibold">Start Quiz</Link>
+                                            <Link 
+                                                to={`/student-course/${id}/module/${module.id}/quiz/${lesson.id}`}
+                                                className="flex items-center space-x-2 px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-all font-semibold">Start Quiz</Link>
                                         </div>
                                     )}
                                     {lesson.resource_type === "Note" && (
@@ -174,13 +176,13 @@ export default function Assessment(){
                                 <div className="w-full p-5 mt-3">
                                     <h3 className="text-xl font-semibold text-[#1A1A1A] mb-4">About this {lesson.resource_type}</h3>
                                     <p className="text-[#4A5C52] leading-relaxed mb-4 text-sm lg:text-base">{module.sub_title}</p>
-                                    <div className="flex w-full space-x-5">
-                                        <div className="w-1/2 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
+                                    <div className="md:flex md:flex-row flex flex-col w-full space-y-5 md:space-y-0 md:space-x-5">
+                                        <div className="w-full md:w-1/2 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
                                             <h3 className="text-sm text-[#8A9E95] mb-1">Type</h3>
                                             <p className="text-lg font-semibold text-[#1A1A1A] capitalize">{lesson.resource_type}</p>
                                         </div>
                                         {lesson.resource_type === 'Video' &&(
-                                            <div className="w-1/2 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
+                                            <div className="w-full md:w-1/2 bg-[#F4F6F5] rounded-lg p-4 flex flex-col">
                                                 <h3 className="text-sm text-[#8A9E95] mb-1">Duration</h3>
                                                 <p className="text-lg font-semibold text-[#1A1A1A] capitalize">{lesson.duration}</p>
                                             </div>

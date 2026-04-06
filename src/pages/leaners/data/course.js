@@ -196,6 +196,67 @@ export const courseType = [
                             id : 3,
                             title : 'User Testing',
                             resource_type : 'Quiz',
+                            quiz : {
+                                title : 'User Testing Fundamentals',
+                                duration : 5,
+                                questions : [
+                                    {
+                                        id : 1,
+                                        question : 'What is the primary goal of user testing?',
+                                        options : [
+                                            "To find bugs in code",
+                                            "To validate that the design meets user needs and expectation",
+                                            "To impress stakeholders with fancy features",
+                                            "To increase the project budget"
+                                        ],
+                                        correctAnswer : 1
+                                    },
+                                    {
+                                        id : 2,
+                                        question : 'How many participants are typically needed for effective usability testing?',
+                                        options : [
+                                            "1-2 users",
+                                            "5-8 users",
+                                            "20-30 users",
+                                            "100+ users"
+                                        ],
+                                        correctAnswer : 2
+                                    },
+                                    {
+                                        id : 3,
+                                        question : 'What is A/B testing?',
+                                        options : [
+                                            "Testing the first two features of a product",
+                                            "Comparing two versions of a design to see which performs better",
+                                            "Testing alphabetically organized content",
+                                            "A grading system for user interfaces"
+                                        ],
+                                        correctAnswer : 1 
+                                    },
+                                    {
+                                        id : 4,
+                                        question : 'When should user testing be conducted?',
+                                        options : [
+                                            "Only at the end of the project",
+                                            "Only at the beginning of the project",
+                                            "Throughout the entire design process",
+                                            "Never, It's a waste of time"
+                                        ],
+                                        correctAnswer : 2
+                                    },
+                                    {
+                                        id : 5, 
+                                        question : 'What is a "think-aloud protocol" in user testing?',
+                                        options : [
+                                            "A method where users silently complete tasks",
+                                            "A technique where users verbalize their thoughts while using the product",
+                                            "A way to test audio features",
+                                            "A debugging technique for developers"
+                                        ],
+                                        correctAnswer : 1
+                                    }
+                                ]
+                            },
                             icon : LuCircleHelp,
                             assignment: {
                             title: 'User Testing Report',

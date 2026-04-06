@@ -79,7 +79,7 @@ export default function SideBar({ children, title }){
                                             <p>Progress</p>
                                         </NavLink> 
                                     </li>
-                                    <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs">
+                                    <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs fixed">
                                         <NavLink to="/profile-setting" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
                                             <LuSettings  className="text-[15px]"/> 
                                             <p>Settings</p>

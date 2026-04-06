@@ -19,6 +19,9 @@ import AssignmentOverview from './pages/leaners/assignmentDetails'
 import LearnerProfile from './pages/leaners/profile'
 import Assessment from './pages/leaners/assessment'
 import PageUp from './pages/leaners/pageUp'
+import QuizPage from './pages/leaners/quixPage'
+import QuizSuccess from './pages/leaners/quizSuccess'
+import QuizReview from './pages/leaners/quizReview'
 
 function App() {
 
@@ -49,6 +52,9 @@ function App() {
           <Route path='/assignment/:id' element={<AssignmentOverview />}></Route>
           <Route path='/user-profile' element={<LearnerProfile />}></Route>
           <Route path='/student-course/:id/module/:moduleId/student-assessment/:lessonId' element={<Assessment />}></Route>
+          <Route path='/student-course/:id/module/:moduleId/quiz/:lessonId' element={<QuizPage />}></Route>
+          <Route path='/quiz-result/:id/:moduleId/quiz/:lessonId' element={<QuizSuccess />}></Route>
+          <Route path='/quiz-result/:id/:moduleId/quiz/quiz-review/:lessonId' element={<QuizReview />}></Route>
         </Routes>
       </Router>
 

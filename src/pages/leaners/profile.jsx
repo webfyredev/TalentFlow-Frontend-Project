@@ -66,9 +66,9 @@ export default function LearnerProfile(){
         <>
             <SideBar title="Profile">
                 <div className="w-full h-auto py-5 px-7">
-                    <div className="w-full p-6 bg-white border-1 border-[#D8D6EF] flex space-x-4 mt-5 rounded-lg">
+                    <div className="w-full p-6 bg-white border-1 border-[#D8D6EF] md:flex md:flex-row  flex flex-col md:space-x-4 mt-5 rounded-lg">
                         <p className="w-16 h-16 rounded-full text-[#1A7A4A] font-semibold bg-[#E8F5EC] flex items-center justify-center">AO</p>
-                        <div className="flex flex-col w-auto px-3">
+                        <div className="flex flex-col w-full md:w-auto px-3">
                             <h3 className="text-2xl font-semibold text-[#1A1A1A] mb-2">Adeola Ogunleye</h3>
                             <div className="flex space-x-3">
                                 <p className="w-28 px-3 py-1 text-xs bg-[#EAF3EE] text-[#4A5C52] border border-[#D8E6DF] rounded-md">TM-L-2024-001</p>
@@ -119,7 +119,7 @@ export default function LearnerProfile(){
                     </div>
                     <div className="w-full my-4">
                         <h3 className="text-xl font-semibold text-[#1A1A1A] mb-4">Achievements</h3>
-                        <div className="w-full py-1 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div className="w-full py-1 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                             {achievements.map((data, index) => (
                                 <div key={index} className="border-1 border-[#D8D6EF] p-5 rounded-xl bg-white flex flex-col items-center space-y-2">
                                     <div className="w-9 h-9 flex items-center justify-center text-[#1A7A4A]">

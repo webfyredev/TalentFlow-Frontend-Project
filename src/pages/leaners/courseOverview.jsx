@@ -52,12 +52,12 @@ export default function CourseOverview(){
                         </div>
 
                     </div>
-                    <div className="w-full h-auto mt-5 flex items-center p-5">
+                    <div className="w-full h-auto mt-5 flex items-center p-2 md:p-5">
                         <div className="w-full bg-white rounded-xl border-1 border-[#D8D6EF] py-5 flex-col flex shadow-sm">
-                            <div className="w-full flex space-x-4 items-center border-b-1 border-[#D8D6EF]">
-                                <button onClick={() => setActiveTab("overview")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "overview" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuInfo /> <p>Overview</p></button>
-                                <button onClick={() => setActiveTab("content")}  className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "content" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuBookOpen /> <p>Course Content</p></button>
-                                <button onClick={() => setActiveTab("progress")} className={`flex space-x-2 items-center px-4 py-2 h-full font-semibold text-sm cursor-pointer transition-all ${activeTab === "progress" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuChartLine /> <p>My Progress</p></button>
+                            <div className="w-full flex space-x-2 md:space-x-4 items-center border-b-1 border-[#D8D6EF]">
+                                <button onClick={() => setActiveTab("overview")} className={`flex space-x-2 items-center px-2 md:px-4 py-2 h-full font-semibold text-[13px] md:text-sm cursor-pointer transition-all ${activeTab === "overview" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuInfo /> <p>Overview</p></button>
+                                <button onClick={() => setActiveTab("content")}  className={`flex space-x-2 items-center px-2 md:px-4 py-2 h-full font-semibold text-[13px] md:text-sm cursor-pointer transition-all ${activeTab === "content" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuBookOpen /> <p>Course Content</p></button>
+                                <button onClick={() => setActiveTab("progress")} className={`flex space-x-2 items-center px-2 md:px-4 py-2 h-full font-semibold text-[13px] md:text-sm cursor-pointer transition-all ${activeTab === "progress" ? 'text-[#1A7A4A] border-b-1 border-[#1A7A4A]' : 'text-[#8A9E95] hover:text-[#1A7A4A]'}`}> <LuChartLine /> <p>My Progress</p></button>
                                 
                             </div>
                             {activeTab === "overview" && (
