@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import Admin_Dashboard from './pages/Tutor/dashboard'
+import Admin_Dashboard from './pages/Admin/dashboard'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import Staff_Courses from './pages/Tutor/course'
+import Staff_Courses from './pages/Tutor/createCourse'
 import Learners_Dashboard from './pages/leaners/dashboard'
 import Courses from './pages/leaners/courses'
 import CourseOverview from './pages/leaners/courseOverview'
@@ -22,6 +22,11 @@ import PageUp from './pages/leaners/pageUp'
 import QuizPage from './pages/leaners/quixPage'
 import QuizSuccess from './pages/leaners/quizSuccess'
 import QuizReview from './pages/leaners/quizReview'
+import Tutor_Dashboard from './pages/Tutor/dashboard'
+import CreateCourse from './pages/Tutor/createCourse'
+import Submissions from './pages/Tutor/submissions'
+import Interns from './pages/Tutor/interns'
+import TutorProfileSettings from './pages/Tutor/settings'
 
 function App() {
 
@@ -40,8 +45,14 @@ function App() {
           {/* <Route path="/" element={<Navigate to="/signup" replace />} /> */}
 
           {/* Admin Routes  */}
-          <Route path='/admin_dashboard' element={<Admin_Dashboard />}></Route>
-          <Route path='/staff-courses' element={<Staff_Courses />}></Route>
+          <Route path='/admin-dashboard' element={<Admin_Dashboard />}></Route>
+          
+          {/* Tutor Routes  */}
+          <Route path='/tutor-dashboard' element={<Tutor_Dashboard />}></Route>
+          <Route path='/create-course' element={<CreateCourse />}></Route>
+          <Route path="/submissions" element={<Submissions />}></Route>
+          <Route path='/interns' element={<Interns />}></Route>
+          <Route path='/tutor-profile' element={<TutorProfileSettings />}></Route>
           {/* Learners Routes  */}
           <Route path='/learners_dashboard' element={<Learners_Dashboard />}></Route>
           <Route path='/student-course' element={<Courses />}></Route>

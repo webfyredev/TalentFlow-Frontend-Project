@@ -74,7 +74,7 @@ export default function QuizPage(){
     }
     return(
         <SideBar title="Quiz">
-            <div className="w-full h-auto py-5 bg-white px-2 md:px-5 lg:px-15 border">
+            <div className="w-full h-auto py-5 bg-white px-2 md:px-5 lg:px-15">
                 <h3 className="text-xl md:text-2xl font-semibold text-[#1A1A1A]">{lesson.quiz.title}</h3>
                 <div className="flex items-center justify-between">
                     <p className="text-sm text-[#8A9E95] mt-1">{course.title}</p>
@@ -95,10 +95,10 @@ export default function QuizPage(){
                     </div>
                 </div>
             </div>
-            <div className="w-full py-5 border px-2 md:px-5 lg:px-15 space-y-5 flex flex-col">
+            <div className="w-full py-5 px-2 md:px-5 lg:px-15 space-y-5 flex flex-col">
                 <div className="flex w-full space-x-3 bg-white p-2 md:p-5 rounded-xl">
                     <div className="w-10 h-10 rounded-full bg-[#E8F5EC] hidden md:flex items-center justify-center flex-shrink-0">{questions[currentQuestion].id}</div>
-                    <div className="flex flex-col w-full border">
+                    <div className="flex flex-col w-full">
                         <h3 className="text-lg font-medium text-[#1A1A1A] mb-4">{questions[currentQuestion].question}</h3>
                         <div className="w-full flex flex-col space-y-3 py-2 items-left">
                             {questions[currentQuestion].options.map((option, index) => (

@@ -4,6 +4,7 @@ import { LuArrowRight, LuCircleCheck, LuCircleX, LuRotateCcw, LuTrophy } from "r
 import { Link } from "react-router-dom";
 
 export default function QuizReview(){
+    const { id, moduleId, lessonId} = useParams();
    
     const { state } = useLocation();
     const navigate = useNavigate();
@@ -113,13 +114,13 @@ export default function QuizReview(){
                         (
                         <div className="w-auto md:flex md:flex-row flex flex-col space-y-5 md:space-y-0 md:space-x-5">
                             <button 
-                                onClick={() => navigate(`/quiz-result/${id}/${moduleId}/quiz/quiz-review/${lessonId}`, { state })}
+                                onClick={() => navigate(`/student-course/${id}/module/${moduleId}/quiz/${lessonId}`)}
                                 className="px-6 py-3 border-2 border-[#1A7A4A] text-[#1A7A4A] rounded-lg hover:bg-[#E8F5EC] font-medium flex items-center justify-center gap-2 cursor-pointer">
                                 <LuRotateCcw  className="mt-1"/>
                                 Retake Quiz
                             </button>
                             <Link 
-                                
+                                to={`/student-course/${id}`}
                                 className="px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-all font-medium flex items-center justify-center gap-2 cursor-pointer">
                                 Continue Learning <LuArrowRight  className="mt-1"/>
                             </Link>

@@ -68,7 +68,9 @@ export default function Learners_Dashboard(){
             title : 'UI/UX Design Principles',
             author : 'Amina Bello',
             percent : 30
-        }
+        },
+        
+
     ]
     const data = [
         {
