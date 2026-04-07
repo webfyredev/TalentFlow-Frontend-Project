@@ -81,7 +81,7 @@ export default function Assignments(){
                     <div className="py-4 w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
                         {assignment_stats.map((data, index) => (
                             <div className="p-5 border-1 rounded-xl border-[#D8D6EF] bg-white flex flex-col">
-                                <h3 className={`text-${data.style} text-2xl`}>{data.value}</h3>
+                                <h3 className={`text-${data.style} text-2xl font-medium`}>{data.value}</h3>
                                 <p className="text-sm mt-1 text-[#8A98AB]">{data.title}</p>
                             </div>
                         ))}

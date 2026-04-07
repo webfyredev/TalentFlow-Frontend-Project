@@ -85,7 +85,9 @@ export default function Tutor_Dashboard(){
                     </div>
                 </div>
                 <div className="w-full flex py-5 mt-5 space-x-5">
-                    <Link className="w-1/2 p-5 border-1 border-[#D8D6EF] rounded-lg bg-white flex space-x-3 group hover:border-1 hover:border-[#1A7A4A] transition-all ">
+                    <Link 
+                        to="/create-course"
+                        className="w-1/2 p-5 border-1 border-[#D8D6EF] rounded-lg bg-white flex space-x-3 group hover:border-1 hover:border-[#1A7A4A] transition-all ">
                         <div className="w-12 h-12 bg-[#E8F5EC] rounded-lg flex items-center justify-center group-hover:bg-[#1A7A4A]">
                             <LuPlus  className="w-6 h-6 text-[#1A7A4A] group-hover:text-white"/>
                         </div>
@@ -94,7 +96,9 @@ export default function Tutor_Dashboard(){
                             <p className="text-sm text-[#8A9E95]">Build and upload a new course</p>
                         </div>
                     </Link>
-                    <Link className="w-1/2 p-5 border-1 border-[#D8D6EF] rounded-lg bg-white flex space-x-3 group hover:border-1 hover:border-[#1A7A4A] transition-all ">
+                    <Link 
+                        to="/submissions"
+                        className="w-1/2 p-5 border-1 border-[#D8D6EF] rounded-lg bg-white flex space-x-3 group hover:border-1 hover:border-[#1A7A4A] transition-all ">
                         <div className="w-12 h-12 bg-[#E8F0FB] rounded-lg flex items-center justify-center group-hover:bg-[#2563eb]">
                             <LuSquareCheck  className="w-6 h-6 text-[#2563eb] group-hover:text-white"/>
                         </div>

@@ -15,7 +15,7 @@ export default function SideBar({ children, title }){
                         </Link>
                         <ul className="flex flex-col items-center space-y-2.5 mt-2 text-[#4A5C52] poppins-font normal">
                             <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-sm">
-                                <NavLink to="/learners_dashboard" end className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'text-[#1A7A4A] bg-[#FFFFFF] hover:rounded-xl hover:bg-[#F4F6F5]' : 'text-[#4A5C52]'}`}>
+                                <NavLink to="/tutor-dashboard" end className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'text-[#1A7A4A] bg-[#FFFFFF] hover:rounded-xl hover:bg-[#F4F6F5]' : 'text-[#4A5C52]'}`}>
                                     <LuLayoutDashboard  className="text-[15px]"/> 
                                     <p>Dashboard</p>
                                 </NavLink> 
@@ -39,7 +39,7 @@ export default function SideBar({ children, title }){
                                 </NavLink> 
                             </li>
                             <li className="mt-65 w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs">
-                                <NavLink to="/tutor-profile" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'text-[#1A7A4A] bg-[#FFFFFF] hover:rounded-xl hover:bg-[#F4F6F5]' : 'text-[#4A5C52]'}`}>
+                                <NavLink to="/tutor-profileSetting" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'text-[#1A7A4A] bg-[#FFFFFF] hover:rounded-xl hover:bg-[#F4F6F5]' : 'text-[#4A5C52]'}`}>
                                     <LuSettings  className="text-[15px]"/> 
                                     <p>Settings</p>
                                 </NavLink> 
@@ -56,31 +56,31 @@ export default function SideBar({ children, title }){
                             <div className="lg:hidden flex flex-col absolute w-full h-auto z-50 bg-[#EAF3EE] left-0 top-14.5 shadow-lg">
                                 <ul className="flex flex-col items-center space-y-2.5 mt-3 lg:mt-2 mb-5 lg:mb-0 text-[#4A5C52] poppins-font normal">
                                     <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-sm">
-                                        <NavLink to="/learners_dashboard" end className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'text-[#1A7A4A] bg-[#FFFFFF] hover:rounded-xl hover:bg-[#F4F6F5]' : 'text-[#4A5C52]'}`}>
+                                        <NavLink to="/tutor-dashboard" end className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'text-[#1A7A4A] bg-[#FFFFFF] hover:rounded-xl hover:bg-[#F4F6F5]' : 'text-[#4A5C52]'}`}>
                                             <LuLayoutDashboard  className="text-[15px]"/> 
                                             <p>Dashboard</p>
                                         </NavLink> 
                                     </li>
                                     <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs">
-                                        <NavLink to="/student-course" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
+                                        <NavLink to="/create-course" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
                                             <LuUpload  className="text-[15px]"/> 
                                             <p>Create Course</p>
                                         </NavLink> 
                                     </li>
                                     <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs">
-                                        <NavLink to="/assignment" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
+                                        <NavLink to="/submissions" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
                                             <LuSquareCheck  className="text-[15px]"/> 
                                             <p>Submissions</p>
                                         </NavLink> 
                                     </li>
                                     <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs">
-                                        <NavLink to="/progress" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
+                                        <NavLink to="/interns" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
                                             <LuUsers  className="text-[15px]"/> 
                                             <p>Interns</p>
                                         </NavLink> 
                                     </li>
-                                    <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs fixed">
-                                        <NavLink to="/profile-setting" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
+                                    <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs">
+                                        <NavLink to="/tutor-profileSetting" className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
                                             <LuSettings  className="text-[15px]"/> 
                                             <p>Settings</p>
                                         </NavLink> 

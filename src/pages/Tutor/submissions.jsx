@@ -45,7 +45,7 @@ export default function Submissions(){
     return(
         <>
             <SideBar title="Submissions">
-                <div className="w-full p-5 border">
+                <div className="w-full p-5">
                     <h3 className="text-2xl md:text-3xl font-semibold text-[#1A1A1A] mb-2">Student Submissions</h3>
                     <p className="text-[#4A5C52]">Review and grade assignment submissions</p>
                     <div className="w-full py-3 grid grid-cols-1 sm:grod-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-3">
