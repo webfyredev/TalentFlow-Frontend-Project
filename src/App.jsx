@@ -1,17 +1,9 @@
 import { useState } from 'react'
 import Admin_Dashboard from './pages/Admin/dashboard'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import Staff_Courses from './pages/Tutor/createCourse'
 import Learners_Dashboard from './pages/leaners/dashboard'
 import Courses from './pages/leaners/courses'
 import CourseOverview from './pages/leaners/courseOverview'
-import LoginPage from './pages/auth/loginPage'
-import SignUpPage from './pages/auth/signupPage'
-import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
-import CheckEmailPage from './pages/auth/CheckEmailPage'
-import RoleSelectionPage from './pages/auth/roleSelectionPage'
-import LearnerVerificationPage from './pages/auth/LearnerVerificationPage'
-import TutorVerificationPage from './pages/auth/TutorVerificationPage'
 import Assignments from './pages/leaners/assignments'
 import Progress from './pages/leaners/progress'
 import ProfileSettings from './pages/leaners/settings'
@@ -27,6 +19,8 @@ import CreateCourse from './pages/Tutor/createCourse'
 import Submissions from './pages/Tutor/submissions'
 import Interns from './pages/Tutor/interns'
 import TutorProfileSettings from './pages/Tutor/settings'
+import LoginPage from './pages/auth/loginPage'
+import SignUpPage from './pages/auth/signupPage'
 
 function App() {
 
@@ -35,14 +29,9 @@ function App() {
         <PageUp />
         <Routes>
           {/* Authentication Routes */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/check-email" element={<CheckEmailPage />} />
-          <Route path="/choose-role" element={< RoleSelectionPage />} />
-          <Route path="/verify-learner" element={<LearnerVerificationPage />} />
-          <Route path="/verify-tutor" element={<TutorVerificationPage />} />
-          {/* <Route path="/" element={<Navigate to="/signup" replace />} /> */}
+          <Route path='/sign-in' element={<LoginPage />}></Route>
+          <Route path='/sign-up' element={<SignUpPage />}></Route>
+          <Route path="/" element={<Navigate to="/sign-in" replace />} />
 
           {/* Admin Routes  */}
           <Route path='/admin-dashboard' element={<Admin_Dashboard />}></Route>

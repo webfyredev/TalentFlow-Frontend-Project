@@ -1,202 +1,54 @@
-import React, { useState } from 'react';
-import { Mail, Lock, User, Check } from 'lucide-react';
-// import InputField from '../components/InputField.js';
-// import Button from '../components/Button.js';
-// import PageTransition from '../components/PageTransition.js';
-// import AuthLayout from '../components/AuthLayout.js';
 import logoImg from '../../images/logo.png'
+import { Link } from 'react-router-dom'
+import { LuEye, LuEyeOff } from "react-icons/lu";
 
 export default function SignUpPage(){
+  return(
+    <>
+      <div className="w-full h-auto p-10 flex flex-col items-center justify-center">
+        <div className="w-[40%] h-auto p-5 flex flex-col items-center">
+          <Link to="/">
+            <img src={logoImg} className='w-60 h-20 object-cover' />
+          </Link>
+          <h3 className='text-3xl font-semibold text-[#1A1A1A] mb-2'>Join TalentFlow</h3>
+          <p className='text-[#4A5C52]'>Create your account and start learning</p>
+          <form action="" className='w-full h-auto shadow-md p-5 mt-5 bg-white rounded-xl border-[#D8D6EF]'>
+            <div className='w-full p-2 flex flex-col'>
+              <label htmlFor="text" className='text-sm font-medium text-[#1A1A1A] mb-2'>Full Name</label>
+              <input type="text" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='Adeola Ogunleye' required />
+            </div>
+            <div className='w-full p-2 flex flex-col'>
+              <label htmlFor="email" className='text-sm font-medium text-[#1A1A1A] mb-2'>Email Address</label>
+              <input type="email" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='you@example.com' required />
+            </div>
+            <div className='w-full p-2 flex flex-col'>
+              <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>I am joining as a</label>
+              <select name="" id="" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all'>
+                <option value="Learner">Learner</option>
+                <option value="Learner">Mentor </option>
+                <option value="Learner">Admin</option>
 
-}
-  // const [isTransitioning, setIsTransitioning] = useState(false);
-  // const [formData, setFormData] = useState({
-  //   fullname: '',
-  //   email: '',
-  //   password: '',
-  //   confirmPassword: ''
-  // });
-  // const [errors, setErrors] = useState({});
-  // const [passwordReqs, setPasswordReqs] = useState({
-  //   length: false,
-  //   upper: false,
-  //   lower: false,
-  //   number: false
-  // });
-
-  // const validatePassword = (value) => {
-  //   const reqs = {
-  //     length: value.length >= 8,
-  //     upper: /[A-Z]/.test(value),
-  //     lower: /[a-z]/.test(value),
-  //     number: /\d/.test(value)
-  //   };
-  //   setPasswordReqs(reqs);
-  //   return Object.values(reqs).every(Boolean);
-  // };
-
-  // const handleNavigate = (href) => {
-  //   setIsTransitioning(true);
-  //   setTimeout(() => {
-  //     window.location.href = href;
-  //   }, 2500);
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const newErrors = {};
-    
-  //   if (!/^[a-zA-Z\s'-]+$/.test(formData.fullname)) {
-  //     newErrors.fullname = 'Name can only contain letters, spaces, hyphens and apostrophes';
-  //   }
-    
-  //   if (!validatePassword(formData.password)) {
-  //     newErrors.password = 'Password does not meet all requirements';
-  //   }
-    
-  //   if (formData.password !== formData.confirmPassword) {
-  //     newErrors.confirmPassword = 'Passwords do not match';
-  //   }
-    
-  //   setErrors(newErrors);
-    
-  //   if (Object.keys(newErrors).length === 0) {
-  //     // Submit form - on success navigate to role selection
-  //     handleNavigate('/choose-role');
-  //   }
-  // };
-
-  // return (
-    // <>
-      {/* <div>
-        <div className='border p-5'>
-          <img src={logoImg} alt="" className='w-20 h-20'/>
-          <h1 className="text-2xl font-bold text-center text-gray-900 leading-none m-0">
-            Join TalentFlow
-          </h1>
-          <p className="text-center text-gray-600 mb-6 mt-1 leading-snug">
-            Start your collaborative learning journey
-          </p>
-          
-          <div className="
-            bg-white rounded-2xl p-4 sm:p-6 md:p-7
-            shadow-lg border border-gray-100
-            transition-all duration-300
-            focus-within:shadow-xl focus-within:border-primary-light
-          ">
-            <h2 className="text-xl font-bold text-gray-900 mb-5">Create Account</h2>
-            
-            <form onSubmit={handleSubmit}>
-              <input
-                id="fullname"
-                placeholder="Love John"
-                required
-                minLength={2}
-                maxLength={50}
-                value={formData.fullname}
-                onChange={(e) => setFormData({...formData, fullname: e.target.value})}
-                error={errors.fullname}
-              />
-              
-              <input
-                id="email"
-                type="email"
-                label="Email Address"
-                placeholder="Your email@example.com"
-                required
-                title="Please enter a valid email address"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-              />
-              
-              <input
-                id="password"
-                type="password"
-                label="Password"
-                placeholder="Create a password"
-                icon={Lock}
-                required
-                minLength={8}
-                value={formData.password}
-                onChange={(e) => {
-                  setFormData({...formData, password: e.target.value});
-                  validatePassword(e.target.value);
-                }}
-                error={errors.password}
-                showPasswordToggle
-              />
-              
-              <div className="flex flex-wrap gap-2 mt-2 mb-4 text-sm text-gray-500">
-                {[
-                  { key: 'length', label: '8+ characters' },
-                  { key: 'upper', label: 'Uppercase' },
-                  { key: 'lower', label: 'Lowercase' },
-                  { key: 'number', label: 'Number' }
-                ].map(({ key, label }) => (
-                  <span 
-                    key={key}
-                    className={`
-                      flex items-center gap-1.5
-                      ${passwordReqs[key] ? 'text-primary' : ''}
-                    `}
-                  >
-                    <span className={`
-                      w-3.5 h-3.5 rounded-full border-2
-                      flex items-center justify-center
-                      ${passwordReqs[key] 
-                        ? 'bg-primary border-primary' 
-                        : 'border-gray-300'
-                      }
-                    `}>
-                      {passwordReqs[key] && (
-                        <Check size={10} className="text-white" />
-                      )}
-                    </span>
-                    {label}
-                  </span>
-                ))}
+              </select>
+            </div>
+            <div className='w-full p-2 flex flex-col'>
+              <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>Password</label>
+              <input type="password" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='examplepassword' required />
+            </div>
+            <div className='w-full p-2 flex flex-col'>
+              <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>Confirm Password</label>
+              <input type="password" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='........' required />
+            </div>
+            <div className='w-full p-2 flex justify-between items-center'>
+              <div className='flex items-center'>
+                <input type="checkbox" className='w-4 h-4 mt-1 text-[#1A7A4A] border-[#D8E6DF] rounded focus:ring-[#1A7A4A]' />
+                <span className='ml-2 text-sm text-[#4A5C52]'>I agree to the <a href="" className='text-[#1A7A4A] hover:underline'>Terms of Service</a> and <a href="" className='text-[#1A7A4A] hover:underline'>Privacy Policy</a></span>
               </div>
-              
-              <input
-                id="confirm-password"
-                type="password"
-                label="Confirm Password"
-                placeholder="Confirm your Password"
-                icon={Lock}
-                required
-                value={formData.confirmPassword}
-                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                error={errors.confirmPassword}
-                showPasswordToggle
-              />
-              
-              <button type="submit" variant="primary" fullWidth className="mb-4">
-                Create Account
-              </button>
-            </form>
-            
-            <p className="text-center text-sm text-gray-600">
-              Already have an account?{' '}
-              <button 
-                type="button"
-                onClick={() => handleNavigate('/login')}
-                className="text-primary font-medium hover:text-primary-dark hover:underline"
-              >
-                Log In
-              </button>
-            </p>
-          </div>
-          
-          <p className="text-center text-sm text-gray-500 mt-6">
-            By signing up, you agree to our{' '}
-            <button type="button" className="text-gray-600 hover:underline">Terms of Service</button>
-            {' '}and{' '}
-            <button type="button" className="text-gray-600 hover:underline">Privacy Policy</button>
-          </p>
+            </div>
+            <button type='submit' className=' mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Create Account</button>
+            <p className='mt-5 flex justify-center items-center text-sm text-[#4A5C52]'>Already have have an account <Link to="/sign-in" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Sign In </Link></p>
+          </form>
         </div>
-        
-      </div> */}
-    // </>
-  // );
-// };
-
+      </div>
+    </>
+  )
+}
