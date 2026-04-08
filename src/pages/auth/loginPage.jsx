@@ -10,7 +10,7 @@ export default function LoginPage(){
           </Link>
           <h3 className='text-2xl md:text-3xl font-semibold text-[#1A1A1A] mb-2'>Welcome to TalentFlow</h3>
           <p className='text-[#4A5C52]'>Sign in to continue your learning journey</p>
-          <form action="" className='w-full h-auto shadow-md p-5 mt-5 bg-white rounded-xl border-[#D8D6EF]'>
+          <form action="" className='w-full h-auto shadow-md p-2 md:p-5 mt-5 bg-white rounded-xl border-[#D8D6EF] border'>
             <div className='w-full p-2 flex flex-col'>
               <label htmlFor="email" className='text-sm font-medium text-[#1A1A1A] mb-2'>Email Address</label>
               <input type="email" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='you@example.com' required />

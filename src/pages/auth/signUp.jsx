@@ -5,14 +5,14 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 export default function SignUpPage(){
   return(
     <>
-      <div className="w-full h-auto p-5 lg:p-10 flex flex-col items-center justify-center">
-        <div className="w-full md:w-[75%] lg:w-[40%] h-auto p-5 flex flex-col items-center">
+      <div className="w-full h-auto p-3 md:p-5 lg:p-10 flex flex-col items-center justify-center">
+        <div className="w-full md:w-[75%] lg:w-[40%] h-auto p-3 md:p-5 flex flex-col items-center">
           <Link to="/">
             <img src={logoImg} className='w-60 h-20 object-cover' />
           </Link>
           <h3 className='text-3xl font-semibold text-[#1A1A1A] mb-2'>Join TalentFlow</h3>
           <p className='text-[#4A5C52]'>Create your account and start learning</p>
-          <form action="" className='w-full h-auto shadow-md p-5 mt-5 bg-white rounded-xl border-[#D8D6EF]'>
+          <form action="" className='w-full h-auto shadow-md p-2 md:p-5 mt-5 bg-white rounded-xl border-[#D8D6EF]'>
             <div className='w-full p-2 flex flex-col'>
               <label htmlFor="text" className='text-sm font-medium text-[#1A1A1A] mb-2'>Full Name</label>
               <input type="text" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='Adeola Ogunleye' required />
