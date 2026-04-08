@@ -69,7 +69,7 @@ export default function Tutor_Dashboard(){
         <SideBar title="Dashboard">
             <div className="w-full h-auto p-5">
                 <div className="w-full h-auto rounded-xl p-5 flex flex-col mt-5 bg-gradient-to-r from-[#1A7748] to-[#15663C]">
-                    <h3 className="text-3xl font-semibold text-white text-normal">Welcome, Chukwuemeka!</h3>
+                    <h3 className="text-2xl md:text-3xl font-semibold text-white text-normal">Welcome, Chukwuemeka!</h3>
                     <p className="mt-2 text-sm text-white/90">You're guiding  73% average completion rate </p>
                     <div className="flex w-65 my-4 items-center justify-between">
                         {data.map((details, index) => (
@@ -84,10 +84,10 @@ export default function Tutor_Dashboard(){
                         ))}
                     </div>
                 </div>
-                <div className="w-full flex py-5 mt-5 space-x-5">
+                <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex md:flex-row py-3 md:py-5 mt-5 md:space-x-5">
                     <Link 
                         to="/create-course"
-                        className="w-1/2 p-5 border-1 border-[#D8D6EF] rounded-lg bg-white flex space-x-3 group hover:border-1 hover:border-[#1A7A4A] transition-all ">
+                        className="w-full md:w-1/2 p-5 border-1 border-[#D8D6EF] rounded-lg bg-white flex space-x-3 group hover:border-1 hover:border-[#1A7A4A] transition-all ">
                         <div className="w-12 h-12 bg-[#E8F5EC] rounded-lg flex items-center justify-center group-hover:bg-[#1A7A4A]">
                             <LuPlus  className="w-6 h-6 text-[#1A7A4A] group-hover:text-white"/>
                         </div>
@@ -98,7 +98,7 @@ export default function Tutor_Dashboard(){
                     </Link>
                     <Link 
                         to="/submissions"
-                        className="w-1/2 p-5 border-1 border-[#D8D6EF] rounded-lg bg-white flex space-x-3 group hover:border-1 hover:border-[#1A7A4A] transition-all ">
+                        className="w-full md:w-1/2 p-5 border-1 border-[#D8D6EF] rounded-lg bg-white flex space-x-3 group hover:border-1 hover:border-[#1A7A4A] transition-all ">
                         <div className="w-12 h-12 bg-[#E8F0FB] rounded-lg flex items-center justify-center group-hover:bg-[#2563eb]">
                             <LuSquareCheck  className="w-6 h-6 text-[#2563eb] group-hover:text-white"/>
                         </div>
