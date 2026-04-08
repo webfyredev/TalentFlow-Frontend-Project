@@ -44,6 +44,7 @@ function App() {
           <Route path='/interns' element={<Interns />}></Route>
           <Route path='/tutor-profileSetting' element={<TutorProfileSettings />}></Route>
           <Route path='/tutor-profile' element={<TutorProfilePage />}></Route>
+          
           {/* Learners Routes  */}
           <Route path='/learners_dashboard' element={<Learners_Dashboard />}></Route>
           <Route path='/student-course' element={<Courses />}></Route>
