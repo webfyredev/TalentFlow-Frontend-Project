@@ -5,8 +5,8 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 export default function SignUpPage(){
   return(
     <>
-      <div className="w-full h-auto p-10 flex flex-col items-center justify-center">
-        <div className="w-[40%] h-auto p-5 flex flex-col items-center">
+      <div className="w-full h-auto p-5 lg:p-10 flex flex-col items-center justify-center">
+        <div className="w-full md:w-[75%] lg:w-[40%] h-auto p-5 flex flex-col items-center">
           <Link to="/">
             <img src={logoImg} className='w-60 h-20 object-cover' />
           </Link>
@@ -41,7 +41,7 @@ export default function SignUpPage(){
             <div className='w-full p-2 flex justify-between items-center'>
               <div className='flex items-center'>
                 <input type="checkbox" className='w-4 h-4 mt-1 text-[#1A7A4A] border-[#D8E6DF] rounded focus:ring-[#1A7A4A]' />
-                <span className='ml-2 text-sm text-[#4A5C52]'>I agree to the <a href="" className='text-[#1A7A4A] hover:underline'>Terms of Service</a> and <a href="" className='text-[#1A7A4A] hover:underline'>Privacy Policy</a></span>
+                <span className='ml-2 text-xs md:text-sm text-[#4A5C52]'>I agree to the <a href="" className='text-[#1A7A4A] hover:underline'>Terms of Service</a> and <a href="" className='text-[#1A7A4A] hover:underline'>Privacy Policy</a></span>
               </div>
             </div>
             <button type='submit' className=' mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Create Account</button>
