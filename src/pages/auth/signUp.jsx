@@ -1,54 +1,213 @@
 import logoImg from '../../images/logo.png'
 import { Link } from 'react-router-dom'
-import { LuEye, LuEyeOff } from "react-icons/lu";
+import { useState } from 'react'
 
-export default function SignUpPage(){
-  return(
+export default function SignUpPage() {
+
+  // ✅ ADD STATE
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("Learner");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  // ✅ HANDLE SUBMIT
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    // 🔥 map frontend role → backend role
+    let mappedRole = "learner";
+    if (role === "Mentor") mappedRole = "tutor";
+    if (role === "Admin") mappedRole = "admin";
+
+    try {
+      const res = await fetch("https://talentflowbackend.onrender.com/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fullName,
+          email,
+          password,
+          confirmPassword,
+          role: mappedRole
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Registration failed");
+        return;
+      }
+
+      console.log("Registration success:", data);
+
+    } catch (err) {
+      console.error("Registration error:", err);
+    }
+  };
+
+  return (
     <>
-      <div className="w-full h-auto p-3 md:p-5 lg:p-10 flex flex-col items-center justify-center">
-        <div className="w-full md:w-[75%] lg:w-[40%] h-auto p-3 md:p-5 flex flex-col items-center">
+      <div className="flex flex-col h-auto items-center justify-center lg:p-10 md:p-5 p-3 w-full">
+        <div className="flex flex-col h-auto items-center lg:w-[40%] md:p-5 md:w-[75%] p-3 w-full">
           <Link to="/">
-            <img src={logoImg} className='w-60 h-20 object-cover' />
+            <img src={logoImg} className='h-20 object-cover w-60' />
           </Link>
-          <h3 className='text-3xl font-semibold text-[#1A1A1A] mb-2'>Join TalentFlow</h3>
+          <h3 className='font-semibold mb-2 text-3xl text-[#1A1A1A]'>Join TalentFlow</h3>
           <p className='text-[#4A5C52]'>Create your account and start learning</p>
-          <form action="" className='w-full h-auto shadow-md p-2 md:p-5 mt-5 bg-white rounded-xl border-[#D8D6EF]'>
-            <div className='w-full p-2 flex flex-col'>
-              <label htmlFor="text" className='text-sm font-medium text-[#1A1A1A] mb-2'>Full Name</label>
-              <input type="text" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='Adeola Ogunleye' required />
-            </div>
-            <div className='w-full p-2 flex flex-col'>
-              <label htmlFor="email" className='text-sm font-medium text-[#1A1A1A] mb-2'>Email Address</label>
-              <input type="email" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='you@example.com' required />
-            </div>
-            <div className='w-full p-2 flex flex-col'>
-              <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>I am joining as a</label>
-              <select name="" id="" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all'>
-                <option value="Learner">Learner</option>
-                <option value="Learner">Mentor </option>
-                <option value="Learner">Admin</option>
 
+          {/* ✅ CONNECT FORM */}
+          <form onSubmit={handleRegister} className='bg-white border-[#D8D6EF] h-auto md:p-5 mt-5 p-2 rounded-xl shadow-md w-full'>
+
+            <div className='flex flex-col p-2 w-full'>
+              <label className='font-medium mb-2 text-[#1A1A1A] text-sm'>Full Name</label>
+              <input
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className='bg-white border border-[#D8E6DF] px-4 py-3 rounded-lg text-sm w-full'
+                placeholder='Adeola Ogunleye'
+                required
+              />
+            </div>
+
+            <div className='flex flex-col p-2 w-full'>
+              <label className='font-medium mb-2 text-[#1A1A1A] text-sm'>Email Address</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className='bg-white border border-[#D8E6DF] px-4 py-3 rounded-lg text-sm w-full'
+                placeholder='you@example.com'
+                required
+              />
+            </div>
+
+            <div className='flex flex-col p-2 w-full'>
+              <label className='font-medium mb-2 text-[#1A1A1A] text-sm'>I am joining as a</label>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className='bg-white border border-[#D8E6DF] px-4 py-3 rounded-lg text-sm w-full'
+              >
+                {/* ✅ FIXED VALUES ONLY */}
+                <option value="Learner">Learner</option>
+                <option value="Mentor">Mentor</option>
+                <option value="Admin">Admin</option>
               </select>
             </div>
-            <div className='w-full p-2 flex flex-col'>
-              <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>Password</label>
-              <input type="password" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='examplepassword' required />
+
+            <div className='flex flex-col p-2 w-full'>
+              <label className='font-medium mb-2 text-[#1A1A1A] text-sm'>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className='bg-white border border-[#D8E6DF] px-4 py-3 rounded-lg text-sm w-full'
+                placeholder='examplepassword'
+                required
+              />
             </div>
-            <div className='w-full p-2 flex flex-col'>
-              <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>Confirm Password</label>
-              <input type="password" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='........' required />
+
+            <div className='flex flex-col p-2 w-full'>
+              <label className='font-medium mb-2 text-[#1A1A1A] text-sm'>Confirm Password</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className='bg-white border border-[#D8E6DF] px-4 py-3 rounded-lg text-sm w-full'
+                placeholder='........'
+                required
+              />
             </div>
-            <div className='w-full p-2 flex justify-between items-center'>
+
+            <div className='flex items-center justify-between p-2 w-full'>
               <div className='flex items-center'>
-                <input type="checkbox" className='w-4 h-4 mt-1 text-[#1A7A4A] border-[#D8E6DF] rounded focus:ring-[#1A7A4A]' />
-                <span className='ml-2 text-xs md:text-sm text-[#4A5C52]'>I agree to the <a href="" className='text-[#1A7A4A] hover:underline'>Terms of Service</a> and <a href="" className='text-[#1A7A4A] hover:underline'>Privacy Policy</a></span>
+                <input type="checkbox" className='h-4 mt-1 w-4' />
+                <span className='md:text-sm ml-2 text-[#4A5C52] text-xs'>
+                  I agree to the Terms of Service and Privacy Policy
+                </span>
               </div>
             </div>
-            <button type='submit' className=' mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Create Account</button>
-            <p className='mt-5 flex justify-center items-center text-sm text-[#4A5C52]'>Already have have an account <Link to="/sign-in" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Sign In </Link></p>
+
+            <button type='submit' className='bg-[#1A7A4A] cursor-pointer mt-5 py-3 rounded-lg text-white w-full'>
+              Create Account
+            </button>
+
+            <p className='flex items-center justify-center mt-5 text-[#4A5C52] text-sm'>
+              Already have have an account
+              <Link to="/sign-in" className='ml-2 text-[#1A7A4A]'>
+                Sign In
+              </Link>
+            </p>
+
           </form>
         </div>
       </div>
     </>
   )
 }
+
+
+
+
+
+
+
+// import logoImg from '../../images/logo.png'
+// import { Link } from 'react-router-dom'
+// import { LuEye, LuEyeOff } from "react-icons/lu";
+
+// export default function SignUpPage(){
+//   return(
+//     <>
+//       <div className="w-full h-auto p-3 md:p-5 lg:p-10 flex flex-col items-center justify-center">
+//         <div className="w-full md:w-[75%] lg:w-[40%] h-auto p-3 md:p-5 flex flex-col items-center">
+//           <Link to="/">
+//             <img src={logoImg} className='w-60 h-20 object-cover' />
+//           </Link>
+//           <h3 className='text-3xl font-semibold text-[#1A1A1A] mb-2'>Join TalentFlow</h3>
+//           <p className='text-[#4A5C52]'>Create your account and start learning</p>
+//           <form action="" className='w-full h-auto shadow-md p-2 md:p-5 mt-5 bg-white rounded-xl border-[#D8D6EF]'>
+//             <div className='w-full p-2 flex flex-col'>
+//               <label htmlFor="text" className='text-sm font-medium text-[#1A1A1A] mb-2'>Full Name</label>
+//               <input type="text" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='Adeola Ogunleye' required />
+//             </div>
+//             <div className='w-full p-2 flex flex-col'>
+//               <label htmlFor="email" className='text-sm font-medium text-[#1A1A1A] mb-2'>Email Address</label>
+//               <input type="email" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='you@example.com' required />
+//             </div>
+//             <div className='w-full p-2 flex flex-col'>
+//               <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>I am joining as a</label>
+//               <select name="" id="" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all'>
+//                 <option value="Learner">Learner</option>
+//                 <option value="Learner">Mentor </option>
+//                 <option value="Learner">Admin</option>
+
+//               </select>
+//             </div>
+//             <div className='w-full p-2 flex flex-col'>
+//               <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>Password</label>
+//               <input type="password" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='examplepassword' required />
+//             </div>
+//             <div className='w-full p-2 flex flex-col'>
+//               <label htmlFor="Password" className='text-sm font-medium text-[#1A1A1A] mb-2'>Confirm Password</label>
+//               <input type="password" className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='........' required />
+//             </div>
+//             <div className='w-full p-2 flex justify-between items-center'>
+//               <div className='flex items-center'>
+//                 <input type="checkbox" className='w-4 h-4 mt-1 text-[#1A7A4A] border-[#D8E6DF] rounded focus:ring-[#1A7A4A]' />
+//                 <span className='ml-2 text-xs md:text-sm text-[#4A5C52]'>I agree to the <a href="" className='text-[#1A7A4A] hover:underline'>Terms of Service</a> and <a href="" className='text-[#1A7A4A] hover:underline'>Privacy Policy</a></span>
+//               </div>
+//             </div>
+//             <button type='submit' className=' mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Create Account</button>
+//             <p className='mt-5 flex justify-center items-center text-sm text-[#4A5C52]'>Already have have an account <Link to="/sign-in" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Sign In </Link></p>
+//           </form>
+//         </div>
+//       </div>
+//     </>
+//   )
+// }
