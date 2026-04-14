@@ -12,37 +12,40 @@ export default function Learners_Dashboard(){
 
     const token = localStorage.getItem("token");
 
-    const userName = progressData?.user?.fullName || "Learner";
     useEffect(() => {
-        document.title = 'Learners_Dashboard'
-        const fetchProgress = async () => {
-            try {
-                const res = await axios.get("/api/progress", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+    document.title = "Learners_Dashboard";
 
-                setProgressData(res.data.data);
-
-            } catch (err) {
-                console.log(err.response?.data || err.message);
-            }
-        };
-
-        if (token) fetchProgress();
-
-    }, [token]);
-
-    if (!progressData && token) {
-        return (
-            <SideBar title="Dashboard">
-                <div className="p-5">Loading dashboard...</div>
-            </SideBar>
+    const fetchProgress = async () => {
+      try {
+        const res = await axios.get(
+          "https://talentflowbackend.onrender.com/api/progress",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
+
+        setProgressData(res.data.data);
+      } catch (err) {
+        console.log(err.response?.data || err.message);
+      }
     };
-    const enrolledCourses = progressData?.courses?.length || 0;
-    const overallProgress = progressData?.overallStats?.completionPercentage || 0;
+
+    if (token) fetchProgress();
+  }, [token]);
+
+  if (!progressData && token) {
+    return (
+      <SideBar title="Dashboard">
+        <div className="p-5">Loading dashboard...</div>
+      </SideBar>
+    );
+  }
+
+  const enrolledCourses = progressData?.courses?.length || 0;
+  const overallProgress = progressData?.overallStats?.completionPercentage || 0;
+
     // useEffect(() => {
     //     document.title = 'Learners_Dashboard'
     // }, []);
