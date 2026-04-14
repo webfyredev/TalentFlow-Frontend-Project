@@ -99,8 +99,8 @@ export default function Admin_Dashboard(){
                 </div>
                 <div className="w-full flex py-5 mt-5 grid grid-cols sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {info.map((data, index) => (
-                        <Link className="p-5 border-1 rounded-lg bg-white flex group space-x-3 border-[#D8ECDF] hover:border-[#1A7A4A] transition-all ">
-                            <div className={`w-12 h-12 p-2 rounded-md flex items-center justify-center bg-${data.background} text-${data.color} group-hover:bg-${data.color}`}>
+                        <Link key={index} className="p-5 border-1 rounded-lg bg-white flex group space-x-3 border-[#D8ECDF] hover:border-[#1A7A4A] transition-all ">
+                            <div className={`w-12 h-12 p-2 rounded-md flex items-center justify-center bg-${data.background} text-${data.color} group-hover:bg-${data.color} group-hover:text-white`}>
                                 {data.icon}
                             </div>
                             <div className="flex flex-col space-y-1">
