@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 export default function LoginPage(){
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // ✅ STATE
   const [email, setEmail] = useState("");
@@ -36,17 +36,15 @@ export default function LoginPage(){
 
       console.log("Login success:", data);
 
-      // ✅ SAVE TOKEN
+      //  SAVE TOKEN
       localStorage.setItem("token", data.token);
 
-      // ✅ SAVE USER (optional but useful)
+      //  SAVE USER
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // ✅ ROLE-BASED REDIRECT
-      if (data.user.role === "learner") {
-        navigate("/learners_dashboard");
-      } else if (data.user.role === "tutor") {
-        navigate("/tutor-dashboard");
+      //  UPDATED FLOW (LOGIN → VERIFICATION FIRST)
+      if (data.user.role === "learner" || data.user.role === "tutor") {
+        navigate("/verify-account");
       } else if (data.user.role === "admin") {
         navigate("/admin-dashboard");
       } else {

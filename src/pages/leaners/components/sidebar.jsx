@@ -103,8 +103,8 @@ export default function SideBar({ children, title }){
                                     AO
                                 </p>
                                 <div className="hidden lg:flex flex-col">
-                                    <p className="text-[12px] font-semibold text-[#191A3B]">Adeola Ogunleye</p>
-                                    <p className="text-[12px] font-semibold text-[#8A98AB]">TM-L-2024-001</p>
+                                    <p className="text-[12px] font-semibold text-[#191A3B]">{userData?.fullName}</p>
+                                    <p className="text-[12px] font-semibold text-[#8A98AB]">{userData?.tfId}</p>
                                 </div>
                             </Link>
                         </div>
