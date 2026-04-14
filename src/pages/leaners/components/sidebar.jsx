@@ -4,8 +4,14 @@ import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
 
 import { LuLayoutDashboard, LuBookOpen, LuClipboardList, LuTrendingUp, LuMessageSquare, LuSettings, LuBell, LuMenu, LuX, } from "react-icons/lu";
 import { useState } from "react";
-export default function SideBar({ children, title }){
+export default function SideBar({ children, title, userData }){
     const [isOpen, setIsOpen] = useState(false);
+    const initials =
+        userData?.fullName
+            ?.split(" ")
+            ?.map((n) => n[0])
+            ?.join("")
+            ?.toUpperCase() || "U";
     return(
         <>
             <div className="w-full h-screen flex">
@@ -100,7 +106,7 @@ export default function SideBar({ children, title }){
                             </Link>
                             <Link to="/user-profile" className="w-auto lg:w-50 h-[85%] lg:hover:bg-[#EAF3EE] rounded-lg flex lg:space-x-3 items-center px-2 transition-all">
                                 <p className="w-7 h-7 p-5 lg:w-9 lg:h-9 items-center flex justify-center rounded-md text-[12px] font-semibold text-[#1A7A4A] bg-[#EAF3EE]">
-                                    AO
+                                    {initials}
                                 </p>
                                 <div className="hidden lg:flex flex-col">
                                     <p className="text-[12px] font-semibold text-[#191A3B]">{userData?.fullName}</p>

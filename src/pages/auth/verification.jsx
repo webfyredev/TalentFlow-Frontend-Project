@@ -52,7 +52,7 @@ export default function Verification(){
       const role = res.data.role;
 
       if (role === "learner") {
-        navigate("/learner-dashboard");
+        navigate("/learners_dashboard");
       } else if (role === "tutor") {
         navigate("/tutor-dashboard");
       } else {
