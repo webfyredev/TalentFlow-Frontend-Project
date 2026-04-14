@@ -22,6 +22,7 @@ import TutorProfileSettings from './pages/Tutor/settings'
 import LoginPage from './pages/auth/loginPage'
 import SignUpPage from './pages/auth/signUp'
 import TutorProfilePage from './pages/Tutor/tutorProfile'
+import Verification from './pages/auth/verification'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
           <Route path='/sign-in' element={<LoginPage />}></Route>
           <Route path='/sign-up' element={<SignUpPage />}></Route>
           <Route path="/" element={<Navigate to="/sign-in" replace />} />
+          <Route path='/verfify-account' element={<Verification />}></Route>
 
           {/* Admin Routes  */}
           <Route path='/admin-dashboard' element={<Admin_Dashboard />}></Route>

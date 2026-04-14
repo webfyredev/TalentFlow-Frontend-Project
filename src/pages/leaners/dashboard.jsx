@@ -8,9 +8,44 @@ import { LuBookOpen, LuClock, LuCircleCheck } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { buttonHoverEffects } from "./components/effect";
 export default function Learners_Dashboard(){
+    const [progressData, setProgressData] = useState(null);
+
+    const token = localStorage.getItem("token");
+
+    const userName = progressData?.user?.fullName || "Learner";
     useEffect(() => {
         document.title = 'Learners_Dashboard'
-    }, []);
+        const fetchProgress = async () => {
+            try {
+                const res = await axios.get("/api/progress", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                setProgressData(res.data.data);
+
+            } catch (err) {
+                console.log(err.response?.data || err.message);
+            }
+        };
+
+        if (token) fetchProgress();
+
+    }, [token]);
+
+    if (!progressData && token) {
+        return (
+            <SideBar title="Dashboard">
+                <div className="p-5">Loading dashboard...</div>
+            </SideBar>
+        );
+    };
+    const enrolledCourses = progressData?.courses?.length || 0;
+    const overallProgress = progressData?.overallStats?.completionPercentage || 0;
+    // useEffect(() => {
+    //     document.title = 'Learners_Dashboard'
+    // }, []);
     const activity = [
         {
             tits: 'Completed Lessons',
@@ -73,13 +108,21 @@ export default function Learners_Dashboard(){
 
     ]
     const data = [
+        // {
+        //     title : 'Enrolled Courses',
+        //     value : 3
+        // },
         {
             title : 'Enrolled Courses',
-            value : 3
+            value : enrolledCourses
         },
+        // {
+        //     title : 'Overall Progress',
+        //     value : '65%'
+        // }
         {
             title : 'Overall Progress',
-            value : '65%'
+            value : `${overallProgress}`
         }
     ];
     const stats = [
