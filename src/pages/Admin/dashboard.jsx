@@ -46,7 +46,7 @@ export default function Admin_Dashboard(){
             icon : <LuUsers size={20}/>,
             title : 'Manage Users',
             text : 'Add, edit, or remove users',
-            background : '[#E8F5EC] ',
+            background : '[#E8F5EC]',
             color : '[#1A7A4A]'
         },
         {
