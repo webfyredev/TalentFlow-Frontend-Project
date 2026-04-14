@@ -5,7 +5,7 @@ export default function Verification(){
     return(
     <>
       <div className="w-full h-screen lg:p-10 flex flex-col items-center justify-center">
-        <div className="w-[95%] md:w-[75%] lg:w-[40%] h-auto p-5 flex flex-col items-center">
+        <div className="w-full md:w-[75%] lg:w-[40%] h-auto p-5 flex flex-col items-center">
           <Link to="/">
             <img src={logoImg} className='w-60 h-20 object-cover' />
           </Link>
@@ -30,7 +30,7 @@ export default function Verification(){
                 <option value="UI/UX Design">UI/UX Design</option>
               </select>
             </div>
-            <button type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Verify Now</button>
+            <button type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3  mb-10 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Verify Now</button>
           </form>
         </div>
       </div>
