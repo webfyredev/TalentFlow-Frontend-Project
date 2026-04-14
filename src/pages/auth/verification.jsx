@@ -53,11 +53,17 @@ export default function Verification(){
 
       // ✅ SAVE VERIFIED STATE
       localStorage.setItem("isVerified", "true");
+      const role = res.data.role;
 
       // ✅ NAVIGATE TO LOGIN PAGE
       setTimeout(() => {
-        navigate("/sign-in");
-
+        if (role === "learner"){
+            navigate("/learners_dashboard")
+        } else if(role === "tutor"){
+            navigate("/tutor-dashboard");
+        } else {
+            navigate("/")
+        }
       }, 2000)
 
     } catch (err) {
@@ -95,7 +101,7 @@ export default function Verification(){
             </div>
             <div className='w-full p-2 flex flex-col'>
               <label htmlFor="text" className='text-sm font-medium text-[#1A1A1A] mb-2'>Reference Number</label>
-              <input type="text" value={referenceNumber} onChange={(e) => setReferenceNumber(e.target.value)} className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='TF-2026-BX0U' required />
+              <input type="text" value={referenceNumber} onChange={(e) => setReferenceNumber(e.target.value)} className='text-sm w-full px-4 py-3 bg-white border border-[#D8E6DF] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all' placeholder='LRN/TRN-2026-XXXXX' required />
             </div>
             <div className='flex flex-col p-2 w-full'>
               <label className='font-medium mb-2 text-sm'>

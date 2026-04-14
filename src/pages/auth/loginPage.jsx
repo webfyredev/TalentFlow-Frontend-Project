@@ -46,6 +46,11 @@ export default function LoginPage(){
       localStorage.setItem("user", JSON.stringify(data.user));
       const role = data.user.role
 
+      if(!data.user.isRoleVerified){
+        navigate("/verify-account");
+        return;
+      }
+
       //  UPDATED FLOW (LOGIN → VERIFICATION FIRST)
       if (role === "learner") {
         navigate("/learners_dashboard");
