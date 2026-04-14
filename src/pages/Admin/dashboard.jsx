@@ -80,7 +80,7 @@ export default function Admin_Dashboard(){
     ];
     return(
         <SideBar>
-            <div className="w-full h-auto p-5 border">
+            <div className="w-full h-auto p-5">
                 <div className="w-full h-auto rounded-xl p-5 flex flex-col mt-5 bg-gradient-to-r from-[#1A7748] to-[#15663C]">
                     <h3 className="text-3xl font-semibold text-white text-normal">Welcome, Funmilayo!</h3>
                     <p className="mt-2 text-sm text-white/80">Here's an overview of the TalentFlow Platform</p>
