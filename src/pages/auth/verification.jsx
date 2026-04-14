@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import logoImg from '../../images/logo.png'
+import { useState } from "react";
 import axios from "axios"
 export default function Verification(){
-    const navigate = useNavigate();
+   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
   const [referenceNumber, setReferenceNumber] = useState("");
   const [courseId, setCourseId] = useState("");
+  const [successMsg, setSuccessMsg] = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
 
   const token = localStorage.getItem("token");
 
@@ -15,15 +18,17 @@ export default function Verification(){
 
     // ✅ BASIC VALIDATION
     if (!fullName || !referenceNumber || !courseId) {
-      alert("All fields are required");
+      setErrorMsg("All fields are required");
+      setSuccessMsg("")
       return;
     }
 
     // ❌ NO TOKEN → BACK TO LOGIN
     if (!token) {
-      alert("Session expired. Please login again.");
-      navigate("/sign-in");
-      return;
+        setErrorMsg("Session expired. Please login again.");
+        setSuccessMsg("")
+        navigate("/sign-in");
+        return;
     }
 
     try {
@@ -43,27 +48,26 @@ export default function Verification(){
 
       console.log(res.data);
 
-      alert("Verification successful 🎉");
+      setSuccessMsg("Verification successful 🎉");
+      setErrorMsg("");
 
       // ✅ SAVE VERIFIED STATE
       localStorage.setItem("isVerified", "true");
 
-      // ✅ ROLE-BASED NAVIGATION (VERY IMPORTANT)
-      const role = res.data.role;
+      // ✅ NAVIGATE TO LOGIN PAGE
+      setTimeout(() => {
+        navigate("/sign-in");
 
-      if (role === "learner") {
-        navigate("/learners_dashboard");
-      } else if (role === "tutor") {
-        navigate("/tutor-dashboard");
-      } else {
-        navigate("/"); // fallback
-      }
+      }, 2000)
 
     } catch (err) {
       console.log(err.response?.data || err.message);
-      alert(err.response?.data?.message || "Verification failed");
-    }
+      setErrorMsg(err.response?.data?.message || "Verification failed");
+      setSuccessMsg("")
+    };
   };
+
+
     return(
     <>
       <div className="w-full h-screen lg:p-10 flex flex-col items-center justify-center">
@@ -73,6 +77,17 @@ export default function Verification(){
           </Link>
           <h3 className='text-2xl md:text-3xl font-semibold text-[#1A1A1A] mb-2'>Verify Account</h3>
           {/* <p className='text-[#4A5C52]'>Sign in to continue your learning journey</p> */}
+          {successMsg && (
+            <div className=" mt-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4 w-full">
+                {successMsg}
+            </div>
+            )}
+
+            {errorMsg && (
+            <div className=" mt-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 w-full">
+                {errorMsg}
+            </div>
+            )}
           <form onSubmit={handleVerify} action="" className='w-full h-auto shadow-md p-2 md:p-5 mt-5 bg-white rounded-xl border-[#D8D6EF] border'>
             <div className='w-full p-2 flex flex-col'>
               <label htmlFor="text" className='text-sm font-medium text-[#1A1A1A] mb-2'>Full Name</label>

@@ -4,6 +4,8 @@ import { useState } from 'react'
 
 
 export default function LoginPage(){
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,7 +32,8 @@ export default function LoginPage(){
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || "Login failed");
+        setErrorMsg(data.message || "Login failed");
+        setSuccessMsg("")
         return;
       }
 
@@ -41,11 +44,14 @@ export default function LoginPage(){
 
       //  SAVE USER
       localStorage.setItem("user", JSON.stringify(data.user));
+      const role = data.user.role
 
       //  UPDATED FLOW (LOGIN → VERIFICATION FIRST)
-      if (data.user.role === "learner" || data.user.role === "tutor") {
-        navigate("/verify-account");
-      } else if (data.user.role === "admin") {
+      if (role === "learner") {
+        navigate("/learners_dashboard");
+      } else if (role === "tutor") {
+        navigate("/tutor-dashboard");
+      } else if (role === "admin") {
         navigate("/admin-dashboard");
       } else {
         navigate("/");
@@ -53,7 +59,8 @@ export default function LoginPage(){
 
     } catch (err) {
       console.error("Login error:", err);
-      alert("Something went wrong");
+      setErrorMsg("Something went wrong");
+      setSuccessMsg("")
     }
   };
 

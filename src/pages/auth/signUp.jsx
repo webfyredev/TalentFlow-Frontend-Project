@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 export default function SignUpPage() {
   const [successMsg, setSuccessMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("")
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   // STATE
@@ -69,7 +69,7 @@ export default function SignUpPage() {
       // ✅ OPTIONAL: redirect to login
 
       setTimeout(() => {
-        navigate("/sign-in");
+        navigate("/verify-account");
 
       }, 2000);
 
