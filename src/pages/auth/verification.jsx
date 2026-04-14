@@ -32,7 +32,7 @@ export default function Verification(){
     }
 
     try {
-      const res = await axios.post(
+      const res = await axios.put(
         "https://talentflowbackend.onrender.com/api/auth/verify-role",
         {
           fullName,
