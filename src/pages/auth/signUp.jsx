@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 export default function SignUpPage() {
-
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("")
   const navigate = useNavigate();
 
   // STATE
@@ -21,7 +22,8 @@ export default function SignUpPage() {
 
     // ✅ FRONTEND VALIDATION (IMPORTANT)
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setErrorMsg("Passwords do not match");
+      setSuccessMsg("");
       return;
     }
 
@@ -53,21 +55,24 @@ export default function SignUpPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || "Registration failed");
+        setErrorMsg(data.message || "Registration failed");
+        setSuccessMsg("")
         setLoading(false);
         return;
       }
 
       console.log("Registration success:", data);
 
-      alert("Account created successfully 🎉");
+      setSuccessMsg("Account created successfully 🎉");
+      setErrorMsg("");
 
       // ✅ OPTIONAL: redirect to login
       navigate("/sign-in");
 
     } catch (err) {
       console.error("Registration error:", err);
-      alert("Something went wrong");
+      setErrorMsg("Something went wrong. Try again");
+      setSuccessMsg("")
     } finally {
       setLoading(false);
     }
@@ -89,7 +94,16 @@ export default function SignUpPage() {
           <p className='text-[#4A5C52]'>
             Create your account and start learning
           </p>
-
+          {successMsg &&(
+            <div className='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4 w-full'>
+              {successMsg}
+            </div>
+          )}
+          {errorMsg &&(
+            <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 w-full'>
+              {errorMsg}
+            </div>
+          )}
           <form
             onSubmit={handleRegister}
             className='bg-white border-[#D8D6EF] md:p-5 mt-5 p-2 rounded-xl shadow-md w-full'
