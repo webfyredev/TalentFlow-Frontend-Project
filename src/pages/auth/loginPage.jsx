@@ -6,39 +6,32 @@ import { useState } from 'react'
 export default function LoginPage(){
 
 
-  const navigate = useNavigate();
+   const navigate = useNavigate();
 
   // ✅ STATE
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
   // ✅ HANDLE LOGIN
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
-
     try {
-      const res = await fetch(
-        "https://talentflowbackend.onrender.com/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email,
-            password
-          })
-        }
-      );
+      const res = await fetch("https://talentflowbackend.onrender.com/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
 
       const data = await res.json();
 
       if (!res.ok) {
         alert(data.message || "Login failed");
-        setLoading(false);
         return;
       }
 
@@ -47,22 +40,26 @@ export default function LoginPage(){
       // ✅ SAVE TOKEN
       localStorage.setItem("token", data.token);
 
-      // ✅ REDIRECT BASED ON ROLE
-      if (data.role === "learner") {
-        navigate("/dashboard");
-      } else if (data.role === "tutor") {
+      // ✅ SAVE USER (optional but useful)
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // ✅ ROLE-BASED REDIRECT
+      if (data.user.role === "learner") {
+        navigate("/learner-dashboard");
+      } else if (data.user.role === "tutor") {
         navigate("/tutor-dashboard");
-      } else if (data.role === "admin") {
+      } else if (data.user.role === "admin") {
         navigate("/admin-dashboard");
+      } else {
+        navigate("/");
       }
 
     } catch (err) {
       console.error("Login error:", err);
       alert("Something went wrong");
-    } finally {
-      setLoading(false);
     }
   };
+
   return(
     <>
       <div className="w-full h-screen lg:p-10 flex flex-col items-center justify-center">
