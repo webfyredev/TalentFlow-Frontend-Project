@@ -177,7 +177,7 @@ export default function SignUpPage() {
             <button
               type='submit'
               disabled={loading}
-              className='bg-[#1A7A4A] disabled:opacity-50 mt-5 py-3 rounded-lg text-white w-full'
+              className='cursor-pointer bg-[#1A7A4A] disabled:opacity-50 mt-5 py-3 rounded-lg text-white w-full'
             >
               {loading ? "Creating Account..." : "Create Account"}
             </button>

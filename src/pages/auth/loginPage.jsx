@@ -45,7 +45,7 @@ export default function LoginPage(){
 
       // ✅ ROLE-BASED REDIRECT
       if (data.user.role === "learner") {
-        navigate("/learner-dashboard");
+        navigate("/learners_dashboard");
       } else if (data.user.role === "tutor") {
         navigate("/tutor-dashboard");
       } else if (data.user.role === "admin") {
@@ -85,7 +85,7 @@ export default function LoginPage(){
               </div>
               <Link className='font-medium text-sm text-[#1A7A4A] hover:underline'>Forgot Password?</Link>
             </div>
-            <button type='submit' className=' mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Sign In</button>
+            <button type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Sign In</button>
             <p className='mt-5 flex justify-center items-center text-sm text-[#4A5C52]'>Don't have an account <Link to="/sign-up" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Sign Up </Link></p>
           </form>
         </div>
