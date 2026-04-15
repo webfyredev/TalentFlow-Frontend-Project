@@ -7,59 +7,39 @@ import { percent } from "framer-motion";
 import axios from "axios";
 export default function CourseOverview(){
     
-    // const [activeTab, setActiveTab] = useState("overview");
-    // const [openModule, setOpenModule] = useState(null);
-    // const [progressData, setProgressData] = useState(null)
-    // const [backendCourse, setBackendCourse] = useState(null);
-    // const token = localStorage.getItem("token");
-    // const { id } = useParams();
+    const [activeTab, setActiveTab] = useState("overview");
+    const [openModule, setOpenModule] = useState(null);
+    const [progressData, setProgressData] = useState(null)
+    const [backendCourse, setBackendCourse] = useState(null);
+    const token = localStorage.getItem("token");
+    const { id } = useParams();
     // // const courses = courseType.find((item) => item.id ===   Number(id));
-    // const dummycourses = courseType.find((item) => item.id ===   Number(id));
-    const categories = ['All', 'Development', 'Design', 'Data Science', 'Marketing', 'Business'];
-
-    const [selectedCategory, setSelectedCategory] = useState("All");
-    const [courseType, setCourseType] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+    const dummycourses = courseType.find((item) => item.id ===   Number(id));
+    
     useEffect(() => {
-        const fetchCourses = async () => {
+        const fetchCourse = async () => {
             try {
                 const res = await fetch("https://talentflowbackend.onrender.com/api/courses");
                 const data = await res.json();
 
-                const formatted = data.map((course) => ({
-                    id: course._id || course.id, // ✅ FIX: use backend ID (VERY IMPORTANT)
-
-                    title: course.title,
-                    text: course.description,
-                    category: course.category || "Development",
-                    author: course.instructor || "Admin",
-                    modules: course.modules?.length || 0,
-                    percent: 0,
-                    image: course.image || "https://placehold.co/600x400",
-                    status: "New",
-                    style: "bg-[#E8F5EC] text-[#1A7A4A]"
-                }));
-
-                setCourseType(formatted);
+                const found = data?.[Number(id) - 1]; // ✅ KEEP INDEX SYSTEM
+                setBackendCourse(found || null);
 
             } catch (err) {
-                console.error("Error fetching courses:", err);
+                console.error("Error fetching course:", err);
             }
         };
 
-        fetchCourses();
-    }, []);
+        fetchCourse();
+    }, [id]);
 
-    // 🔥 FETCH PROGRESS (REAL DATA)
     useEffect(() => {
         const fetchProgress = async () => {
             try {
                 const res = await axios.get(
                     "https://talentflowbackend.onrender.com/api/progress",
                     {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
+                        headers: { Authorization: `Bearer ${token}` }
                     }
                 );
 
@@ -72,11 +52,11 @@ export default function CourseOverview(){
 
         if (token) fetchProgress();
     }, [token]);
+    if (!dummycourses) return <p>Courses not available</p>;
 
-
-    const totalLessons = courses.modulesView.reduce((sum, module) => sum + (module.lessons?.length || 0), 0);
-    const completedLessons = courses.modulesView.reduce((sum, module) => sum + (module.lesssons_completed || 0),0);
-    const remaining_course = totalLessons - completedLessons
+    // const totalLessons = courses.modulesView.reduce((sum, module) => sum + (module.lessons?.length || 0), 0);
+    // const completedLessons = courses.modulesView.reduce((sum, module) => sum + (module.lesssons_completed || 0),0);
+    // const remaining_course = totalLessons - completedLessons
 
     if(!dummycourses) return <p>Courses not available</p>
     const courses = {
@@ -94,6 +74,15 @@ export default function CourseOverview(){
         progressData?.courses?.find(c => c.title === courses.title);
 
     const percent = courseProgress?.progress || 0;
+    const totalLessons = courses.modulesView.reduce(
+        (sum, module) => sum + (module.lessons?.length || 0), 0
+    );
+
+    const completedLessons = courses.modulesView.reduce(
+        (sum, module) => sum + (module.lesssons_completed || 0), 0
+    );
+
+    const remaining_course = totalLessons - completedLessons;
 
     return(
         <>

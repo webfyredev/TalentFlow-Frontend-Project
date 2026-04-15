@@ -11,8 +11,8 @@ import { courseType as staticCourses } from "./data/course";
 export default function Courses(){
     const courses = ['All', 'Development', 'Design', 'Data Science', 'Marketing', 'Business']
     const [selectedCategory, setSelectedCategory] = useState("All");
-    const [search, setSearch] = useState("");
-    const [backendCourses, setBackendCourses] = useState([]);
+    const [courseType, setCourseType] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     useEffect(() => {
         const fetchCourses = async () => {
             try {
@@ -20,7 +20,8 @@ export default function Courses(){
                 const data = await res.json();
 
                 const formatted = data.map((course, index) => ({
-                    id: course._id || index + 1000, // avoid collision with static
+                    id: index + 1,
+
                     title: course.title,
                     text: course.description,
                     category: course.category || "Development",
@@ -32,7 +33,7 @@ export default function Courses(){
                     style: "bg-[#E8F5EC] text-[#1A7A4A]"
                 }));
 
-                setBackendCourses(formatted);
+                setCourseType(formatted);
 
             } catch (err) {
                 console.error("Error fetching courses:", err);
@@ -42,14 +43,16 @@ export default function Courses(){
         fetchCourses();
     }, []);
 
-    const allCourses = [...staticCourses, ...backendCourses];
+
     const filteredCategory =
         selectedCategory === "All"
-            ? allCourses
-            : allCourses.filter(c => c.category === selectedCategory);
+            ? courseType
+            : courseType.filter(type => type.category === selectedCategory);
 
-    const filteredCourses = filteredCategory.filter(course =>
-        course.title.toLowerCase().includes(search.toLowerCase())
+    // ✅ ADD SEARCH ON TOP OF YOUR FILTER
+    const finalCourses = filteredCategory.filter(course =>
+        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.text.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     // const filteredCategory = selectedCategory === "All" ? courseType : courseType.filter(type => type.category === selectedCategory);
@@ -59,11 +62,11 @@ export default function Courses(){
            <SideBar  title="Courses">
                 <div className="w-full h-auto p-5">
                     <h3 className="font-semibold text-2xl mt-3">Course Catalog</h3>
-                    <p className="text-sm mt-2 text-[#8A9E95]">Explore ad enroll in courses to expand your skills</p>
+                    <p className="text-sm mt-2 text-[#8A9E95]">Explore and enroll in courses to expand your skills</p>
                     <div className="mt-2 w-full mt-3 lg:flex flex flex-col lg:flex-row lg:justify-between space-y-3 lg:space-y-0">
                         <div className="w-full lg:w-[75%] h-11 border border-[#D8D6EF] bg-white rounded-lg flex items-center px-3 space-x-2 focus:outline-none focus:ring-2 focus:ring-[#1A7A4A] focus:border-transparent transition-all">
                             <FaSearch  className="text-[#8F9E95]"/>
-                            <input type="text" placeholder="Search Courses..." value={search} onChange={(e) => setSearch(e.target.value)} className="text-[#8A9E95] text-[13px] border-none outline-none w-full h-full "/>
+                            <input type="text" placeholder="Search Courses..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="text-[#8A9E95] text-[13px] border-none outline-none w-full h-full "/>
                         </div>
                         <select 
                             value={selectedCategory}
@@ -92,7 +95,7 @@ export default function Courses(){
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
 
-                    {filteredCourses.map((data) => (
+                    {finalCourses.map((data) => (
                         <div
                             key={data.id}
                             className="border flex flex-col group overflow-hidden rounded-xl"
