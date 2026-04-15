@@ -169,7 +169,7 @@ export default function Learners_Dashboard(){
         }
     ]
     return(
-        <SideBar title={`Welcome, ${userData?.fullName || "Learner"}`}>
+        <SideBar title="Dashboard">
             <div className="w-full h-auto p-5">
                 <div className="w-full h-auto rounded-xl p-5 flex flex-col lg:mt-5 bg-gradient-to-br from-[#1A7A4A] to-[#156239]">
                     <h3 className="text-2xl lg:text-3xl font-semibold text-white text-normal mt-2">Welcome {userData?.fullName || "Learner"}</h3>
@@ -185,15 +185,7 @@ export default function Learners_Dashboard(){
                             <p className="text-white font-bold text-xl">{overallProgress}%</p>
                         </div>
                     </div>
-                    <div className="mt-5">
-                        <input
-                            type="text"
-                            placeholder="Search courses..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="w-full p-2 border rounded-md"
-                        />
-                    </div>
+                    
                     {/* <div className="flex w-75 my-4 items-center justify-between">
                         {data.map((details, index) => (
                             <div key={index} className="py-2 px-5 bg-[#4B8966] rounded-md">
@@ -206,6 +198,15 @@ export default function Learners_Dashboard(){
                             </div>
                         ))}
                     </div> */}
+                </div>
+                <div className="mt-5">
+                        <input
+                            type="text"
+                            placeholder="Search courses..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="w-full p-2 border rounded-md"
+                        />
                 </div>
                 <div className="w-full flex py-5 mt-5 grid grid-cols sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {stats.map((data, index) => (
