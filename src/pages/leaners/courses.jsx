@@ -9,7 +9,7 @@ import { courseType as staticCourses } from "./data/course";
 
 
 export default function Courses(){
-    const courses = ['All', 'Development', 'Design', 'Data Science', 'Marketing', 'Business']
+    const categories = ['All', 'Development', 'Design', 'Data Science', 'Marketing', 'Business'];
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [courseType, setCourseType] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -84,10 +84,10 @@ export default function Courses(){
                             <button
                                 key={index}
                                 onClick={() => setSelectedCategory(data)}
-                                className={`py-2 rounded-md font-semibold text-sm
+                                className={`py-2 rounded-md font-semibold text-sm cursor-pointer transition-all
                                 ${selectedCategory === data
                                     ? "bg-[#1A7A4A] text-white"
-                                    : "bg-white border text-[#4A5C52]"}`}
+                                    : "bg-white hover:bg-transparent border-1 border-[#D8D6EF] text-[#4A5C52]"}`}
                             >
                                 {data}
                             </button>
