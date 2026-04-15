@@ -115,7 +115,7 @@ export default function ProfileSettings(){
                         </button>
                         <button
                             onClick={handleLogout}
-                            className="mt-4 px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                            className="ml-5 mt-4 px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
                         >
                             Logout
                     </button>
