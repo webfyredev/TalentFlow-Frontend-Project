@@ -12,6 +12,14 @@ export default function SideBar({ children, title, userData }){
             ?.map((n) => n[0])
             ?.join("")
             ?.toUpperCase() || "U";
+    
+    const referenceNumber =
+        userData?.referenceNumber ||
+        (userData?.role === "learner"
+            ? userData?.learnerRef
+            : userData?.tutorRef) ||
+        "";
+    
     return(
         <>
             <div className="w-full h-screen flex">
@@ -109,8 +117,8 @@ export default function SideBar({ children, title, userData }){
                                     {initials}
                                 </p>
                                 <div className="hidden lg:flex flex-col">
-                                    <p className="text-[12px] font-semibold text-[#191A3B]">{userData?.fullName}</p>
-                                    <p className="text-[12px] font-semibold text-[#8A98AB]">{userData?.tfId}</p>
+                                    <p className="text-[12px] font-semibold text-[#191A3B]">{userData?.fullName || "Loading..."}</p>
+                                    <p className="text-[12px] font-semibold text-[#8A98AB]">{referenceNumber}</p>
                                 </div>
                             </Link>
                         </div>

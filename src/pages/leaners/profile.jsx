@@ -37,9 +37,14 @@ export default function LearnerProfile(){
         );
     }
 
-    const user = profileData || {};
+    const user = profileData?.user || profileData || {};
     const stats = profileData.stats || {};
     const courses = profileData.courses || [];
+
+    const referenceNumber =
+        user?.role === "learner"
+            ? user?.learnerRef
+            : user?.tutorRef;
 
     const achievements = [
         {
@@ -116,11 +121,11 @@ export default function LearnerProfile(){
                             </div>
                             <div className="flex space-x-2 mt-3 items-center text-[#8A9E95] text-[14px]">
                                 <LuMail />
-                                <a href={`mailto:${user.email}`}>{user.email}</a>
+                                <a href={`mailto:${user.email}`}>{user.email || "No email"}</a>
                             </div>
                             <div className="flex space-x-2 mt-1.5 items-center text-[#8A9E95] text-[14px]">
                                 <LuCalendar />
-                                <p>Joined {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}</p>
+                                <p> Joined{" "} {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"} </p>
                             </div>
                         </div>
                     </div>

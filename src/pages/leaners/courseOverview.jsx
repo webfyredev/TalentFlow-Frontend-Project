@@ -7,30 +7,48 @@ import { percent } from "framer-motion";
 import axios from "axios";
 export default function CourseOverview(){
     
-    const [activeTab, setActiveTab] = useState("overview");
-    const [openModule, setOpenModule] = useState(null);
-    const [progressData, setProgressData] = useState(null)
-    const [backendCourse, setBackendCourse] = useState(null);
-    const token = localStorage.getItem("token");
-    const { id } = useParams();
-    // const courses = courseType.find((item) => item.id ===   Number(id));
-    const dummycourses = courseType.find((item) => item.id ===   Number(id));
+    // const [activeTab, setActiveTab] = useState("overview");
+    // const [openModule, setOpenModule] = useState(null);
+    // const [progressData, setProgressData] = useState(null)
+    // const [backendCourse, setBackendCourse] = useState(null);
+    // const token = localStorage.getItem("token");
+    // const { id } = useParams();
+    // // const courses = courseType.find((item) => item.id ===   Number(id));
+    // const dummycourses = courseType.find((item) => item.id ===   Number(id));
+    const categories = ['All', 'Development', 'Design', 'Data Science', 'Marketing', 'Business'];
+
+    const [selectedCategory, setSelectedCategory] = useState("All");
+    const [courseType, setCourseType] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     useEffect(() => {
-        const fetchCourse = async () => {
+        const fetchCourses = async () => {
             try {
                 const res = await fetch("https://talentflowbackend.onrender.com/api/courses");
                 const data = await res.json();
 
-                const found = data?.[Number(id) - 1];
-                setBackendCourse(found || null);
+                const formatted = data.map((course) => ({
+                    id: course._id || course.id, // ✅ FIX: use backend ID (VERY IMPORTANT)
+
+                    title: course.title,
+                    text: course.description,
+                    category: course.category || "Development",
+                    author: course.instructor || "Admin",
+                    modules: course.modules?.length || 0,
+                    percent: 0,
+                    image: course.image || "https://placehold.co/600x400",
+                    status: "New",
+                    style: "bg-[#E8F5EC] text-[#1A7A4A]"
+                }));
+
+                setCourseType(formatted);
 
             } catch (err) {
-                console.error("Error fetching course:", err);
+                console.error("Error fetching courses:", err);
             }
         };
 
-        fetchCourse();
-    }, [id]);
+        fetchCourses();
+    }, []);
 
     // 🔥 FETCH PROGRESS (REAL DATA)
     useEffect(() => {
