@@ -7,6 +7,7 @@ import { LuBookOpen, LuClock, LuCircleCheck } from "react-icons/lu";
 
 import { Link } from "react-router-dom";
 import { buttonHoverEffects } from "./components/effect";
+import axios from "axios";
 export default function Learners_Dashboard(){
     const [progressData, setProgressData] = useState(null);
 
