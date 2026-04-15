@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import SideBar from "./components/sidebar";
 import { LuArrowLeft, LuBook, LuBookOpen, LuChartLine, LuChartNoAxesColumn, LuCheck, LuChevronDown, LuChevronUp, LuCircleHelp, LuClock, LuFile, LuInfo, LuVideo } from "react-icons/lu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { progressCards, courseType } from "./data/course";
 import { percent } from "framer-motion";
 import axios from "axios";

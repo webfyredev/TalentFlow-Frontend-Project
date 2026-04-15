@@ -136,7 +136,7 @@ export default function Courses(){
                                 </div>
 
                                 <Link to={`/student-course/${data.id}`}>
-                                    <button className="w-full mt-2 py-2.5 rounded-lg font-semibold bg-[#1A7A4A] text-white">
+                                    <button className="w-full mt-2 py-2.5 rounded-lg font-semibold bg-[#1A7A4A] text-white cursor-pointer">
                                         {data.percent === 0 ? "Enroll Now" : "Continue Learning"}
                                     </button>
                                 </Link>
