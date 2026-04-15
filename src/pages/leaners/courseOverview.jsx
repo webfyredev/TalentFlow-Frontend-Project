@@ -4,17 +4,78 @@ import { LuArrowLeft, LuBook, LuBookOpen, LuChartLine, LuChartNoAxesColumn, LuCh
 import { useState } from "react";
 import { progressCards, courseType } from "./data/course";
 import { percent } from "framer-motion";
+import axios from "axios";
 export default function CourseOverview(){
     
     const [activeTab, setActiveTab] = useState("overview");
     const [openModule, setOpenModule] = useState(null);
+    const [progressData, setProgressData] = useState(null)
+    const [backendCourse, setBackendCourse] = useState(null);
+    const token = localStorage.getItem("token");
     const { id } = useParams();
-    const courses = courseType.find((item) => item.id ===   Number(id));
+    // const courses = courseType.find((item) => item.id ===   Number(id));
+    const dummycourses = courseType.find((item) => item.id ===   Number(id));
+    useEffect(() => {
+        const fetchCourse = async () => {
+            try {
+                const res = await fetch("https://talentflowbackend.onrender.com/api/courses");
+                const data = await res.json();
+
+                const found = data?.[Number(id) - 1];
+                setBackendCourse(found || null);
+
+            } catch (err) {
+                console.error("Error fetching course:", err);
+            }
+        };
+
+        fetchCourse();
+    }, [id]);
+
+    // 🔥 FETCH PROGRESS (REAL DATA)
+    useEffect(() => {
+        const fetchProgress = async () => {
+            try {
+                const res = await axios.get(
+                    "https://talentflowbackend.onrender.com/api/progress",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                setProgressData(res.data.data);
+
+            } catch (err) {
+                console.error(err.response?.data || err.message);
+            }
+        };
+
+        if (token) fetchProgress();
+    }, [token]);
+
+
     const totalLessons = courses.modulesView.reduce((sum, module) => sum + (module.lessons?.length || 0), 0);
     const completedLessons = courses.modulesView.reduce((sum, module) => sum + (module.lesssons_completed || 0),0);
     const remaining_course = totalLessons - completedLessons
 
-    if(!courses) return <p>Courses not available</p>
+    if(!dummycourses) return <p>Courses not available</p>
+    const courses = {
+        ...dummycourses, title : backendCourse?.title || dummycourses.title,
+        image : backendCourse?.image || dummycourses.image,
+        author : backendCourse?.instructor || dummycourses.author,
+        category : backendCourse?.category || dummycourses.category,
+        text : backendCourse?.description || dummycourses.text,
+        modulesView : dummycourses.modulesView
+
+    }
+    // if(!courses) return <p>Courses not available</p>
+
+    const courseProgress =
+        progressData?.courses?.find(c => c.title === courses.title);
+
+    const percent = courseProgress?.progress || 0;
 
     return(
         <>

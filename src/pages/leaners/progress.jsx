@@ -1,66 +1,116 @@
 import { LuTrendingUp, LuTrophy, LuCalendar, LuEye  } from "react-icons/lu";
 import SideBar from "./components/sidebar";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Progress(){
-    const timline = [
-        {
-            title : 'Joined TalentFlow',
-            date : 'January 15 2024'
-        },
-        {
-            title : 'First Course Enrolled',
-            date : 'January 20, 2024'
-        },
-        {
-            title : 'Completed First Assignment',
-            date : 'February 10, 2024'
-        },
-        {
-            title : 'First Course Completed',
-            date : 'March 20, 2024'
-        }
-    ]
-    const course_progress = [
-        {
-            title : 'Introduction to Web Development',
-            author : 'Chukwuemeka Nwosu',
-            modules : '3 of 4',
-            percent : 65
-        },
-        {
-            title : 'UI/UX Design Principles',
-            author : 'Amina Bello',
-            modules : '1 of 3',
-            percent : 30
-        },
-        {
-            title : 'Digital Marketing Fundamentals',
-            author : 'Blessing Okafor',
-            modules : '2 of 2',
-            percent : 100,
-        },
-    ]
+    const [progressData, setProgressData] = useState(null);
+
+    const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        const fetchProgress = async () => {
+            try {
+                const res = await axios.get("https://talentflowbackend.onrender.com/api/progress", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                setProgressData(res.data.data);
+
+            } catch (err) {
+                console.log(err.response?.data || err.message);
+            }
+        };
+
+        if (token) fetchProgress();
+
+    }, [token]);
+
+    if (!progressData && token) {
+        return (
+            <SideBar title="Progress">
+                <div className="p-5">Loading progress...</div>
+            </SideBar>
+        );
+    }
+
+    // const timline = [
+    //     {
+    //         title : 'Joined TalentFlow',
+    //         date : 'January 15 2024'
+    //     },
+    //     {
+    //         title : 'First Course Enrolled',
+    //         date : 'January 20, 2024'
+    //     },
+    //     {
+    //         title : 'Completed First Assignment',
+    //         date : 'February 10, 2024'
+    //     },
+    //     {
+    //         title : 'First Course Completed',
+    //         date : 'March 20, 2024'
+    //     }
+    // ]
+    
+    // const course_progress = [
+    //     {
+    //         title : 'Introduction to Web Development',
+    //         author : 'Chukwuemeka Nwosu',
+    //         modules : '3 of 4',
+    //         percent : 65
+    //     },
+    //     {
+    //         title : 'UI/UX Design Principles',
+    //         author : 'Amina Bello',
+    //         modules : '1 of 3',
+    //         percent : 30
+    //     },
+    //     {
+    //         title : 'Digital Marketing Fundamentals',
+    //         author : 'Blessing Okafor',
+    //         modules : '2 of 2',
+    //         percent : 100,
+    //     },
+    // ]
+     
     const progress_stats = [
         {
             icon : <LuTrophy />,
             title : 'Course Completed',
             style : 'bg-[#E8F5EC] text-[#1A7A4A]',
-            value : 1,
+            // value : 1,
+            value : progressData?.overallStats?.coursesCompleted || 0,
         },
         {
             icon : <LuEye />,
             title : 'In Progress',
             style : 'bg-[#E8F0FB] text-[#2563EB]',
-            value : 2
+            // value : 2
+            value : progressData?.overallStats?.inProgress || 0
         },
         {
             icon : <LuCalendar />,
             title : 'Learning Days',
             style : 'bg-[#FDECDA] text-[#DD3E31]',
-            value : 72
+            // value : 72
+            value : progressData?.overallStats?.learningDays || 0
         }
-    ]
+    ];
+    const course_progress = progressData?.courses?.map((c) => ({
+        title: c.title,
+        author: c.instructor,
+        modules: `${c.modulesCompleted} of ${c.totalModules}`,
+        percent: c.progress
+    })) || [];
+
+    const timline = progressData?.milestones?.map((m) => ({
+        title: m.title,
+        date: m.date
+    })) || [];
     return(
         <>
             <SideBar title="Progress">
@@ -72,18 +122,27 @@ export default function Progress(){
                             <LuTrendingUp  className="w-12 h-12 p-3 text-white rounded-lg bg-white/20"/>
                             <div className="flex flex-col">
                                 <p className="text-sm text-white/80">Overall Completion</p>
-                                <h3 className="text-3xl font-semibold text-white">65%</h3>
+                                {/* <h3 className="text-3xl font-semibold text-white">65%</h3> */}
+                                <h3 className="text-3xl font-semibold text-white">{progressData?.overallStats?.completionPercentage || 0}%</h3>
+
                             </div>
                         </div>
                         <div className="w-full mt-3">
                             <div className="relative w-full h-1.5 rounded-full bg-[#D8E6DF]">
-                                <div className="absolute w-[65%] bg-[#1A7A4A] h-full rounded-full"></div>
+                                {/* <div className="absolute w-[65%] bg-[#1A7A4A] h-full rounded-full"></div> */}
+                                <div className="absolute  bg-[#1A7A4A] h-full rounded-full" style={{ width: `${progressData?.overallStats?.completionPercentage || 0}%`}}></div>
+
                             </div>
                         </div>
-                        <p className="mt-3 text-sm text-white/90">You're making great progress! Keep up the momentum</p>
+                        {/* <p className="mt-3 text-sm text-white/90">You're making great progress! Keep up the momentum</p> */}
+                        <p className="mt-3 text-sm text-white/90">
+                            {progressData?.overallStats?.encouragement ||
+                            "You're making great progress! Keep up the momentum"}
+                        </p>
+
                     </div>
                     <div className="w-full py-5 mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                        {progress_stats .map((data, index) => (
+                        {progress_stats.map((data, index) => (
                             <div className="px-5 py-6 border bg-white flex flex-col border-1 border-[#D8D6EF] rounded-xl">
                                 <div className="flex space-x-2.5 items-center">
                                     <div className={`w-10 h-10 flex items-center justify-center rounded-lg ${data.style}`}>
@@ -112,7 +171,7 @@ export default function Progress(){
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <p className="text-sm text-[#8A9E95]">by {data.author}</p>
-                                        <p className="text-[12px] text-[#8A9E95]">Completed</p>
+                                        {/* <p className="text-[12px] text-[#8A9E95]">Completed</p> */}
                                     </div>
                                     <div className="mt-5 w-full">
                                         <div className="w-full h-1.5 relative bg-[#D8E6DF] rounded-full">

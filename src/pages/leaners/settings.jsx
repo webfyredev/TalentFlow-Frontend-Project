@@ -1,8 +1,64 @@
 import { LuBell, LuLock, LuSave, LuUser } from "react-icons/lu";
 import SideBar from "./components/sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function ProfileSettings(){
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem("token");
+
+    // 🔥 FETCH REAL USER PROFILE
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const res = await axios.get(
+                    "https://talentflowbackend.onrender.com/api/profile",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                setUser(res.data.data);
+
+            } catch (err) {
+                console.log(err.response?.data || err.message);
+            }
+        };
+
+        if (token) fetchUser();
+
+    }, [token]);
+
+    // 🔥 LOGOUT FUNCTION
+    const handleLogout = async () => {
+        try {
+            await axios.post(
+                "https://talentflowbackend.onrender.com/api/auth/logout",
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            localStorage.removeItem("token");
+            navigate("/login");
+
+        } catch (err) {
+            console.log(err.response?.data || err.message);
+
+            // force logout anyway
+            localStorage.removeItem("token");
+            navigate("/login");
+        }
+    };
+
     return(
         <>
             <SideBar title="Settings">
@@ -17,11 +73,12 @@ export default function ProfileSettings(){
                         <form className="w-full mt-2 py-4">
                             <div className="flex flex-col mb-4">
                                 <label htmlFor="" className="text-sm font-medium text-[#1A1A1A] mb-1.5">Full Name</label>
-                                <input type="text" placeholder="Adeola Ogunleye" className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" />
+                                <input type="text" value={user?.fullName || ""} readOnly className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" />
+                                {/* <input type="text" placeholder="Adeola Ogunleye" className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" /> */}
                             </div>
                             <div className="flex flex-col">
                                 <label htmlFor="" className="text-sm font-medium text-[#1A1A1A] mb-1.5">Email Address</label>
-                                <input type="email" placeholder="adeola@trueminds.com" className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" />
+                                <input type="email" value={user?.email || ""} readOnly className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" />
                             </div>
                         </form>
                     </div>
@@ -56,6 +113,12 @@ export default function ProfileSettings(){
                                 Change Password
                             </Link>
                         </button>
+                        <button
+                            onClick={handleLogout}
+                            className="mt-4 px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                        >
+                            Logout
+                    </button>
                     </div>
                     <div className="w-full p-5 mt-1.5 flex justify-end">
                         <button className="px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] font-medium cursor-pointer flex items-center "> <LuSave className="mr-2 w-4.5 h-4.5 mt-0.5"/> Save Changes</button>
