@@ -205,7 +205,7 @@ export default function Learners_Dashboard(){
                             placeholder="Search courses..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full p-2 border rounded-md"
+                            className="w-full p-2 border-1 rounded-md bg-white border-[#D8ECDF]"
                         />
                 </div>
                 <div className="w-full flex py-5 mt-5 grid grid-cols sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
