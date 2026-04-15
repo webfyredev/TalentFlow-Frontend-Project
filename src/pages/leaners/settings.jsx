@@ -15,7 +15,7 @@ export default function ProfileSettings(){
         const fetchUser = async () => {
             try {
                 const res = await axios.get(
-                    "https://talentflowbackend.onrender.com/api/profile",
+                    "https://talentflowbackend.onrender.com/api/user/me",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

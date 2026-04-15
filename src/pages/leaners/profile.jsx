@@ -11,7 +11,7 @@ export default function LearnerProfile(){
         const fetchProfile = async () => {
             try {
                 const res = await axios.get(
-                    "https://talentflowbackend.onrender.com/api/profile",
+                    "https://talentflowbackend.onrender.com/api/user/me",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
