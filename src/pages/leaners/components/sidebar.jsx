@@ -6,12 +6,15 @@ import { LuLayoutDashboard, LuBookOpen, LuClipboardList, LuTrendingUp, LuMessage
 import { useState } from "react";
 export default function SideBar({ children, title, userData }){
     const [isOpen, setIsOpen] = useState(false);
-    const initials =
-        userData?.fullName
-            ?.split(" ")
-            ?.map((n) => n[0])
-            ?.join("")
-            ?.toUpperCase() || "U";
+    const initials = userData?.fullName
+        ? userData.fullName
+        : userData?.referenceNumber
+            ? userData.referenceNumber
+              .split(" ")
+              .map((n) => n[0])
+              .join("")
+              .toUpperCase()
+        : "U";
     
     const referenceNumber =
         userData?.referenceNumber ||
@@ -19,7 +22,6 @@ export default function SideBar({ children, title, userData }){
             ? userData?.learnerRef
             : userData?.tutorRef) ||
         "";
-    
     return(
         <>
             <div className="w-full h-screen flex">
