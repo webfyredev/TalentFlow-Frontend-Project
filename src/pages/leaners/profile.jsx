@@ -1,6 +1,7 @@
 import { LuAward, LuBookOpen, LuCalendar, LuFlag, LuFlame, LuMail, LuTrophy } from "react-icons/lu";
 import SideBar from "./components/sidebar";
 import { useState, useEffect } from "react";
+import axios from "axios";
 export default function LearnerProfile(){
     const [profileData, setProfileData] = useState(null);
 
