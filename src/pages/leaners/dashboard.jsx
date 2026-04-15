@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import SideBar from "./components/sidebar";
 import image1 from '../../images/cos1.jpg'
 import image2 from '../../images/cos2.jpg'
