@@ -48,7 +48,7 @@ export default function ProfileSettings(){
             );
 
             localStorage.removeItem("token");
-            navigate("/login");
+            navigate("/sign-in");
 
         } catch (err) {
             console.log(err.response?.data || err.message);
