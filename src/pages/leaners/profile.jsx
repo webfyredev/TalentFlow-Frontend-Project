@@ -116,8 +116,8 @@ export default function LearnerProfile(){
                         <div className="flex flex-col w-full md:w-auto px-3">
                             <h3 className="text-2xl font-semibold text-[#1A1A1A] mb-2">{user.fullName || "Learner"}</h3>
                             <div className="flex space-x-3">
-                                <p className="w-28 px-3 py-1 text-xs bg-[#EAF3EE] text-[#4A5C52] border border-[#D8E6DF] rounded-md">{user.referenceNumber || "N/A"}</p>
-                                <p className="px-2.5 py-0.5 text-xs font-medium bg-[#E8F0FB] text-[#2563eb] flex items-center justify-center rounded-full">Learner</p>
+                                <p className="w-35 px-3 py-1 text-xs bg-[#EAF3EE] text-[#4A5C52] border border-[#D8E6DF] rounded-md">{user.referenceNumber || "N/A"}</p>
+                                <p className="px-2.5 py-0.5 text-xs font-medium bg-[#E8F0FB] text-[#2563eb] flex items-center justify-center rounded-lg">Learner</p>
                             </div>
                             <div className="flex space-x-2 mt-3 items-center text-[#8A9E95] text-[14px]">
                                 <LuMail />
