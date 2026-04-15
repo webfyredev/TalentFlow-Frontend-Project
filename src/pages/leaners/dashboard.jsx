@@ -174,13 +174,13 @@ export default function Learners_Dashboard(){
                 <div className="w-full h-auto rounded-xl p-5 flex flex-col lg:mt-5 bg-gradient-to-br from-[#1A7A4A] to-[#156239]">
                     <h3 className="text-2xl lg:text-3xl font-semibold text-white text-normal mt-2">Welcome {userData?.fullName || "Learner"}</h3>
                     <p className="mt-2 text-sm text-white/80">You're doing great! Keep up the momentum and continue your learning journey</p>
-                    <div className="flex w-75 my-4 justify-between">
-                        <div className="bg-[#4B8966] px-4 py-2 rounded-md">
+                    <div className="flex w-75 my-4 items-center space-x-5">
+                        <div className="w-1/2 bg-[#4B8966] px-4 py-2 rounded-md">
                             <p className="text-white/80 text-xs">Enrolled</p>
                             <p className="text-white font-bold text-xl">{enrolledCourses}</p>
                         </div>
 
-                        <div className="bg-[#4B8966] px-4 py-2 rounded-md">
+                        <div className="w-1/2 bg-[#4B8966] px-4 py-2 rounded-md">
                             <p className="text-white/80 text-xs">Progress</p>
                             <p className="text-white font-bold text-xl">{overallProgress}%</p>
                         </div>
