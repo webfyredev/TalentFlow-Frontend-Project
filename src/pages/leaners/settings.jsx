@@ -55,7 +55,7 @@ export default function ProfileSettings(){
 
             // force logout anyway
             localStorage.removeItem("token");
-            navigate("/login");
+            navigate("/sign-in");
         }
     };
 
