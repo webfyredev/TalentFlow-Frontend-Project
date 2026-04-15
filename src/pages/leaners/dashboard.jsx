@@ -153,7 +153,7 @@ export default function Learners_Dashboard(){
         <SideBar title="Dashboard">
             <div className="w-full h-auto p-5">
                 <div className="w-full h-auto rounded-xl p-5 flex flex-col lg:mt-5 bg-gradient-to-br from-[#1A7A4A] to-[#156239]">
-                    <h3 className="text-2xl lg:text-3xl font-semibold text-white text-normal mt-2">Welcome Back, Adeola!</h3>
+                    <h3 className="text-2xl lg:text-3xl font-semibold text-white text-normal mt-2">Welcome Back Adeola!</h3>
                     <p className="mt-2 text-sm text-white/80">You're doing great! Keep up the momentum and continue your learning journey</p>
                     <div className="flex w-75 my-4 items-center justify-between">
                         {data.map((details, index) => (
@@ -193,7 +193,7 @@ export default function Learners_Dashboard(){
                     </div>
                     <div className="mt-5 py-3 lg:flex lg:flex-row flex flex-col lg:space-x-5 space-y-5 lg:space-y-0">
                         {course.map((data, index) => (
-                            <div className="w-full lg:w-1/2 rounded-xl border-1 border-[#D8ECDF] flex flex-col group overflow-hidden">
+                            <div key={index} className="w-full lg:w-1/2 rounded-xl border-1 border-[#D8ECDF] flex flex-col group overflow-hidden">
                                 <img src={data.image} alt="CourseImage" className="rounded-t-xl w-full h-40 object-cover group-hover:scale-105 transition-all duration-300" />
                                 <div className="w-full flex flex-col py-3 px-4 bg-white rounded-b-xl">
                                     <h3 className="text-md font-semibold group-hover:text-[#1A7A4A] mt-3">{data.title}</h3>
