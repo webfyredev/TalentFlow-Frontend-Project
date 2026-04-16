@@ -54,6 +54,12 @@ export default function Learners_Dashboard(){
   const overallProgress = progressData?.overallStats?.completionPercentage || 0;
 
   const handleEnroll = (courseTitle) => {
+        const alreadyExists = progressData.courses?.some(
+            (c) => c.title === courseTitle
+        );
+
+        if (alreadyExists) return;
+
         const updated = {
             ...progressData,
             courses: [
@@ -65,9 +71,6 @@ export default function Learners_Dashboard(){
         setProgressData(updated);
     };
 
-    // useEffect(() => {
-    //     document.title = 'Learners_Dashboard'
-    // }, []);
     const activity = [
         {
             tits: 'Completed Lessons',
@@ -131,17 +134,20 @@ export default function Learners_Dashboard(){
 
     ];
 
-    const course = [
-        ...staticCourses,
-        ...(progressData?.courses || []).map((c) => ({
-            title: c.title,
-            author: c.instructor || "Instructor",
-            percent: c.progress || 0,
-            image: image1 // fallback image
-        }))
-    ];
-     const filteredCourses = course.filter((c) =>
-         c.title?.toLowerCase().includes(search.toLowerCase()) //added question mark here
+    const backendCourses = (progressData?.courses || []).map((c) => ({
+        title: c.title,
+        author: c.instructor || "Instructor",
+        percent: c.progress || 0,
+        image: image1
+    }));
+
+    const course = [...staticCourses, ...backendCourses].filter(
+        (course, index, self) =>
+            index === self.findIndex((c) => c.title === course.title)
+    );
+    
+    const filteredCourses = course.filter((c) =>
+        c.title?.toLowerCase().includes(search.toLowerCase())
     );
     const data = [
         // {
