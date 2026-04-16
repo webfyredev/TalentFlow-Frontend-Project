@@ -115,7 +115,7 @@ export default function LearnerProfile(){
     ]
     return(
         <>
-            <SideBar title="Profile">
+            <SideBar title="Profile" userData={user}>
                 <div className="w-full h-auto py-5 px-7">
                     <div className="w-full p-6 bg-white border-1 border-[#D8D6EF] md:flex md:flex-row  flex flex-col md:space-x-4 mt-5 rounded-lg">
                         <p className="w-16 h-16 rounded-full text-[#1A7A4A] font-semibold bg-[#E8F5EC] flex items-center justify-center">{user.fullName?.split(" ").map(n => n[0]).join("") || "U"}</p>
