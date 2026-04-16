@@ -188,7 +188,7 @@ export default function Learners_Dashboard(){
         }
     ]
     return(
-        <SideBar title="Dashboard">
+        <SideBar title="Dashboard" userData={userData}>
             <div className="w-full h-auto p-5">
                 <div className="w-full h-auto rounded-xl p-5 flex flex-col lg:mt-5 bg-gradient-to-br from-[#1A7A4A] to-[#156239]">
                     <h3 className="text-2xl lg:text-3xl font-semibold text-white text-normal mt-2">Welcome {userData?.fullName || "Learner"}</h3>
