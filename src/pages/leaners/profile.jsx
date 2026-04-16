@@ -42,9 +42,10 @@ export default function LearnerProfile(){
     const courses = profileData.courses || [];
 
     const referenceNumber =
-        user?.role === "learner"
-            ? user?.learnerRef
-            : user?.tutorRef;
+        userData?.referenceNumber ||
+        userData?.learnerRef ||
+        userData?.tutorRef ||
+    "";
     
     const joinedDate =
         user?.createdAt ||
