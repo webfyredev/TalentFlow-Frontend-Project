@@ -38,8 +38,8 @@ export default function LearnerProfile(){
     }
 
     const user = profileData?.user || profileData || {};
-    const stats = profileData.stats || {};
-    const courses = profileData.courses || [];
+    const stats = profileData?.stats || {};
+    const courses = profileData?.courses || [];
 
     const referenceNumber =
         user?.role === "learner"
