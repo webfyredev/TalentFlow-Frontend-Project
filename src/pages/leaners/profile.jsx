@@ -48,9 +48,9 @@ export default function LearnerProfile(){
     "";
     
     const joinedDate =
-        user?.createdAt ||
+        user?.joinedAt ||
         user?.created_at ||
-        profileData?.createdAt ||
+        profileData?.joinedAt ||
         profileData?.created_at;
 
     const achievements = [
