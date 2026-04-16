@@ -5,36 +5,37 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Progress(){
+     const [ userData, setUserData] = useState(null);
     const [progressData, setProgressData] = useState(null);
 
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-        const fetchProgress = async () => {
-            try {
-                const res = await axios.get("https://talentflowbackend.onrender.com/api/progress", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+    const fetchData = async () => {
+        try {
+            const [progressRes, userRes] = await Promise.all([
+                axios.get("https://talentflowbackend.onrender.com/api/progress", {
+                    headers: { Authorization: `Bearer ${token}` }
+                }),
+                axios.get("https://talentflowbackend.onrender.com/api/user/me", {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+            ]);
 
-                setProgressData(res.data.data);
+            setProgressData(progressRes.data.data);
+            setUserData(userRes.data.data);
 
-            } catch (err) {
-                console.log(err.response?.data || err.message);
-            }
-        };
+        } catch (err) {
+            console.log(err.response?.data || err.message);
+        }
+    };
 
-        if (token) fetchProgress();
+    if (token) fetchData();
+}, [token]);
 
-    }, [token]);
 
-    if (!progressData && token) {
-        return (
-            <SideBar title="Progress" userData={null}>
-                <div className="p-5">Loading progress...</div>
-            </SideBar>
-        );
+    if (!progressData || !userData) {
+        return <div className="p-5">Loading progress...</div>;
     }
 
     // const timline = [
@@ -113,7 +114,7 @@ export default function Progress(){
     })) || [];
     return(
         <>
-            <SideBar title="Progress">
+            <SideBar title="Progress" userData={userData}>
                 <div className="w-full h-auto p-5">
                     <h3 className="font-semibold text-2xl mt-3">Learning Progress</h3>
                     <p className="text-sm mt-2 text-[#8A9E95]">Track your journey and achievements</p>
