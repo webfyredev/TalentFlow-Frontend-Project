@@ -122,22 +122,22 @@ export default function Learners_Dashboard(){
             image: image1 // fallback image
         }))
     ];
-    // const course = [
-    //     {
-    //         image : image1,
-    //         title : 'Introduction to Web Development',
-    //         author : 'Chukwuemeka Nwosu',
-    //         percent : 0
-    //     },
-    //     {
-    //         image : image2,
-    //         title : 'UI/UX Design Principles',
-    //         author : 'Amina Bello',
-    //         percent : 0
-    //     },
+    const staticCourses = [
+        {
+            image : image1,
+            title : 'Introduction to Web Development',
+            author : 'Chukwuemeka Nwosu',
+            percent : 0
+        },
+        {
+            image : image2,
+            title : 'UI/UX Design Principles',
+            author : 'Amina Bello',
+            percent : 0
+        },
         
 
-    // ];
+    ];
      const filteredCourses = course.filter((c) =>
          c.title?.toLowerCase().includes(search.toLowerCase()) //added question mark here
     );
