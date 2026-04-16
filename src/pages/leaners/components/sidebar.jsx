@@ -8,13 +8,17 @@ export default function SideBar({ children, title, userData }){
     const [isOpen, setIsOpen] = useState(false);
     const initials = userData?.fullName
         ? userData.fullName
+            .split(" ")
+            .map((n) => n[0])
+            .join("")
+            .toUpperCase()
         : userData?.referenceNumber
             ? userData.referenceNumber
-              .split(" ")
-              .map((n) => n[0])
-              .join("")
-              .toUpperCase()
-        : "U";
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .toUpperCase()
+            : "U";
     
     const referenceNumber =
         userData?.referenceNumber ||

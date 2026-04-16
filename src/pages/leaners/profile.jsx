@@ -38,13 +38,19 @@ export default function LearnerProfile(){
     }
 
     const user = profileData?.user || profileData || {};
-    const stats = profileData?.stats || {};
-    const courses = profileData?.courses || [];
+    const stats = profileData.stats || {};
+    const courses = profileData.courses || [];
 
     const referenceNumber =
         user?.role === "learner"
             ? user?.learnerRef
             : user?.tutorRef;
+    
+    const joinedDate =
+        user?.createdAt ||
+        user?.created_at ||
+        profileData?.createdAt ||
+        profileData?.created_at;
 
     const achievements = [
         {
@@ -116,7 +122,7 @@ export default function LearnerProfile(){
                         <div className="flex flex-col w-full md:w-auto px-3">
                             <h3 className="text-2xl font-semibold text-[#1A1A1A] mb-2">{user.fullName || "Learner"}</h3>
                             <div className="flex space-x-3">
-                                <p className="w-35 px-3 py-1 text-xs bg-[#EAF3EE] text-[#4A5C52] border border-[#D8E6DF] rounded-md">{user.referenceNumber || "N/A"}</p>
+                                <p className="w-35 px-3 py-1 text-xs bg-[#EAF3EE] text-[#4A5C52] border border-[#D8E6DF] rounded-md">{referenceNumber || "N/A"}</p>
                                 <p className="px-2.5 py-0.5 text-xs font-medium bg-[#E8F0FB] text-[#2563eb] flex items-center justify-center rounded-lg">Learner</p>
                             </div>
                             <div className="flex space-x-2 mt-3 items-center text-[#8A9E95] text-[14px]">
@@ -125,7 +131,12 @@ export default function LearnerProfile(){
                             </div>
                             <div className="flex space-x-2 mt-1.5 items-center text-[#8A9E95] text-[14px]">
                                 <LuCalendar />
-                                <p> Joined{" "} {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"} </p>
+                                <p>
+                                    Joined{" "}
+                                    {joinedDate
+                                        ? new Date(joinedDate).toLocaleDateString()
+                                        : "N/A"}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -133,28 +144,29 @@ export default function LearnerProfile(){
 
                     <div className="p-5 border-1 bg-white rounded-xl border-[#D8D6EF] flex flex-col">
                         <h3 className="text-2xl font-semibold">
-                            {stats.enrolledCourses || 0}
+                            {stats.enrolledCourses ?? courses.length ?? 0}
                         </h3>
                         <p className="text-sm text-[#8A9E95]">Enrolled Courses</p>
                     </div>
 
                     <div className="p-5 border-1 bg-white rounded-xl border-[#D8D6EF] flex flex-col">
                         <h3 className="text-2xl font-semibold">
-                            {stats.completedCourses || 0}
+                            {/* {stats.completedCourses || 0} */}
+                            {stats.completedCourses ?? courses.filter(c => c.progress === 100).length ?? 0}
                         </h3>
                         <p className="text-sm text-[#8A9E95]">Completed</p>
                     </div>
 
                     <div className="p-5 border-1 bg-white rounded-xl border-[#D8D6EF] flex flex-col">
                         <h3 className="text-2xl font-semibold">
-                            {stats.averageProgress || 0}%
+                            {stats.averageProgress ?? 0}%
                         </h3>
                         <p className="text-sm text-[#8A9E95]">Avg Progress</p>
                     </div>
 
                     <div className="p-5 border-1 bg-white rounded-xl border-[#D8D6EF] flex flex-col">
                         <h3 className="text-2xl font-semibold">
-                            {stats.certificates || 0}
+                            {stats.certificates ?? 0}
                         </h3>
                         <p className="text-sm text-[#8A9E95]">Certificates</p>
                     </div>

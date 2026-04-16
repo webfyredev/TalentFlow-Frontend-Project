@@ -6,15 +6,61 @@ import { useState } from "react";
 
 export default function Assessment(){
     const { id, lessonId, moduleId } = useParams();
-        const courses = courseType.find((item) => item.id ===   Number(id));
-        const module = courses.modulesView.find((mod) => mod.id === Number(moduleId))
-        const lesson = module?.lessons.find((lesson) => lesson.id === Number(lessonId));
+        const navigate = useNavigate();
         const [activeTab, setActiveTab] = useState("content");
-        const getInitials = (name) => { return name.split(" ").map(word => word[0]).join("").toUpperCase(); }
+        const [progressData, setProgressData] = useState(null);
+        const token = localStorage.getItem("token")
+
+        const courses = courseType.find((item) => item.id ===   Number(id));
+        const module = courses?.modulesView?.find((mod) => mod.id === Number(moduleId));
+        // const module = courses.modulesView.find((mod) => mod.id === Number(moduleId))
+        const lesson = module?.lessons.find((lesson) => lesson.id === Number(lessonId));
+
+
+        if (!courses || !module || !lesson) {
+            return <p className="p-5">Lesson not found</p>;
+        }
+
         const currentIndex = module.lessons.findIndex((l) => l.id === Number(lessonId));
         const nextLesson = module.lessons[currentIndex + 1];
         const previousLesson = module.lessons[currentIndex - 1];
-        const navigate = useNavigate();
+        const getInitials = (name) => { return name.split(" ").map(word => word[0]).join("").toUpperCase(); }
+        // const currentIndex = module.lessons.findIndex((l) => l.id === Number(lessonId));
+        // const nextLesson = module.lessons[currentIndex + 1];
+        // const previousLesson = module.lessons[currentIndex - 1];
+
+        useEffect(() => {
+        const fetchProgress = async () => {
+            try {
+                const res = await axios.get("/api/progress", {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setProgressData(res.data.data);
+            } catch (err) {
+                console.log(err.response?.data || err.message);
+            }
+        };
+
+        if (token) fetchProgress();
+    }, [token]);
+
+    const updateProgress = async () => {
+        try {
+            await axios.put("/api/progress/update", {
+                courseName: courses.title
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        } catch (err) {
+            console.log(err.response?.data || err.message);
+        }
+    };
+
+    const courseProgress = progressData?.courses?.find(
+        c => c.title === courses.title
+    );
+
+    const isCompleted = courseProgress?.completed;
         const objectives = ['Understand the key concepts covered in this lesson', 'Apply learned principles to practical scenarios', 'Build foundational knowledge for advanced topics'];
     return(
         <>
@@ -34,9 +80,15 @@ export default function Assessment(){
                         </p>
                         <div className="flex justify-between">
                             <h3 className="text-xl md:text-3xl font-semibold text-[#1A1A1A]">{lesson.title}</h3>
-                            {lesson.status === "Completed" && (
-                                <div className="flex items-center text-sm font-semibold text-[#1A7A4A] bg-[#E8F5EC] px-3 py-2 rounded-lg space-x-1"> <LuCheck  className="w-5 h-5 mt-1"/> <p>Completed</p></div>
+                            {isCompleted && (
+                                <div className="flex items-center text-sm font-semibold text-[#1A7A4A] bg-[#E8F5EC] px-3 py-2 rounded-lg space-x-1">
+                                    <LuCheck className="h-5 w-5 mt-1" />
+                                    <p>Completed</p>
+                                </div>
                             )}
+                            {/* {lesson.status === "Completed" && (
+                                <div className="flex items-center text-sm font-semibold text-[#1A7A4A] bg-[#E8F5EC] px-3 py-2 rounded-lg space-x-1"> <LuCheck  className="w-5 h-5 mt-1"/> <p>Completed</p></div>
+                            )} */}
                         </div>
                         <p className="text-sm text-[#8A9E95] mt-1">{lesson.duration}</p>
                     </div>
@@ -87,9 +139,9 @@ export default function Assessment(){
                                     )}
                                     {lesson.resource_type === "Note" && (
                                         <div className="w-full h-auto lg:p-3 mt-5">
-                                            <h3 className="text-2xl font-semibold text-[#1A1A1A] mb-4">{lesson.lessonContent.title}</h3>
+                                            <h3 className="text-2xl font-semibold text-[#1A1A1A] mb-4">{lesson.lessonContent?.title}</h3>
                                             <h3 className="text-xl font-medium text-[#1A1A1A] mb-3">Introduction</h3>
-                                            <h3 className="p-2 rounded-lg bg-[#E8F5EC] text-base leading-relaxed text-[#4A5C52]">{lesson.lessonContent.introduction}</h3>
+                                            <h3 className="p-2 rounded-lg bg-[#E8F5EC] text-base leading-relaxed text-[#4A5C52]">{lesson.lessonContent?.introduction}</h3>
                                             <div className="flex flex-col space-y-3 mt-3">
                                                 {lesson.lessonContent.sections.map((section, index) => (
                                                     <div key={index} className=" p-3">
@@ -126,13 +178,15 @@ export default function Assessment(){
                                                 }
                                             }}
                                             className="flex items-center space-x-2 px-4 py-3 border-2 border-[#D8E6DF] text-[#4A5C52] rounded-lg hover:border-[#1A7A4A] hover:text-[#1A7A4A] transition-all cursor-pointer"><LuChevronLeft /> <p>Previous</p></button>
-                                        <button 
-                                            onClick={() => {
+                                        <button
+                                            onClick={async () => {
+                                                await updateProgress();
                                                 if (nextLesson) {
-                                                    navigate(`/student-course/${id}/module/${module.id}/student-assessment/${nextLesson.id}`)
+                                                    navigate(`/student-course/${id}/module/${module.id}/student-assessment/${nextLesson.id}`);
                                                 }
                                             }}
-                                            className="flex items-center space-x-2 px-4 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium cursor-pointer"><p>Next</p> <LuChevronRight />
+                                        >
+                                            Next
                                         </button>
                                     </div>
 
@@ -140,35 +194,59 @@ export default function Assessment(){
                             )}
                             {activeTab === "assignment" && (
                                 <div className="w-full p-5 flex flex-col ">
-                                    <h3 className="text-xl font-semibold text-[#1A1A1A] mb-2">{lesson.assignment.title}</h3>
+                                    <h3 className="text-xl font-semibold text-[#1A1A1A] mb-2">{lesson.assignment?.title}</h3>
                                     <div className="flex items-center gap-4 text-xs text-[#8A9E95]">
-                                        <p>Due: {lesson.assignment.due_date}</p>
+                                        <p>Due: {lesson.assignment?.due_date}</p>
                                         <div className="w-1 h-1 bg-[#8A9E95] rounded-full"></div>
-                                        <p>Points: {lesson.assignment.points}</p>
+                                        <p>Points: {lesson.assignment?.points}</p>
                                     </div>
                                     <div className="w-full bg-[#F4F6F5] rounded-lg p-6 mt-5">
                                         <h3 className="font-semibold text-[#1A1A1A] mb-3">Instructions</h3>
-                                        <p className="text-sm">{lesson.assignment.instructions}</p>
+                                        <p className="text-sm">{lesson.assignment?.instructions}</p>
                                     </div>
                                     <button className="mt-5 px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-all cursor-pointer font-medium">
                                         Start Assignment
                                     </button>
                                     <div className="w-full py-7 border-t-1 border-[#D8E6DF]  mt-10 flex items-center justify-between">
-                                        <button 
+                                        {/* <button 
                                             onClick={() => {
                                                 if (previousLesson) {
                                                     navigate(`/student-course/${id}/module/${module.id}/student-assessment/${previousLesson.id}`)
                                                 }
                                             }}
-                                            className="flex items-center space-x-2 px-4 py-3 border-2 border-[#D8E6DF] text-[#4A5C52] rounded-lg hover:border-[#1A7A4A] hover:text-[#1A7A4A] transition-all cursor-pointer"><LuChevronLeft /> <p>Previous</p></button>
-                                        <button 
+                                            className="flex items-center space-x-2 px-4 py-3 border-2 border-[#D8E6DF] text-[#4A5C52] rounded-lg hover:border-[#1A7A4A] hover:text-[#1A7A4A] transition-all cursor-pointer"><LuChevronLeft /> <p>Previous</p>
+                                        </button> */}
+                                        {/* <button 
                                             onClick={() => {
                                                 if (nextLesson) {
                                                     navigate(`/student-course/${id}/module/${module.id}/student-assessment/${nextLesson.id}`)
                                                 }
                                             }}
                                             className="flex items-center space-x-2 px-4 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium cursor-pointer"><p>Next</p> <LuChevronRight />
+                                        </button> */}
+                                        <button
+                                            onClick={() => {
+                                                if (previousLesson) {
+                                                    navigate(`/student-course/${id}/module/${module.id}/student-assessment/${previousLesson.id}`);
+                                                }
+                                            }}
+                                            className="flex items-center space-x-2 px-4 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium cursor-pointer"
+                                        >
+                                            <LuChevronLeft /> <p>Previous</p>
                                         </button>
+
+                                        <button
+                                            onClick={async () => {
+                                                await updateProgress();
+                                                if (nextLesson) {
+                                                    navigate(`/student-course/${id}/module/${module.id}/student-assessment/${nextLesson.id}`);
+                                                }
+                                            }}
+                                            className="flex items-center space-x-2 px-4 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium cursor-pointer"
+                                        >
+                                            <p>Next</p> <LuChevronRight />
+                                        </button>
+
                                     </div>
                                 </div>
                             )}

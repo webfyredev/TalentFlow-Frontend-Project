@@ -31,7 +31,7 @@ export default function Progress(){
 
     if (!progressData && token) {
         return (
-            <SideBar title="Progress">
+            <SideBar title="Progress" userData={null}>
                 <div className="p-5">Loading progress...</div>
             </SideBar>
         );

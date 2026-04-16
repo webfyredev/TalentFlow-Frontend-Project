@@ -40,13 +40,15 @@ export default function Learners_Dashboard(){
     if (token) fetchData();
   }, [token]);
 
-  if (!progressData || !userData) {
-    return (
-      <SideBar title="Dashboard" userData={userData}>
-        <div className="p-5">Loading dashboard...</div>
-      </SideBar>
-    );
-  }
+  const isLoading = !progressData || !userData;
+
+  if (isLoading) {
+        return (
+            <div className="p-5"  userData={null}>
+                Loading dashboard...
+            </div>
+        );
+    }
 
   const enrolledCourses = progressData?.courses?.length || 0;
   const overallProgress = progressData?.overallStats?.completionPercentage || 0;
@@ -112,23 +114,32 @@ export default function Learners_Dashboard(){
         }
     ]
     const course = [
-        {
-            image : image1,
-            title : 'Introduction to Web Development',
-            author : 'Chukwuemeka Nwosu',
-            percent : 0
-        },
-        {
-            image : image2,
-            title : 'UI/UX Design Principles',
-            author : 'Amina Bello',
-            percent : 0
-        },
+        ...staticCourses,
+        ...(progressData?.courses || []).map((c) => ({
+            title: c.title,
+            author: c.instructor || "Instructor",
+            percent: c.progress || 0,
+            image: image1 // fallback image
+        }))
+    ];
+    // const course = [
+    //     {
+    //         image : image1,
+    //         title : 'Introduction to Web Development',
+    //         author : 'Chukwuemeka Nwosu',
+    //         percent : 0
+    //     },
+    //     {
+    //         image : image2,
+    //         title : 'UI/UX Design Principles',
+    //         author : 'Amina Bello',
+    //         percent : 0
+    //     },
         
 
-    ];
+    // ];
      const filteredCourses = course.filter((c) =>
-        c.title.toLowerCase().includes(search.toLowerCase())
+         c.title?.toLowerCase().includes(search.toLowerCase()) //added question mark here
     );
     const data = [
         // {

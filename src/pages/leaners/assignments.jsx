@@ -4,74 +4,115 @@ import { FaFile, FaSearch } from "react-icons/fa";
 import { LuClipboardList, LuClock } from "react-icons/lu";
 import { Link } from "react-router-dom";
 export default function Assignments(){
+    const [assignments, setAssignments] = useState([]);
+    const [selectedStatus, setSelectedStatus] = useState("All Status");
+    // const filteredAss = selectedStatus === "All Status" ? assignments : assignments.filter(item => item.status === selectedStatus)
+    useEffect(() => {
+        const fetchAssignments = async () => {
+            try {
+                const res = await axios.get("/api/progress", {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+
+                const milestones = res.data.data.milestones || [];
+
+                // 🔥 Convert milestones → assignments
+                const mappedAssignments = milestones
+                    .filter(m => m.title.toLowerCase().includes("assignment"))
+                    .map((m, index) => ({
+                        id: index + 1,
+                        title: m.title,
+                        sub_title: m.course || "General Course",
+                        text: "Complete this assignment to progress in your course",
+                        status: "Pending",
+                        due: m.date,
+                        style: "bg-[#FFF8E6] text-[#D9771C]",
+                        link_text: "Submit Assignment"
+                    }));
+
+                setAssignments(mappedAssignments);
+
+            } catch (err) {
+                console.error("Error fetching assignments", err);
+            }
+        };
+
+        fetchAssignments();
+    }, []);
+    const assignment_status = ['All Status', 'Pending', 'Submitted', 'Graded', 'Overdue'];
+    const filteredAss =
+        selectedStatus === "All Status"
+            ? assignments
+            : assignments.filter(item => item.status === selectedStatus);
+
     const assignment_stats = [
         {
-            value : 4,
+            value : assignments.length,
             title : 'Total',
             style : '[#0000000]'
         },
         {
-            value : 1,
+            value: assignments.filter(a => a.status === "Pending").length,
             title : 'Pending',
             style : '[#D9771C]'
         },
         {
-            value : 1,
+            value: assignments.filter(a => a.status === "Submitted").length,
             title : 'Submitted',
             style : '[#2563EB]'
         },
         {
-            value : 1,
+            value: assignments.filter(a => a.status === "Graded").length,
             title : 'Graded',
             style : '[#1A7A4A]'
         }
     ];
-    const assignments = [
-        {
-            id : 1,
-            title : 'Build a Personal Portfolio Website',
-            sub_title : 'Introduction to Web Development',
-            text : 'Create a responsive portfolio website using HTML,CSS and Javascript',
-            status : 'Pending',
-            due : '4/5/2026',
-            style : 'bg-[#FFF8E6] text-[#D9771C]',
-            link_text : 'Submit Assignment'
-        },
-        {
-            id : 2,
-            title : 'Javascript Calculator Project',
-            sub_title : 'Introduction to Web Development',
-            text : 'Build a functional calculator using vanilla Javascript',
-            status : 'Submitted',
-            due : '3/30/2026',
-            style : 'bg-[#E8F0FB] text-[#2563EB]',
-            link_text : 'View Submission'
-        },
-        {
-            id : 3,
-            title : 'Redesign a Mobile App',
-            sub_title : 'UI/UX Design Principles',
-            text : 'Choose an existing mobile app and create a redesigned version with improved UX',
-            status : 'Graded',
-            due : '4/15/2026',
-            result : '92/100',
-            style : 'bg-[#E8F5EC] text-[#1A7A4A]',
-            link_text : 'View Feedback'
-        },
-        {
-            id : 4,
-            title : 'Social Media Campaign Strategy',
-            sub_title : 'Digital Marketing Fundamentals ',
-            text : 'Develop a complete social media marketing strategy for a fictional band.',
-            status : 'Overdue',
-            due : '3/25/2026',
-            style : 'bg-[#FDECDA] text-[#DD3E31]',
-            link_text : 'Submit Assignment'
-        },
-    ]
-    const assignment_status = ['All Status', 'Pending', 'Submitted', 'Graded', 'Overdue'];
-    const [selectedStatus, setSelectedStatus] = useState("All Status");
-    const filteredAss = selectedStatus === "All Status" ? assignments : assignments.filter(item => item.status === selectedStatus)
+    // const assignments = [
+    //     {
+    //         id : 1,
+    //         title : 'Build a Personal Portfolio Website',
+    //         sub_title : 'Introduction to Web Development',
+    //         text : 'Create a responsive portfolio website using HTML,CSS and Javascript',
+    //         status : 'Pending',
+    //         due : '4/5/2026',
+    //         style : 'bg-[#FFF8E6] text-[#D9771C]',
+    //         link_text : 'Submit Assignment'
+    //     },
+    //     {
+    //         id : 2,
+    //         title : 'Javascript Calculator Project',
+    //         sub_title : 'Introduction to Web Development',
+    //         text : 'Build a functional calculator using vanilla Javascript',
+    //         status : 'Submitted',
+    //         due : '3/30/2026',
+    //         style : 'bg-[#E8F0FB] text-[#2563EB]',
+    //         link_text : 'View Submission'
+    //     },
+    //     {
+    //         id : 3,
+    //         title : 'Redesign a Mobile App',
+    //         sub_title : 'UI/UX Design Principles',
+    //         text : 'Choose an existing mobile app and create a redesigned version with improved UX',
+    //         status : 'Graded',
+    //         due : '4/15/2026',
+    //         result : '92/100',
+    //         style : 'bg-[#E8F5EC] text-[#1A7A4A]',
+    //         link_text : 'View Feedback'
+    //     },
+    //     {
+    //         id : 4,
+    //         title : 'Social Media Campaign Strategy',
+    //         sub_title : 'Digital Marketing Fundamentals ',
+    //         text : 'Develop a complete social media marketing strategy for a fictional band.',
+    //         status : 'Overdue',
+    //         due : '3/25/2026',
+    //         style : 'bg-[#FDECDA] text-[#DD3E31]',
+    //         link_text : 'Submit Assignment'
+    //     },
+    // ]
+    
     return(
         <>
             <SideBar title="Assignments">
@@ -101,7 +142,10 @@ export default function Assignments(){
                         </select>
                     </div>
                     <div className="w-full py-3 mt-5 flex-col space-y-4">
-                        {filteredAss.map((data, index) => (
+                        {filteredAss.length === 0 ? (
+                            <p className="text-[#8A9E95] text-sm">No assignments yet</p>
+                        ) : (
+                            filteredAss.map((data, index) => (
                                 <div key={index} className=" w-full p-5 border-1 border-[#D8D6EF] rounded-lg bg-white hover:border-1 hover:border-[#1A7A4A] transition-all duration-300">
                                     <div className="w-full flex space-x-3">
                                         <div className="w-9 h-9 rounded-md flex items-center justify-center bg-[#E8F5EC] text-[#1A7A4A]">
@@ -124,7 +168,9 @@ export default function Assignments(){
                                         <p>Due {data.due}</p>
                                     </div>
                                 </div>                            
-                        ))}
+                        ))
+                        )}
+                        
                     </div>
                 </div>
             </SideBar>
