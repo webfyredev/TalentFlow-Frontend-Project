@@ -2,7 +2,7 @@ import { LuArrowLeft, LuBook, LuCheck, LuChevronLeft, LuChevronRight, LuCircleHe
 import SideBar from "./components/sidebar";
 import { courseType } from "./data/course";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Assessment(){
     const { id, lessonId, moduleId } = useParams();
