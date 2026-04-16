@@ -21,11 +21,10 @@ export default function SideBar({ children, title, userData }){
             : "U";
     
     const referenceNumber =
-        userData?.referenceNumber ||
-        (userData?.role === "learner"
-            ? userData?.learnerRef
-            : userData?.tutorRef) ||
-        "";
+    userData?.referenceNumber ||
+    userData?.learnerRef ||
+    userData?.tutorRef ||
+    "";
     return(
         <>
             <div className="w-full h-screen flex">
