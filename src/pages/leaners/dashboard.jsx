@@ -44,7 +44,7 @@ export default function Learners_Dashboard(){
 
   if (isLoading) {
         return (
-            <div className="p-5"  userData={null}>
+            <div className="p-5"  userdata={null}>
                 Loading dashboard...
             </div>
         );
