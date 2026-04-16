@@ -113,15 +113,7 @@ export default function Learners_Dashboard(){
             style : 'bg-[#E8F5EC] text-[#1A7A4A]',
         }
     ]
-    const course = [
-        ...staticCourses,
-        ...(progressData?.courses || []).map((c) => ({
-            title: c.title,
-            author: c.instructor || "Instructor",
-            percent: c.progress || 0,
-            image: image1 // fallback image
-        }))
-    ];
+    
     const staticCourses = [
         {
             image : image1,
@@ -137,6 +129,16 @@ export default function Learners_Dashboard(){
         },
         
 
+    ];
+
+    const course = [
+        ...staticCourses,
+        ...(progressData?.courses || []).map((c) => ({
+            title: c.title,
+            author: c.instructor || "Instructor",
+            percent: c.progress || 0,
+            image: image1 // fallback image
+        }))
     ];
      const filteredCourses = course.filter((c) =>
          c.title?.toLowerCase().includes(search.toLowerCase()) //added question mark here
