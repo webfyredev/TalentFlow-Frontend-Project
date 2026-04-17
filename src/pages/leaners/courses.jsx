@@ -5,23 +5,33 @@ import { FaSearch } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { courseType as staticCourses } from "./data/course";
-
+import axios from "axios";
 
 
 export default function Courses(){
     const categories = ['All', 'Development', 'Design', 'Data Science', 'Marketing', 'Business'];
+    const token = localStorage.getItem("token")
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [courseType, setCourseType] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [userData, setUserData] = useState(null);
+    
     useEffect(() => {
-        const fetchCourses = async () => {
+        const fetchData = async () => {
             try {
-                const res = await fetch("https://talentflowbackend.onrender.com/api/courses");
-                const data = await res.json();
+                const [coursesRes, userRes] = await Promise.all([
+                    fetch("https://talentflowbackend.onrender.com/api/courses"),
+                    axios.get("https://talentflowbackend.onrender.com/api/user/me", {
+                        headers: { Authorization: `Bearer ${token}` }
+                    })
+                ]);
 
-                const formatted = data.map((course, index) => ({
+                const coursesData = await coursesRes.json();
+
+                setUserData(userRes.data.data);
+
+                const formatted = coursesData.map((course, index) => ({
                     id: index + 1,
-
                     title: course.title,
                     text: course.description,
                     category: course.category || "Development",
@@ -36,12 +46,13 @@ export default function Courses(){
                 setCourseType(formatted);
 
             } catch (err) {
-                console.error("Error fetching courses:", err);
+                console.error("Error fetching data:", err);
             }
         };
 
-        fetchCourses();
-    }, []);
+        if (token) fetchData();
+    }, [token]);
+
 
 
     const filteredCategory =
@@ -55,11 +66,15 @@ export default function Courses(){
         course.text.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    if (!userData) {
+        return <div className="p-5">Loading courses...</div>;
+    }
+
     // const filteredCategory = selectedCategory === "All" ? courseType : courseType.filter(type => type.category === selectedCategory);
 
     return(
         <>
-           <SideBar  title="Courses">
+           <SideBar  title="Courses" userData={userData}>
                 <div className="w-full h-auto p-5">
                     <h3 className="font-semibold text-2xl mt-3">Course Catalog</h3>
                     <p className="text-sm mt-2 text-[#8A9E95]">Explore and enroll in courses to expand your skills</p>

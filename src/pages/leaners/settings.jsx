@@ -10,7 +10,6 @@ export default function ProfileSettings(){
 
     const token = localStorage.getItem("token");
 
-    // 🔥 FETCH REAL USER PROFILE
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -34,7 +33,6 @@ export default function ProfileSettings(){
 
     }, [token]);
 
-    // 🔥 LOGOUT FUNCTION
     const handleLogout = async () => {
         try {
             await axios.post(
@@ -61,7 +59,7 @@ export default function ProfileSettings(){
 
     return(
         <>
-            <SideBar title="Settings">
+            <SideBar title="Settings" userData={user}>
                 <div className="w-full h-auto p-5 lg:p-10">
                     <h3 className="font-semibold text-2xl mt-3">Account Settings</h3>
                     <p className="text-sm mt-2 text-[#4A5C52]">Manage your profile and preferences</p>

@@ -3,44 +3,69 @@ import SideBar from "./components/sidebar";
 import { FaFile, FaSearch } from "react-icons/fa";
 import { LuClipboardList, LuClock } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import axios from "axios";
 export default function Assignments(){
     const [assignments, setAssignments] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState("All Status");
+    const [userData, setUserData] = useState(null);
     // const filteredAss = selectedStatus === "All Status" ? assignments : assignments.filter(item => item.status === selectedStatus)
+
     useEffect(() => {
-        const fetchAssignments = async () => {
+        const fetchUser = async () => {
             try {
-                const res = await axios.get("/api/progress", {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                const res = await axios.get(
+                    "https://talentflowbackend.onrender.com/api/user/me",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
                     }
-                });
+                );
 
-                const milestones = res.data.data.milestones || [];
-
-                // 🔥 Convert milestones → assignments
-                const mappedAssignments = milestones
-                    .filter(m => m.title.toLowerCase().includes("assignment"))
-                    .map((m, index) => ({
-                        id: index + 1,
-                        title: m.title,
-                        sub_title: m.course || "General Course",
-                        text: "Complete this assignment to progress in your course",
-                        status: "Pending",
-                        due: m.date,
-                        style: "bg-[#FFF8E6] text-[#D9771C]",
-                        link_text: "Submit Assignment"
-                    }));
-
-                setAssignments(mappedAssignments);
+                setUserData(res.data.data);
 
             } catch (err) {
-                console.error("Error fetching assignments", err);
+                console.error("Error fetching user", err);
             }
         };
 
-        fetchAssignments();
+        fetchUser();
     }, []);
+
+    // useEffect(() => {
+    //     const fetchAssignments = async () => {
+    //         try {
+    //             const res = await axios.get("/api/progress", {
+    //                 headers: {
+    //                     Authorization: `Bearer ${localStorage.getItem("token")}`
+    //                 }
+    //             });
+
+    //             const milestones = res.data.data.milestones || [];
+
+    //             // 🔥 Convert milestones → assignments
+    //             const mappedAssignments = milestones
+    //                 .filter(m => m.title.toLowerCase().includes("assignment"))
+    //                 .map((m, index) => ({
+    //                     id: index + 1,
+    //                     title: m.title,
+    //                     sub_title: m.course || "General Course",
+    //                     text: "Complete this assignment to progress in your course",
+    //                     status: "Pending",
+    //                     due: m.date,
+    //                     style: "bg-[#FFF8E6] text-[#D9771C]",
+    //                     link_text: "Submit Assignment"
+    //                 }));
+
+    //             setAssignments(mappedAssignments);
+
+    //         } catch (err) {
+    //             console.error("Error fetching assignments", err);
+    //         }
+    //     };
+
+    //     fetchAssignments();
+    // }, []);
     const assignment_status = ['All Status', 'Pending', 'Submitted', 'Graded', 'Overdue'];
     const filteredAss =
         selectedStatus === "All Status"
@@ -69,6 +94,10 @@ export default function Assignments(){
             style : '[#1A7A4A]'
         }
     ];
+
+    if (!userData) {
+        return <div className="p-5">Loading assignments...</div>;
+    }
     // const assignments = [
     //     {
     //         id : 1,
@@ -115,7 +144,7 @@ export default function Assignments(){
     
     return(
         <>
-            <SideBar title="Assignments">
+            <SideBar title="Assignments" userData={userData}>
                 <div className="w-full h-auto p-5">
                     <h3 className="font-semibold text-2xl mt-3">Assignments</h3>
                     <p className="text-sm mt-2 text-[#8A9E95]">Manage and submit your course assignments</p>
