@@ -11,6 +11,8 @@ export default function CourseOverview(){
     const [openModule, setOpenModule] = useState(null);
     const [progressData, setProgressData] = useState(null)
     const [backendCourse, setBackendCourse] = useState(null);
+    const [successMsg, setSuccessMsg] = useState("");
+    const [errorMsg, setErrorMsg] = useState("")
     const token = localStorage.getItem("token");
     const [userData, setUserData] = useState(null);
     const { id } = useParams();
@@ -28,10 +30,11 @@ export default function CourseOverview(){
                     }
                 }
             );
+            
+            // alert("Enrolled successfully!");
+            setSuccessMsg("Enrolled successfully!");
+            setErrorMsg("");
 
-            alert("Enrolled successfully!");
-
-            // 🔥 refresh progress
             const res = await axios.get(
                 "https://talentflowbackend.onrender.com/api/progress",
                 {
@@ -43,7 +46,9 @@ export default function CourseOverview(){
 
         } catch (err) {
             console.error(err.response?.data || err.message);
-            alert(err.response?.data?.message || "Error enrolling");
+            // alert(err.response?.data?.message || "Error enrolling");
+            setErrorMsg(err.response?.data?.message || "Error enrolling");
+            setSuccessMsg("")
         }
     };
     // // const courses = courseType.find((item) => item.id ===   Number(id));
@@ -258,6 +263,17 @@ export default function CourseOverview(){
                                             
                                             
                                         </div>
+                                        {successMsg && (
+                                            <div className="mt-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4 w-full">
+                                                {successMsg}
+                                            </div>
+                                            )}
+
+                                            {errorMsg && (
+                                            <div className="mt-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 w-full">
+                                                {errorMsg}
+                                            </div>
+                                        )}
                                         <h3 className="font-semibold text-[#1A1A1A] mt-5">Instructor</h3>
                                         <div className="w-full rounded-lg mt-5 flex items-center p-4 bg-[#F4F6F5] rounded-lg space-x-3">
                                             <p className="w-12 h-12 bg-[#E8F5EC] rounded-full flex items-center justify-center text-[#1A7A4A] font-medium">
