@@ -185,7 +185,9 @@ export default function Assessment(){
                                                     navigate(`/student-course/${id}/module/${module.id}/student-assessment/${nextLesson.id}`);
                                                 }
                                             }}
-                                        >
+                                            className="flex items-center space-x-2 px-4 py-3 bg-[#1A7A4A] text-white rounded-lg  hover:bg-[#156239] transition-all cursor-pointer"
+                                            >
+                                                <p>Next</p> <LuChevronRight />
                                             Next
                                         </button>
                                     </div>
