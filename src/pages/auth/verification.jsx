@@ -118,7 +118,7 @@ export default function Verification(){
               </select>
             </div>
             <button type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3  mb-5 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Verify Now</button>
-            <p className='mt-6 mb-10 flex justify-center items-center text-sm text-[#4A5C52]'>Continue to sign in after verification <Link to="/sign-in" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Sign In </Link> </p>
+            <p className='mt-2.5 mb-10 flex justify-center items-center text-sm text-[#4A5C52]'>Continue to sign in after verification <Link to="/sign-in" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Sign In </Link> </p>
           </form>
         </div>
       </div>
