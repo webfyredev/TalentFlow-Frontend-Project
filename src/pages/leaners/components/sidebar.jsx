@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom"
-import logoImg from "../../../images/logo.png"
+import logoImg from "../../../images/logos.png"
 import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
 
 import { LuLayoutDashboard, LuBookOpen, LuClipboardList, LuTrendingUp, LuMessageSquare, LuSettings, LuBell, LuMenu, LuX, } from "react-icons/lu";
