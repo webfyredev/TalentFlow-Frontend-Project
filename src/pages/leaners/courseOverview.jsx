@@ -12,17 +12,51 @@ export default function CourseOverview(){
     const [progressData, setProgressData] = useState(null)
     const [backendCourse, setBackendCourse] = useState(null);
     const token = localStorage.getItem("token");
+    const [userData, setUserData] = useState(null);
     const { id } = useParams();
+
+    const handleEnroll = async () => {
+        try {
+            await axios.post(
+                "https://talentflowbackend.onrender.com/api/enroll",
+                {
+                    courseId: backendCourse._id
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            alert("Enrolled successfully!");
+
+            // 🔥 refresh progress
+            const res = await axios.get(
+                "https://talentflowbackend.onrender.com/api/progress",
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+
+            setProgressData(res.data.data);
+
+        } catch (err) {
+            console.error(err.response?.data || err.message);
+            alert(err.response?.data?.message || "Error enrolling");
+        }
+    };
     // // const courses = courseType.find((item) => item.id ===   Number(id));
     const dummycourses = courseType.find((item) => item.id ===   Number(id));
     
     useEffect(() => {
         const fetchCourse = async () => {
             try {
+
                 const res = await fetch("https://talentflowbackend.onrender.com/api/courses");
                 const data = await res.json();
 
-                const found = data?.[Number(id) - 1]; // ✅ KEEP INDEX SYSTEM
+                const found = data.find((c, index) => index + 1 === Number(id)); // ✅ KEEP INDEX SYSTEM
                 setBackendCourse(found || null);
 
             } catch (err) {
@@ -32,6 +66,7 @@ export default function CourseOverview(){
 
         fetchCourse();
     }, [id]);
+
 
     useEffect(() => {
         const fetchProgress = async () => {
@@ -52,8 +87,28 @@ export default function CourseOverview(){
 
         if (token) fetchProgress();
     }, [token]);
-    if (!dummycourses) return <p>Courses not available</p>;
 
+    useEffect(() => {
+    const fetchUser = async () => {
+        try {
+            const res = await axios.get(
+                "https://talentflowbackend.onrender.com/api/user/me",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            setUserData(res.data.data);
+
+        } catch (err) {
+            console.error("Error fetching user:", err.response?.data || err.message);
+        }
+    };
+
+        if (token) fetchUser();
+    }, [token]);
     // const totalLessons = courses.modulesView.reduce((sum, module) => sum + (module.lessons?.length || 0), 0);
     // const completedLessons = courses.modulesView.reduce((sum, module) => sum + (module.lesssons_completed || 0),0);
     // const remaining_course = totalLessons - completedLessons
@@ -86,7 +141,7 @@ export default function CourseOverview(){
 
     return(
         <>
-            <SideBar title="Courses">
+            <SideBar title="Courses" userData={userData}>
                 <div className="w-full h-auto">
                     <div className="w-full h-80 relative">
                         <img src={courses.image} alt="Course Image" className="w-full h-full object-cover" />
@@ -151,7 +206,9 @@ export default function CourseOverview(){
                                                 <>
                                                     <h3 className="font-semibold text-[#1A1A1A] mb-3">Ready to start learning?</h3>
                                                     <p className="text-sm text-[#4A5C52]">Enroll in this course to start your learning journey and gain new skills</p>
-                                                    <button className="cursor-pointer mt-5 bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium">
+                                                    <button 
+                                                        onClick={handleEnroll}
+                                                        className="cursor-pointer mt-5 bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium">
                                                         Enroll Now
                                                     </button>
                                                 </>
@@ -273,7 +330,9 @@ export default function CourseOverview(){
                                             <div className="w-full flex flex-col mt-7 space-y-3.5 bg-[#E8F5EC] rounded-xl p-6 text-center items-center border border-[#1A7A4A]/20">
                                                 <h3 className="font-semibold text-[#1A1A1A] mb-2">Enroll to access course content!</h3>
                                                 <p className="text-sm text-[#4A5C52] mb-4">Start learning today and unlock all modules and lessons.</p>
-                                                <button className="w-35 cursor-pointer py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium">Enroll Now</button>
+                                                <button 
+                                                    onClick={handleEnroll}
+                                                    className="w-35 cursor-pointer py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium">Enroll Now</button>
                                             </div>
                                         )}
                                         
@@ -347,7 +406,9 @@ export default function CourseOverview(){
                                                 <LuChartNoAxesColumn  className="w-15 h-15 text-[#8A9E95]"/>
                                                 <h3 className="font-semibold text-[#1A1A1A] mb-2">Enroll to track your progress</h3>
                                                 <p className="text-sm text-[#4A5C52] mb-4">Start this course to monitor your learning journey and track completion</p>
-                                                <button className=" cursor-pointer px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium">Enroll Now</button>
+                                                <button 
+                                                    onClick={handleEnroll}
+                                                    className=" cursor-pointer px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] transition-colors font-medium">Enroll Now</button>
                                             </div>
                                         )}
                                     </div>

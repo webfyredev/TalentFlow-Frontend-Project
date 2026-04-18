@@ -60,8 +60,8 @@ export default function Courses(){
             ? courseType
             : courseType.filter(type => type.category === selectedCategory);
 
-    // ✅ ADD SEARCH ON TOP OF YOUR FILTER
-    const finalCourses = filteredCategory.filter(course =>
+
+        const finalCourses = filteredCategory.filter(course =>
         course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.text.toLowerCase().includes(searchTerm.toLowerCase())
     );
