@@ -20,7 +20,7 @@ export default function CourseOverview(){
     const handleEnroll = async () => {
         try {
             await axios.post(
-                "https://talentflowbackend.onrender.com/api/progress/enroll",
+                "https://talentflowbackend.onrender.com/api/courses/enroll",
                 {
                     courseId: backendCourse._id
                 },
