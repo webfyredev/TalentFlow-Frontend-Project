@@ -1,4 +1,4 @@
-import logoImg from '../../images/logo.png'
+import logoImg from '../../images/logos.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 

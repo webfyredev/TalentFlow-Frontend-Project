@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import logoImg from '../../images/logo.png'
+import logoImg from '../../images/logos.png'
 import { useState } from "react";
 import axios from "axios"
 export default function Verification(){
