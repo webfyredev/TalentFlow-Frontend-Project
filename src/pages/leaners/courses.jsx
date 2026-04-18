@@ -9,7 +9,7 @@ import axios from "axios";
 
 
 export default function Courses(){
-    const categories = ['All', 'Development', 'Design', 'Data Science', 'Marketing', 'Business'];
+    const categories = ['All', 'Development', 'Design', 'Data Science', 'Management', 'AI'];
     const token = localStorage.getItem("token")
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [courseType, setCourseType] = useState([]);
