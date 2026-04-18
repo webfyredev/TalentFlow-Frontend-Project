@@ -4,8 +4,20 @@ import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
 
 import {LuLayoutDashboard, LuClipboardList, LuTrendingUp, LuMessageSquare, LuSettings, LuBell, LuMenu, LuX, LuUpload, LuSquareCheck, LuUsers, LuUser, } from "react-icons/lu";
 import { useState } from "react";
-export default function SideBar({ children, title }){
+export default function SideBar({ children, title, userData }){
     const [isOpen, setIsOpen] = useState(false);
+    const fullName = userData?.fullName || "User Name";
+    const trn = userData?.trn || "TRN-000";
+    const initials = fullName
+        ?.split(" ")
+        .map(n => n[0])
+        .join("")
+        .toUpperCase();
+    
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.href = "/sign-in";
+    };
     return(
         <>
             <div className="w-full h-screen flex">
@@ -43,6 +55,13 @@ export default function SideBar({ children, title }){
                                     <LuSettings  className="text-[15px]"/> 
                                     <p>Settings</p>
                                 </NavLink> 
+                            </li>
+                            <li className="font-semibold mt-5 text-[12.5px] w-[95%]">
+                                <button onClick={handleLogout} className={({ isActive }) =>
+                                    `flex space-x-3 items-center p-3 ${isActive ? 'text-[#1A7A4A] bg-white' : ''}`}>
+                                    <LuX />
+                                    <p>Logout</p>
+                                </button>
                             </li>
                         </ul>
                             
@@ -85,6 +104,12 @@ export default function SideBar({ children, title }){
                                             <p>Settings</p>
                                         </NavLink> 
                                     </li>
+                                    <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-xs">
+                                        <button onClick={handleLogout} className={({isActive}) => `flex space-x-3 flex justify-left items-center p-3 ${isActive ? 'bg-[#FFFFFF] hover:rounded-lg hover:bg-[#F4F6F5]' : ''}`}>
+                                            <LuX  className="text-[15px]"/> 
+                                            <p>Logout</p>
+                                        </button> 
+                                    </li>
                                 </ul>
                             </div>
                         )}
@@ -100,11 +125,11 @@ export default function SideBar({ children, title }){
                             </Link>
                             <Link to="/user-profile" className="w-auto lg:w-50 h-[85%] lg:hover:bg-[#EAF3EE] rounded-lg flex lg:space-x-3 items-center px-2 transition-all">
                                 <p className="w-7 h-7 p-5 lg:w-9 lg:h-9 items-center flex justify-center rounded-md text-[12px] font-semibold text-[#1A7A4A] bg-[#EAF3EE]">
-                                    CN
+                                    {initials}
                                 </p>
                                 <div className="hidden lg:flex flex-col">
-                                    <p className="text-[12px] font-semibold text-[#191A3B]">Chukwuemeka Nwosu</p>
-                                    <p className="text-[12px] font-semibold text-[#8A98AB]">TM-L-2024-001</p>
+                                    <p className="text-[12px] font-semibold text-[#191A3B]">{fullName}</p>
+                                    <p className="text-[12px] font-semibold text-[#8A98AB]">{trn}</p>
                                 </div>
                             </Link>
                         </div>
