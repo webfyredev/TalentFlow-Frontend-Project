@@ -113,7 +113,7 @@ export default function Courses(){
                     {finalCourses.map((data) => (
                         <div
                             key={data.id}
-                            className="border flex flex-col group overflow-hidden rounded-xl"
+                            className="border-1 border-[#D8D6EF] flex flex-col group overflow-hidden rounded-xl hover:border-1 hover:border-[#1A7A4A]"
                         >
                             <img
                                 src={data.image}
