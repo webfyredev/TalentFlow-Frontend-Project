@@ -188,7 +188,6 @@ export default function Assessment(){
                                             className="flex items-center space-x-2 px-4 py-3 bg-[#1A7A4A] text-white rounded-lg  hover:bg-[#156239] transition-all cursor-pointer"
                                             >
                                                 <p>Next</p> <LuChevronRight />
-                                            Next
                                         </button>
                                     </div>
 
