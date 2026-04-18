@@ -1,11 +1,37 @@
 import { LuBell, LuLock, LuSave, LuUser } from "react-icons/lu";
 import SideBar from "./components/sidebar";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function TutorProfileSettings(){
+    const [userData, setUserData] = useState(null); 
+    const token = localStorage.getItem("token"); 
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const res = await axios.get(
+                    "https://talentflowbackend.onrender.com/api/user/me",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                setUserData(res.data.data);
+
+            } catch (err) {
+                console.error(err.response?.data || err.message);
+            }
+        };
+
+        if (token) fetchUser();
+    }, [token]);
+
     return(
         <>
-            <SideBar title="Settings">
+            <SideBar title="Settings" userData={userData}>
                 <div className="w-full h-auto p-5 lg:p-10">
                     <h3 className="font-semibold text-2xl mt-3">Account Settings</h3>
                     <p className="text-sm mt-2 text-[#4A5C52]">Manage your profile and preferences</p>
@@ -17,11 +43,11 @@ export default function TutorProfileSettings(){
                         <form className="w-full mt-2 py-4">
                             <div className="flex flex-col mb-4">
                                 <label htmlFor="" className="text-sm font-medium text-[#1A1A1A] mb-1.5">Full Name</label>
-                                <input type="text" placeholder="Adeola Ogunleye" className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" />
+                                <input type="text" value={userData?.fullName || ""} readOnly className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" />
                             </div>
                             <div className="flex flex-col">
                                 <label htmlFor="" className="text-sm font-medium text-[#1A1A1A] mb-1.5">Email Address</label>
-                                <input type="email" placeholder="adeola@trueminds.com" className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" />
+                                <input type="email" value={userData?.email || ""} readOnly className="text-[#1A1A1A] text-[14px] w-full h-11 border-1 border-[#D8D6EF] px-3 rounded-md outline-[#1A7A4A]" />
                             </div>
                         </form>
                     </div>

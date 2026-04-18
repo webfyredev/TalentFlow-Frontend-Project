@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import SideBar from "./components/sidebar";
 import { LuUsers, LuAward, LuActivity, LuBookOpen, LuPlus, LuSquareCheck, LuUser, LuTrendingUp, LuCircleAlert } from "react-icons/lu";
 import { FaChartBar } from "react-icons/fa";
@@ -7,10 +7,36 @@ import image1 from '../../images/cos1.jpg'
 import image2 from '../../images/cos2.jpg'
 import { motion } from "framer-motion";
 import { buttonHoverEffects } from "../leaners/components/effect";
+import axios from "axios";
 export default function Tutor_Dashboard(){
+    const [userData, setUserData] = useState(null); 
+    const token = localStorage.getItem("token");
     useEffect(() => {
         document.title = 'TalentFlow - Tutor_Dashboard'
     }, []);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const res = await axios.get(
+                    "https://talentflowbackend.onrender.com/api/user/me",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                setUserData(res.data.data);
+
+            } catch (err) {
+                console.error(err.response?.data || err.message);
+            }
+        };
+
+        if (token) fetchUser();
+    }, [token]);
+
     const stats = [
         {
             icon : <LuBookOpen  size={15}/>,
@@ -66,10 +92,10 @@ export default function Tutor_Dashboard(){
         },
     ];
     return(
-        <SideBar title="Dashboard">
+        <SideBar title="Dashboard" userData={userData}>
             <div className="w-full h-auto p-5">
                 <div className="w-full h-auto rounded-xl p-5 flex flex-col mt-5 bg-gradient-to-r from-[#1A7748] to-[#15663C]">
-                    <h3 className="text-2xl md:text-3xl font-semibold text-white text-normal">Welcome, Chukwuemeka!</h3>
+                    <h3 className="text-2xl md:text-3xl font-semibold text-white text-normal">Welcome, {userData?.fullName || "Tutor"}!</h3>
                     <p className="mt-2 text-sm text-white/90">You're guiding  73% average completion rate </p>
                     <div className="flex w-65 my-4 items-center justify-between">
                         {data.map((details, index) => (
