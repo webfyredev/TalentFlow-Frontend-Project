@@ -30,7 +30,7 @@ export default function SideBar({ children, title, userData }){
             <div className="w-full h-screen flex">
                 <div className="lg:w-[22%] h-full hidden lg:flex flex-col bg-[#EAF3EE] fixed left-0 top-0">
                         <Link className="w-full">
-                            <img src={logoImg} alt="logoImg" className="w-55 h-30 object-cover" />
+                            <img src={logoImg} alt="logoImg" className="w-40 h-25 object-cover" />
                         </Link>
                         <ul className="flex flex-col items-center space-y-2.5 mt-2 text-[#4A5C52] poppins-font normal">
                             <li className="w-[95%] font-semibold text-[12.5px] transition-all hover:bg-[#F4F6F5] hover:shadow-sm">
