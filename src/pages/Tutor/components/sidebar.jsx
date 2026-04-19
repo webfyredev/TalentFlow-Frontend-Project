@@ -123,7 +123,7 @@ export default function SideBar({ children, title, userData }){
                                 <LuBell  className="w-7 h-7 p-1 text-[#1A7A4A]"/>
                                 <div className="absolute w-2 h-2 rounded-full top-[5px] right-1.5 bg-[#DC2626]"></div>
                             </Link>
-                            <Link to="/user-profile" className="w-auto lg:w-50 h-[85%] lg:hover:bg-[#EAF3EE] rounded-lg flex lg:space-x-3 items-center px-2 transition-all">
+                            <Link to="/tutor-profile" className="w-auto lg:w-50 h-[85%] lg:hover:bg-[#EAF3EE] rounded-lg flex lg:space-x-3 items-center px-2 transition-all">
                                 <p className="w-7 h-7 p-5 lg:w-9 lg:h-9 items-center flex justify-center rounded-md text-[12px] font-semibold text-[#1A7A4A] bg-[#EAF3EE]">
                                     {initials}
                                 </p>
