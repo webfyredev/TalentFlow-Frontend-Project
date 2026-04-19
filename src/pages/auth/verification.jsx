@@ -32,7 +32,7 @@ export default function Verification(){
     }
 
     try {
-      const res = await axios.post(
+      const res = await axios.put(
         "https://talentflowbackend.onrender.com/api/auth/verify-role",
         {
           fullName,
@@ -51,11 +51,11 @@ export default function Verification(){
       setSuccessMsg("Verification successful 🎉");
       setErrorMsg("");
 
-      // ✅ SAVE VERIFIED STATE
+    
       localStorage.setItem("isVerified", "true");
       const role = res.data.role;
 
-      // ✅ NAVIGATE TO LOGIN PAGE
+     
       setTimeout(() => {
         if (role === "learner"){
             navigate("/learners_dashboard")
