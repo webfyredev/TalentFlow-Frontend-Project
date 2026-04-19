@@ -250,7 +250,7 @@ export default function Learners_Dashboard(){
                         <p className="text-lg font-semibold">Continue Learning</p>
                         <Link className="text-[13px] lg:text-sm font-semibold text-[#1A7A4A]"> View all courses</Link>
                     </div>
-                    <div className="mt-5 py-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-5 border">
+                    <div className="mt-5 py-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-5">
                         {filteredCourses.map((data, index) => (
                             <div key={index} className="w-full rounded-xl border-1 border-[#D8ECDF] flex flex-col group overflow-hidden">
                                 <img src={data.image} alt="CourseImage" className="rounded-t-xl w-full h-40 object-cover group-hover:scale-105 transition-all duration-300" />
