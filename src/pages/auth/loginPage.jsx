@@ -80,6 +80,17 @@ export default function LoginPage(){
           </Link>
           <h3 className='text-2xl md:text-3xl font-semibold text-[#1A1A1A] mb-2'>Welcome to TalentFlow</h3>
           <p className='text-[#4A5C52]'>Sign in to continue your learning journey</p>
+          {successMsg && (
+            <div className="mt-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4 w-full">
+                {successMsg}
+            </div>
+            )}
+
+            {errorMsg && (
+            <div className="mt-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 w-full">
+                {errorMsg}
+            </div>
+            )}
           <form onSubmit={handleLogin} action="" className='w-full h-auto shadow-md p-2 md:p-5 mt-5 bg-white rounded-xl border-[#D8D6EF] border'>
             <div className='w-full p-2 flex flex-col'>
               <label htmlFor="email" className='text-sm font-medium text-[#1A1A1A] mb-2'>Email Address</label>
