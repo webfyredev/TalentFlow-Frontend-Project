@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom"
 import logoImg from '../../images/logos.png'
 import { useState } from "react";
 import axios from "axios"
+import { motion } from "framer-motion";
+import { buttonHoverEffects } from "../leaners/components/effect";
 export default function Verification(){
    const navigate = useNavigate();
 
@@ -117,7 +119,7 @@ export default function Verification(){
                 <option value="69d3a887524a5f49708a4f5f">Machine Learning</option>
               </select>
             </div>
-            <button type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3  mb-5 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Verify Now</button>
+            <motion.button {...buttonHoverEffects} type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3  mb-5 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Verify Now</motion.button>
             <p className='mt-2.5 mb-6 flex justify-center items-center text-sm text-[#4A5C52]'>Continue to sign in after verification <Link to="/sign-in" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Sign In </Link> </p>
           </form>
         </div>

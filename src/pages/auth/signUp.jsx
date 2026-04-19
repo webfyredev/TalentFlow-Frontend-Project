@@ -1,6 +1,8 @@
 import logoImg from '../../images/logos.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { motion } from 'framer-motion';
+import { buttonHoverEffects } from '../leaners/components/effect';
 
 export default function SignUpPage() {
   const [successMsg, setSuccessMsg] = useState("");
@@ -192,13 +194,14 @@ export default function SignUpPage() {
             </div>
 
             {/* BUTTON */}
-            <button
+            <motion.button
+              {...buttonHoverEffects}
               type='submit'
               disabled={loading}
               className='cursor-pointer bg-[#1A7A4A] disabled:opacity-50 mt-5 py-3 rounded-lg text-white w-full'
             >
               {loading ? "Creating Account..." : "Create Account"}
-            </button>
+            </motion.button>
 
             {/* LOGIN LINK */}
             <p className='flex justify-center mt-5 text-[#4A5C52] text-sm'>

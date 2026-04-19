@@ -1,6 +1,8 @@
 import logoImg from '../../images/logos.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { motion } from 'framer-motion';
+import { buttonHoverEffects } from '../leaners/components/effect';
 
 
 export default function LoginPage(){
@@ -94,7 +96,9 @@ export default function LoginPage(){
               </div>
               <Link className='font-medium text-sm text-[#1A7A4A] hover:underline'>Forgot Password?</Link>
             </div>
-            <button type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Sign In</button>
+            <motion.button 
+              {...buttonHoverEffects}
+              type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Sign In</motion.button>
             <p className='my-6 flex justify-center items-center text-sm text-[#4A5C52]'>Don't have an account <Link to="/sign-up" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Sign Up </Link>  <span className='ml-2 '>Or </span> <Link to="/verify-account" className='text-[#1A7A4A] hover:underline font-medium ml-2'>Verify account </Link></p>
           </form>
         </div>
