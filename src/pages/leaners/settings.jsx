@@ -116,7 +116,7 @@ export default function ProfileSettings(){
                             className="ml-5 mt-4 px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
                         >
                             Logout
-                    </button>
+                        </button>
                     </div>
                     <div className="w-full p-5 mt-1.5 flex justify-end">
                         <button className="px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] font-medium cursor-pointer flex items-center "> <LuSave className="mr-2 w-4.5 h-4.5 mt-0.5"/> Save Changes</button>

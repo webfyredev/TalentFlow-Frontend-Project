@@ -29,6 +29,29 @@ export default function TutorProfileSettings(){
         if (token) fetchUser();
     }, [token]);
 
+    const handleLogout = async () => {
+        try {
+            await axios.post(
+                "https://talentflowbackend.onrender.com/api/auth/logout",
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            localStorage.removeItem("token");
+            navigate("/sign-in");
+
+        } catch (err) {
+            console.log(err.response?.data || err.message);
+
+            // force logout anyway
+            localStorage.removeItem("token");
+            navigate("/sign-in");
+        }
+    };
     return(
         <>
             <SideBar title="Settings" userData={userData}>
@@ -81,6 +104,12 @@ export default function TutorProfileSettings(){
                             <Link className="w-full">
                                 Change Password
                             </Link>
+                        </button>
+                        <button
+                            onClick={handleLogout}
+                            className="ml-5 mt-4 px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
+                        >
+                            Logout
                         </button>
                     </div>
                     <div className="w-full p-5 mt-1.5 flex justify-end">
