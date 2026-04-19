@@ -71,7 +71,7 @@ export default function SignUpPage() {
       // ✅ OPTIONAL: redirect to login
 
       setTimeout(() => {
-        navigate("/verify-account");
+        navigate("/sign-in");
 
       }, 2000);
 
