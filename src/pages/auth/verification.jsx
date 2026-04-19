@@ -18,14 +18,12 @@ export default function Verification(){
   const handleVerify = async (e) => { 
     e.preventDefault();
 
-    // ✅ BASIC VALIDATION
     if (!fullName || !referenceNumber || !courseId) {
       setErrorMsg("All fields are required");
       setSuccessMsg("")
       return;
     }
 
-    // ❌ NO TOKEN → BACK TO LOGIN
     if (!token) {
         setErrorMsg("Session expired. Please login again.");
         setSuccessMsg("")
@@ -34,7 +32,7 @@ export default function Verification(){
     }
 
     try {
-      const res = await axios.put(
+      const res = await axios.post(
         "https://talentflowbackend.onrender.com/api/auth/verify-role",
         {
           fullName,
@@ -111,12 +109,12 @@ export default function Verification(){
               </label>
               <select value={courseId} onChange={(e) => setCourseId(e.target.value)} className='border border-[#D8E6DF] px-4 py-3 rounded-lg text-sm w-full'>
                 <option value="">Select Course</option>
-                <option value="69d3a887524a5f49708a4f5a">Frontend Development</option>
-                <option value="69d3a887524a5f49708a4f5b">Backend Development</option>
-                <option value="69d3a887524a5f49708a4f5c">UI/UX Design</option>
-                <option value="69d3a887524a5f49708a4f5d">Project Management</option>
-                <option value="69d3a887524a5f49708a4f5e">AI Integration</option>
-                <option value="69d3a887524a5f49708a4f5f">Machine Learning</option>
+                <option value="69e359fb322bec78f8267da1">Frontend Development</option>
+                <option value="69e359fb322bec78f8267da2">Backend Development</option>
+                <option value="69e359fb322bec78f8267da3">UI/UX Design</option>
+                <option value="69e359fb322bec78f8267da4">Project Management</option>
+                <option value="69e359fb322bec78f8267da5">AI Integration</option>
+                <option value="69e359fb322bec78f8267da6">Machine Learning</option>
               </select>
             </div>
             <motion.button {...buttonHoverEffects} type='submit' className='mt-5 cursor-pointer w-full bg-[#1A7A4A] text-white py-3  mb-5 rounded-lg hover:bg-[#156239] transition-colors font-medium'>Verify Now</motion.button>
