@@ -2,7 +2,9 @@ import { LuBell, LuLock, LuSave, LuUser } from "react-icons/lu";
 import SideBar from "./components/sidebar";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { buttonHoverEffects } from "../leaners/components/effect";
 
 export default function TutorProfileSettings(){
     const [userData, setUserData] = useState(null); 
@@ -105,12 +107,13 @@ export default function TutorProfileSettings(){
                                 Change Password
                             </Link>
                         </button>
-                        <button
+                        <motion.button
+                            {...buttonHoverEffects}
                             onClick={handleLogout}
                             className="ml-5 mt-4 px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
                         >
                             Logout
-                        </button>
+                        </motion.button>
                     </div>
                     <div className="w-full p-5 mt-1.5 flex justify-end">
                         <button className="px-6 py-3 bg-[#1A7A4A] text-white rounded-lg hover:bg-[#156239] font-medium cursor-pointer flex items-center "> <LuSave className="mr-2 w-4.5 h-4.5 mt-0.5"/> Save Changes</button>
